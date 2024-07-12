@@ -1,24 +1,18 @@
-# ssafy-vue
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+stitch-front@0.0.0 C:\Users\SSAFY\Desktop\stitch-front
+├── @reduxjs/toolkit@2.2.6
+├── @types/react-dom@18.3.0
+├── @types/react@18.3.3
+├── @typescript-eslint/eslint-plugin@7.16.0
+├── @typescript-eslint/parser@7.16.0
+├── @vitejs/plugin-react@4.3.1
+├── autoprefixer@10.4.19
+├── eslint-plugin-react-hooks@4.6.2
+├── eslint-plugin-react-refresh@0.4.8
+├── eslint@8.57.0
+├── postcss@8.4.39
+├── react-dom@18.3.1
+├── react-redux@9.1.2
+├── react@18.3.1
+├── tailwindcss@3.4.4
+├── typescript@5.5.3
+└── vite@5.3.3
