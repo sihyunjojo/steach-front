@@ -37,6 +37,11 @@ export default function Navbar() {
             문의하기
           </a>
         </li>
+        <li>
+          <a href="" className="hover:text-orange-300">
+            조시현 test
+          </a>
+        </li>
       </ul>
       {/* 로그인 및 회원가입 버튼 */}
       <ul className="flex justify-evenly w-1/5 text-3xl font-bold">
