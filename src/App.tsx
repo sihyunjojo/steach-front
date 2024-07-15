@@ -1,10 +1,16 @@
-import "./App.css";
-import Navbar from "./components/main/Navbar.tsx";
+import { Button } from "react-bootstrap";
+import Footer from "./components/main/Footer.tsx";
+import NavBar from "./components/main/NavBar.tsx";
+import Card from "./components/main/Card.tsx";
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-    </>
+    <div>
+      <NavBar />
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <Card />
+      <Button>gdgd</Button>
+      <Footer />
+    </div>
   );
 }
