@@ -3,11 +3,9 @@ import Navbar from "./components/main/Navbar.tsx";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/user/LoginPage.tsx";
 import SignUpPage from "./pages/user/SignUpPage/SignUpPage.tsx";
-import JosihyeonTest from "./tests/JosihyeonTest.tsx";
 import ProfilePage from "./pages/student/ProfilePage.tsx";
 import HomePage from "./pages/main/HomePage.tsx";
 import JosihyeonTest from "./tests/JosihyeonTest.tsx";
-import ProfilePage from "./pages/student/ProfilePage.tsx";
 import LectureDetailPage from "./pages/lecture/DetailPage.tsx";
 
 export default function App() {
