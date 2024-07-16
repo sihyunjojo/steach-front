@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
-    @apply font-dongle;
+  @apply font-dongle;
+  font-size: x-large;
 }

@@ -1,18 +1,17 @@
-import React from 'react';
-import aa from '../../assets/banner.jpg'
+import Footer from "../../components/main/Footer.tsx";
+import NavBar from "../../components/main/NavBar.tsx";
+import Cards from "../../components/main/Cards.tsx";
+import HomePageCarousel from "../../components/main/Carousel.tsx";
+import Subjects from "../../components/main/Subjects.tsx";
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
   return (
-    <div className='flex'>
-    <div className='w-1/2 border border-black'>
-      <h2>내용</h2>
-      <img src={aa} alt="" />
-    </div>
-    <div className='w-1/2 border border-black'>
-      <h2>내용</h2>
-    </div>
+    <div>
+      {/* <NavBar /> */}
+      <HomePageCarousel />
+      <Subjects />
+      <Cards />
+      <Footer />
     </div>
   );
 }
-
-export default HomePage;
