@@ -9,9 +9,11 @@ export default function Navbar() {
   return (
     <nav className="flex justify-between items-center border-b-2 p-2">
       {/* Nabar 로고 */}
-      <div>
-        <img src={logoImage} alt="no-image" className="w-5/5 h-24" />
-      </div>
+      <Link to={"/"}>
+        <div>
+          <img src={logoImage} alt="no-image" className="w-5/5 h-24" />
+        </div>
+      </Link>
       {/* 검색창 */}
       <form className="w-2/5 flex relative">
         <input
@@ -40,6 +42,11 @@ export default function Navbar() {
             문의하기
           </a>
         </li>
+        <li>
+          <Link to={"/JosihyeonTest"} className="hover:text-orange-300">
+            조시현 test용
+          </Link>
+        </li>
       </ul>
       {/* 로그인 및 회원가입 버튼 */}
       <ul className="flex justify-evenly w-1/5 text-3xl font-bold">
@@ -48,7 +55,7 @@ export default function Navbar() {
           <button
             className="border-2 p-3 rounded-md"
             onClick={() => {
-              navigate("/login");
+              navigate("/user/login");
             }}
           >
             로그인
@@ -59,7 +66,7 @@ export default function Navbar() {
           <button
             className="text-white bg-red-400 border-2 p-3 rounded-md hover:bg-red-500"
             onClick={() => {
-              navigate("/SignUp");
+              navigate("/user/signup");
             }}
           >
             회원가입
