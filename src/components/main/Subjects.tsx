@@ -24,8 +24,8 @@ export default function Subjects() {
     <section className="flex justify-center">
       <div>
         <div className="flex text-center">
-          {subjects.map((subject) => (
-            <a href="#" className="mx-6 my-12">
+          {subjects.map((subject, index) => (
+            <a href="#" className="mx-6 my-12" key={index}>
               <FontAwesomeIcon icon={subject.icon} className="w-16 h-16" />
               <div>{subject.name}</div>
             </a>

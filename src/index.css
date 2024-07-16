@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 body {
+  /* @apply font-malang; */
   @apply font-dongle;
+  /* @apply font-noto-sans; */
   font-size: x-large;
 }

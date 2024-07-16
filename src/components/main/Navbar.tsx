@@ -33,9 +33,9 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          <a href="" className="hover:text-orange-300">
+          <Link to={"/student/profile"} className="hover:text-orange-300">
             내 강의실
-          </a>
+          </Link>
         </li>
         <li>
           <a href="" className="hover:text-orange-300">
