@@ -1,10 +1,9 @@
 import logoImage from "../../assets/LOGO.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  
   let navigate = useNavigate();
 
   return (
@@ -46,11 +45,23 @@ export default function Navbar() {
       <ul className="flex justify-evenly w-1/5 text-3xl font-bold">
         <li>
           {/* <Link to={'/login'}> */}
-            <button className="border-2 p-3 rounded-md" onClick={() => { navigate('/login') }}>로그인</button>
+          <button
+            className="border-2 p-3 rounded-md"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            로그인
+          </button>
           {/* </Link> */}
         </li>
         <li>
-          <button className="text-white bg-red-400 border-2 p-3 rounded-md hover:bg-red-500" onClick={() => { navigate('/SignUp') }}>
+          <button
+            className="text-white bg-red-400 border-2 p-3 rounded-md hover:bg-red-500"
+            onClick={() => {
+              navigate("/SignUp");
+            }}
+          >
             회원가입
           </button>
         </li>
