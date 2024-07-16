@@ -6,6 +6,9 @@ import SignUpPage from "./pages/user/SignUpPage/SignUpPage.tsx";
 import JosihyeonTest from "./tests/JosihyeonTest.tsx";
 import ProfilePage from "./pages/student/ProfilePage.tsx";
 import HomePage from "./pages/main/HomePage.tsx";
+import JosihyeonTest from "./tests/JosihyeonTest.tsx";
+import ProfilePage from "./pages/student/ProfilePage.tsx";
+import LectureDetailPage from "./pages/lecture/DetailPage.tsx";
 
 export default function App() {
   return (
@@ -16,8 +19,9 @@ export default function App() {
         <Route path="/student/profile" element={<ProfilePage />}></Route>
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
-        <Route path="/JosihyeonTest" element={<JosihyeonTest />}></Route>
+        <Route path="/JosihyeonTest" element={<LectureDetailPage />}></Route>
       </Routes>
+      <div className="min-h-40" />
       <Footer />
     </div>
   );
