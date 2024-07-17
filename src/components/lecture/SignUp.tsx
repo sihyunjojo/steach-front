@@ -18,7 +18,17 @@ const LectureSignUp: React.FC = () => {
             강의 등록시 주의사항
             설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명
         </div>
-        </div>
+          </div>
+          {/* 
+          강의 제목
+          textarea
+
+          강의 커리큘럼
+          date, time
+
+          상세 설명
+          textarta
+          */}
           <h1 className='text-6xl'>강의 소개-information</h1>
           <textarea className='w-full h-40' id='information'></textarea>
         

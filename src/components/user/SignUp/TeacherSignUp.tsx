@@ -45,7 +45,8 @@ const TeacherSignUp: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
+    e.preventDefault();
+    axiosSignUp(formData)
   };
     
   const axiosSignUp = (event: FormData) => {
@@ -57,7 +58,20 @@ const TeacherSignUp: React.FC = () => {
       alert('모든 필드를 채워주세요.');
       return;
     }
-    axios.post(`API`, event)
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('userid', event.userid);
+    formDataToSend.append('password', event.password);
+    formDataToSend.append('confirmPassword', event.confirmPassword);
+    formDataToSend.append('email', event.email);
+    // formDataToSend.append('uploadfile', event.uploadfile);
+
+
+    axios.post(`/teacher/join`, formDataToSend , {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
       .then((response) => {
       console.log(response.data)
     })
@@ -124,7 +138,7 @@ const TeacherSignUp: React.FC = () => {
             required
           />
           <button type='submit' className="w-full py-2 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-10"
-            onClick={() => { console.log(formData); axiosSignUp(formData)}}>회원가입</button>
+          onClick={()=>{console.log(formData.uploadfile)}}>회원가입</button>
           </div>
         </form>
     </>

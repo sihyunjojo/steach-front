@@ -6,9 +6,19 @@ import SignUpPage from "./pages/user/SignUpPage/SignUpPage.tsx";
 import ProfilePage from "./pages/student/ProfilePage.tsx";
 import HomePage from "./pages/main/HomePage.tsx";
 import JosihyeonTest from "./tests/JosihyeonTest.tsx";
-import LectureSignUpPage from "./pages/lecture/SignUpPage.tsx";
+import LectureSignUpPage from "./pages/lecture/DetailPage.tsx";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux'
+// import { fetchLectures } from './store/lecturesSlice.tsx';
+import { AppDispatch } from './store';
 
-export default function App() {
+const App: React.FC = () => {
+  // const dispatch = useDispatch<AppDispatch>();
+
+  // useEffect(() => {
+  //   dispatch(fetchLectures());
+  // }, [dispatch]);
+
   return (
     <div>
       <Navbar />
@@ -19,8 +29,11 @@ export default function App() {
         <Route path="/user/signup" element={<SignUpPage />}></Route>
         <Route path="/JosihyeonTest" element={<LectureSignUpPage />}></Route>
       </Routes>
-      <div className="min-h-40" />
       <Footer />
     </div>
   );
+
+
 }
+
+export default App;

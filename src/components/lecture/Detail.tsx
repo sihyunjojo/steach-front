@@ -1,14 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import ax from '../../assets/teacher.png'
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store'
+import { Lecture } from '../../store/lecturesSlice';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import he from 'he'
 
 const LectureDetail: React.FC = () => {
-  
+
+  const [editorData, setEditorData] = useState('<p>Hello from CKEditor 5!</p>');
+
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setEditorData(data);
+    console.log('Editor data:', data);
+    const jsonData = JSON.stringify({ content: data });
+    console.log('JSON encoded data:', jsonData);
+  };
+
+
+  const lectures = useSelector((state: RootState) => state.lectures.lectures)
+  const status = useSelector((state: RootState) => state.lectures.status);
+  const error = useSelector((state: RootState) => state.lectures.error);
+  console.log(lectures)
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
+      {
+        lectures.map((lecture: Lecture) => (
+          <li key={lecture.id}>
+          <h2>{lecture.sub_title}</h2>
+        </li>
+      ))}
       <header className="flex bg-[#1C2151] text-white text-left py-2.5 justify-center">
         <div className='w-3/5'>
           <div>
@@ -62,14 +96,14 @@ const LectureDetail: React.FC = () => {
           </div>
            
 
-          {/* sub_title : 서브 제목 */}
-          {/* intro : 강의 소개 */}
-          {/* target : 강의를 들으면 좋겠는 대상 */}
-          {/* requirement : 학습 요구사항(선수과목) */}
-          {/* information : 강의 정보 */}
-          {/* sub_category : 과목 카테고리 */}
-          {/* weekdays : 월화수목금토일 */}
-          {/* start_date : 시작일
+          {/* sub_title : 서브 제목
+          intro : 강의 소개
+          target : 강의를 들으면 좋겠는 대상
+          requirement : 학습 요구사항(선수과목)
+          information : 강의 정보
+          sub_category : 과목 카테고리
+          weekdays : 월화수목금토일
+          start_date : 시작일
           end_date : 종료일
           lecture_start_time : 시작시간
           lecture_end_time : 종료시간 */}
@@ -79,7 +113,31 @@ const LectureDetail: React.FC = () => {
       </div>
       <div className='col-span-2'></div>
       </div>
-      <div></div>
+      <div>
+      <div className="App">
+            <h2>Using CKEditor 5 in React</h2>
+            <CKEditor
+                editor={ClassicEditor}
+                data={editorData}
+                onReady={editor => {
+                    console.log('Editor is ready to use!', editor);
+                }}
+                onChange={handleEditorChange}
+                onBlur={(event, editor) => {
+                    console.log('Blur.', editor);
+                }}
+                onFocus={(event, editor) => {
+                    console.log('Focus.', editor);
+                }}
+            />
+            <div>
+            <h2>Output:</h2>
+            
+                <div dangerouslySetInnerHTML={{ __html: editorData }} />
+            </div>
+        </div>
+      </div>
+
     </>
   );
 }

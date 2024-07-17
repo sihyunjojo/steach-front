@@ -31,21 +31,41 @@ const StudentSignUp: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-};
+    axiosSignUp(formData)
+  };
+  
+
 
   const axiosSignUp = (event: FormData) => {
     if (Object.values(formData).some(value => value === '')) {
       alert('모든 필드를 채워주세요.');
       return;
     }
-  axios.post(`API`, event)
+
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('userid', event.userid);
+    formDataToSend.append('password', event.password);
+    formDataToSend.append('confirmPassword', event.confirmPassword);
+    formDataToSend.append('email', event.email);
+    formDataToSend.append('AuthCode', event.AuthCode);
+
+
+
+    axios.post(`http://localhost:5000/students`, formDataToSend, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    })
     .then((response) => {
-    console.log(response.data)
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-} 
+      console.log(response.data)
+      console.log('a')
+      console.log(response)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } 
       
     
   return (
@@ -105,8 +125,7 @@ const StudentSignUp: React.FC = () => {
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          <button type='submit' className="w-full py-2 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-10"
-            onClick={() => { console.log(formData);  axiosSignUp(formData)}}>회원가입</button>
+          <button type='submit' className="w-full py-2 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-10">회원가입</button>
           </div>
         </form>
     </>
