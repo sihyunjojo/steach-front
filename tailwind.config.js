@@ -7,6 +7,7 @@ export default {
         dongle: ["Dongle", "sans-serif"],
         "noto-sans": ['"Noto Sans Korean"', "sans-serif"],
         malang: ["HancomMalangMalang-Regular", "sans-serif"],
+        lineseed: ['lineseed', 'sans-serif'],
       },
       colors: {
         ivory: "#FFFFF0",
