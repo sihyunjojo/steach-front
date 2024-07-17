@@ -28,11 +28,11 @@ ChartJS.register(
 );
 
 const data = {
-  labels: ["국어", "수학", "사회", "과학", "예체능", "공학", "외국어", "기타"],
+  labels: ["국어", "수학", "사회", "과학", "예체능", "공학", "외국어"],
   datasets: [
     {
       label: "My First Dataset",
-      data: [65, 59, 90, 81, 56, 55, 40, 38],
+      data: [65, 59, 90, 81, 56, 55, 40],
       fill: true,
       backgroundColor: "rgba(255, 99, 132, 0.2)",
       borderColor: "rgb(255, 99, 132)",
@@ -44,7 +44,7 @@ const data = {
     },
     {
       label: "My Second Dataset",
-      data: [28, 48, 40, 19, 96, 27, 100, 52],
+      data: [28, 48, 40, 19, 96, 27, 100],
       fill: true,
       backgroundColor: "rgba(54, 162, 235, 0.2)",
       borderColor: "rgb(54, 162, 235)",
@@ -58,6 +58,8 @@ const data = {
 };
 
 const options = {
+  responsive: true,
+  maintainAspectRatio: false,
   elements: {
     line: {
       borderWidth: 1,
@@ -68,13 +70,13 @@ const options = {
 const MyLecturePreference: React.FC = () => {
   return (
     <>
-      <Card className="w-72 h-96 border-2 rounded-lg shadow my-6 p-5 flex justify-center">
+      <Card className="w-3/4 h-full my-6 p-5 flex justify-center">
         <CardHeader>
           <h2 className="text-4xl text-center">나의 수업 선호도</h2>
         </CardHeader>
 
-        <CardBody>
-          <Stack divider={<StackDivider />} spacing="4">
+        <CardBody className="w-full h-96 relative">
+          <Stack divider={<StackDivider />} spacing="4" className="text-center">
             <Box>
               <Radar data={data} options={options} />
             </Box>

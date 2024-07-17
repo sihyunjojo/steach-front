@@ -11,8 +11,8 @@ import {
 const CareerRecommendation: React.FC = () => {
   return (
     <>
-      <Card className="w-72 h-96 border-2 rounded-lg shadow my-6 p-5 flex justify-center">
-        <CardHeader className="">
+      <Card className="rounded-lg flex justify-center">
+        <CardHeader>
           <h2 className="text-4xl text-center">AI 진로추천</h2>
         </CardHeader>
 

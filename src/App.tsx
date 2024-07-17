@@ -19,7 +19,6 @@ export default function App() {
         <Route path="/user/signup" element={<SignUpPage />}></Route>
         <Route path="/JosihyeonTest" element={<LectureSignUpPage />}></Route>
       </Routes>
-      <div className="min-h-40" />
       <Footer />
     </div>
   );
