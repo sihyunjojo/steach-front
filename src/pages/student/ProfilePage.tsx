@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Tabs,
   TabList,
@@ -14,49 +14,73 @@ import ProfileLectureHistory from "../../components/student/ProfileLectureHistor
 import MyLecturePreference from "../../components/student/MyLecturePreference";
 import CareerRecommendation from "../../components/student/CareerRecommendation";
 import SchduledLectures from "../../components/student/ScheduledLectures";
+import MyInfo from "../../components/student/MyInfo";
+import UpdateMyInfo from "../../components/student/UpdateMyInfo";
 
 const ProfilePage: React.FC = () => {
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabClick = (tab: number) => {
+    setSelectedTab(tab);
+  };
   return (
-    <Box className="p-6">
-      <Flex justifyContent="space-between">
-        <Box flex="1" mx="3">
-          <Heading
-            as="h1"
-            mb="8"
-            className="text-5xl font-bold text-center w-72"
-          >
-            내 강의실
-          </Heading>
-          <MyLecturePreference />
-          <CareerRecommendation />
-        </Box>
-        <Box flex="3" className="rounded-lg shadow border-2 p-2">
-          <Tabs position="relative" variant="unstyled">
-            <TabList className="border-b-2 font-semibold">
-              <Tab className="mx-2 text-3xl">예정된 강의</Tab>
-              <Tab className="mx-2 text-3xl">강의 히스토리</Tab>
-              <Tab className="mx-2 text-3xl">내정보</Tab>
-            </TabList>
-            <TabIndicator
-              mt="-1.5px"
-              height="2px"
-              borderRadius="1px"
-              className="bg-orange-300"
-            />
-            <TabPanels className="p-3">
-              <TabPanel>
-                <SchduledLectures />
-              </TabPanel>
-              <TabPanel>
-                <ProfileLectureHistory />
-              </TabPanel>
-              <TabPanel>
-                <p>내정보</p>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
-      </Flex>
+    <Box flex="3" className="rounded-lg shadow border-2 p-2 m-6">
+      <Tabs orientation="vertical">
+        <Flex>
+          <TabList className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5 ">
+            <Tab
+              className={`my-2 text-2xl p-3 ${
+                selectedTab === 0 ? "bg-green-300 text-white rounded-3xl" : ""
+              }`}
+              onClick={() => handleTabClick(0)}
+            >
+              내 강의
+            </Tab>
+            <Tab
+              className={`my-2 text-2xl p-3 ${
+                selectedTab === 1 ? "bg-green-300 text-white rounded-3xl" : ""
+              }`}
+              onClick={() => handleTabClick(1)}
+            >
+              강의 히스토리
+            </Tab>
+            <Tab
+              className={`my-2 text-2xl p-3 ${
+                selectedTab === 2 ? "bg-green-300 text-white rounded-3xl" : ""
+              }`}
+              onClick={() => handleTabClick(2)}
+            >
+              통계 및 진로추천
+            </Tab>
+            <Tab
+              className={`my-2 text-2xl p-3 ${
+                selectedTab === 3 ? "bg-green-300 text-white rounded-3xl" : ""
+              }`}
+              onClick={() => handleTabClick(3)}
+            >
+              내정보
+            </Tab>
+          </TabList>
+
+          <TabPanels className="p-3">
+            <TabPanel>
+              <SchduledLectures />
+            </TabPanel>
+            <TabPanel>
+              <ProfileLectureHistory />
+            </TabPanel>
+            <TabPanel>
+              <div className="flex justify-center">
+                <MyLecturePreference />
+                <CareerRecommendation />
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <UpdateMyInfo />
+            </TabPanel>
+          </TabPanels>
+        </Flex>
+      </Tabs>
     </Box>
   );
 };
