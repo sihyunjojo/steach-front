@@ -5,10 +5,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  TabIndicator,
   Box,
   Flex,
-  Heading,
 } from "@chakra-ui/react";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
 import MyLecturePreference from "../../components/student/MyLecturePreference";
