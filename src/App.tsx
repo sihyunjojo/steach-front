@@ -11,6 +11,9 @@ import { useEffect } from "react";
 import { useDispatch } from 'react-redux'
 // import { fetchLectures } from './store/lecturesSlice.tsx';
 import { AppDispatch } from './store';
+import TeacherProfilePage from "./pages/teacher/MyRoomPage.tsx";
+import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
+import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
 
 const App: React.FC = () => {
   // const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +31,9 @@ const App: React.FC = () => {
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
         <Route path="/JosihyeonTest" element={<LectureSignUpPage />}></Route>
+        <Route path="/teacher/profile" element={<TeacherProfilePage />}></Route>
+        <Route path="/teacher/profiledetail" element={<MyInfoDetailPage />}></Route>
+        <Route path="/teacher/profiledetail/update" element={<MyInfoDetailUpdate />}></Route>
       </Routes>
       <Footer />
     </div>

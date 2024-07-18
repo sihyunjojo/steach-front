@@ -7,7 +7,7 @@ import { RootState } from '../../store'
 import { Lecture } from '../../store/lecturesSlice';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import he from 'he'
+import { Stack, Divider, Text } from "@chakra-ui/react";
 
 const LectureDetail: React.FC = () => {
 
@@ -50,7 +50,7 @@ const LectureDetail: React.FC = () => {
             <p>IT 프로그래밍-sub_category</p>
             <h1 className='text-7xl p-3'>김호경의 따라하며 배우는 C++ - sub_title</h1>
             <p className='p-1'>초보도 따라할 수 있는 c++ 개발 입문! 게임학과 - intro</p>
-            <Link to={'/'}>
+            <Link to={'/teacher/profiledetail'}>
               <div className="flex items-center">
                 <img src={ax} className='w-10 h-10 m-5' />
                 <span>유니티 신 김호경 - 강사상세페이지, 만들어야함</span>
@@ -71,6 +71,10 @@ const LectureDetail: React.FC = () => {
       <div className='col-span-8 bg-[#999999] p-4'>
         <div className='whitespace-pre-line break-words'>
           <h1 className='text-6xl'>강의 소개-information</h1>
+          <Stack direction='row' h='100px' p={4}>
+            <Divider orientation='vertical' />
+            <Text>Chakra UI</Text>
+          </Stack>
             informationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformation
           </div>
           <br className='text-black'></br>
