@@ -1,10 +1,12 @@
+import React from "react";
 import logoImage from "../../assets/LOGO.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Navbar() {
-  let navigate = useNavigate();
+// 김헌규 - 자바스크립트로 작성된 형식을 타입스크립트로 변경
+const Navbar: React.FC = () => {
+  const navigate = useNavigate();
 
   return (
     <nav className="flex justify-between items-center border-b-2 p-2">
@@ -75,4 +77,6 @@ export default function Navbar() {
       </ul>
     </nav>
   );
-}
+};
+
+export default Navbar;

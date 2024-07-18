@@ -10,48 +10,54 @@ const Login: React.FC = () => {
   const navigate = useNavigate()
 
   interface FormData {
-    userid : string;
-    password : string;
+    userid: string;
+    password: string;
   }
-  
+
   const [formData, setFormData] = useState<FormData>({
-    userid: '',
-    password: '',
+    userid: "",
+    password: "",
   });
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
-    ...formData,
-    [name]: value,
+      ...formData,
+      [name]: value,
     });
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
-  
-  const axiosLogin = (event: FormData) => {
-  if (Object.values(formData).some(value => value === '')) {
-    alert('아이디, 비밀번호를 입력해주세요.');
-    return;
-  }
-  axios.post(`API`, event)
-    .then((response) => {
-    console.log(response.data)
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-  } 
 
+  const axiosLogin = (event: FormData) => {
+    if (Object.values(formData).some((value) => value === "")) {
+      alert("아이디, 비밀번호를 입력해주세요.");
+      return;
+    }
+    axios
+      .post(`API`, event)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
-      <div className='main-content relative h-screen background-image bg-cover bg-center bg-no-repeat'>
-        <img src={LoginBannerBgImg} className='absolute opacity-60 z-0 w-full' />
+      <div className="main-content relative h-screen background-image bg-cover bg-center bg-no-repeat">
+        <img
+          src={LoginBannerBgImg}
+          className="absolute opacity-60 z-0 w-full"
+        />
         <div className="flex items-center justify-center h-full">
-          <form className="relative max-w-md mx-auto p-6 bg-rose-200 shadow-md rounded-lg z-10" onSubmit={handleSubmit}>
+          <form
+            className="relative max-w-md mx-auto p-6 bg-rose-200 shadow-md rounded-lg z-10"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label htmlFor="userid" className="block text-gray-700">아이디</label>
                 <input
@@ -83,6 +89,6 @@ const Login: React.FC = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 export default Login;

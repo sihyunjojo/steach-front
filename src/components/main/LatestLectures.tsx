@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   Heading,
@@ -18,12 +18,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 SwiperCore.use([Navigation, Pagination]);
 
-export default function LatestLectures() {
+// 김헌규 - 자바스크립트로 작성된 코드를 타입스크립트 방식으로 변경 및 interface 객체 생성
+const LatestLectures: React.FC = () => {
+  // 김헌규
   const [swiper, setSwiper] = useState<SwiperClass>();
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
+  const [isBeginning, setIsBeginning] = useState<boolean>(true);
+  const [isEnd, setIsEnd] = useState<boolean>(false);
 
-  const samples = [
+  // 김헌규
+  interface Sample {
+    image: string;
+    title: string;
+    description: string;
+    teacher: string;
+  }
+
+  // 김헌규
+  const samples: Sample[] = [
     {
       image:
         "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
@@ -147,4 +158,6 @@ export default function LatestLectures() {
       </Box>
     </section>
   );
-}
+};
+
+export default LatestLectures;
