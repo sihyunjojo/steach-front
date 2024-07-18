@@ -84,17 +84,13 @@ const samples: Sample[] = [
   },
 ];
 
-interface LectureSwiperProps {
-  title: string;
-}
-
-const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
+const TodayLecture: React.FC = () => {
   return (
     <section className="flex justify-center my-6">
       <Box className="container mx-16 px-16">
         <header className="font-bold m-3">
           <h1 className="sm:text-sm md:text-2xl lg:text-4xl xl:text-5xl">
-            {title}
+            오늘의 강의
           </h1>
         </header>
         <Box className="flex justify-center">
@@ -149,13 +145,4 @@ const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
   );
 };
 
-const ScheduledLectures: React.FC = () => {
-  return (
-    <>
-      <LectureSwiper title="지금 선생님이 수업을 시작했어요!" />
-      <LectureSwiper title="예정 된 수업이 있어요 ~" />
-    </>
-  );
-};
-
-export default ScheduledLectures;
+export default TodayLecture;

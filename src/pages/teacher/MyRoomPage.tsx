@@ -8,13 +8,12 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
-import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
-import MyLecturePreference from "../../components/student/MyLecturePreference";
-import CareerRecommendation from "../../components/student/CareerRecommendation";
-import SchduledLectures from "../../components/student/ScheduledLectures";
-import UpdateMyInfo from "../../components/student/UpdateMyInfo";
 
-const ProfilePage: React.FC = () => {
+import MyLecture from "../../components/teacher/MyLecture";
+import TeacherLectureHistory from "../../components/teacher/TeacherLectureHistory";
+import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
+
+const TeacherProfilePage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabClick = (tab: number) => {
@@ -43,14 +42,6 @@ const ProfilePage: React.FC = () => {
             </Tab>
             <Tab
               className={`my-2 text-2xl p-3 ${
-                selectedTab === 2 ? "bg-green-300 text-white rounded-3xl" : ""
-              }`}
-              onClick={() => handleTabClick(2)}
-            >
-              통계 및 진로추천
-            </Tab>
-            <Tab
-              className={`my-2 text-2xl p-3 ${
                 selectedTab === 3 ? "bg-green-300 text-white rounded-3xl" : ""
               }`}
               onClick={() => handleTabClick(3)}
@@ -61,19 +52,13 @@ const ProfilePage: React.FC = () => {
 
           <TabPanels className="p-3">
             <TabPanel>
-              <SchduledLectures />
+              <MyLecture />
             </TabPanel>
             <TabPanel>
-              <ProfileLectureHistory />
+              <TeacherLectureHistory />
             </TabPanel>
             <TabPanel>
-              <div className="flex justify-center">
-                <MyLecturePreference />
-                <CareerRecommendation />
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <UpdateMyInfo />
+              <TeacherUpdateMyInfo />
             </TabPanel>
           </TabPanels>
         </Flex>
@@ -82,4 +67,4 @@ const ProfilePage: React.FC = () => {
   );
 };
 
-export default ProfilePage;
+export default TeacherProfilePage;

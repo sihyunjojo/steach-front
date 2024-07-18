@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
-const UpdateMyInfo: React.FC = () => {
+const TeacherUpdateMyInfo: React.FC = () => {
   // 비밀번호 확인 Input 상태 및 핸들러 함수
   const [inputPassword, setInputPassword] = useState("");
 
@@ -42,6 +42,26 @@ const UpdateMyInfo: React.FC = () => {
     setUpdatePasswordCheckInput(event.target.value);
   }
 
+  // 이름 변경 Input 상태 및 핸들러 함수
+  const [updateNameInput, setUpdateNameInput] = useState("");
+
+  function handleNameUpdate(event: any) {
+    setUpdateNameInput(event.target.value);
+  }
+
+  // 휴대폰 번호 변경 Input 상태 및 핸들러 함수
+  const [phoneNumberUpdateInput, setPhoneNumberUpdateInput] = useState("");
+
+  function handlePhoneNumberInput(event: any) {
+    setPhoneNumberUpdateInput(event.target.value);
+  }
+
+  // 이메일 변경 Input 상태 및 핸들러 함수
+  const [emailUpdateInput, setEmailUpdateInput] = useState("");
+
+  function handleEmailUpdateInput(event: any) {
+    setEmailUpdateInput(event.target.value);
+  }
   const password = "1q2w3e4r";
 
   return (
@@ -98,6 +118,33 @@ const UpdateMyInfo: React.FC = () => {
                 className="border-2 rounded-lg p-2"
               />
             </div>
+            <div className="my-4 p-2">
+              <FormLabel className="text-2xl">이름</FormLabel>
+              <Input
+                type="text"
+                value={updateNameInput}
+                onChange={handleNameUpdate}
+                className="border-2 rounded-lg p-2"
+              />
+            </div>
+            <div className="my-4 p-2">
+              <FormLabel className="text-2xl">휴대폰 번호 (-없이)</FormLabel>
+              <Input
+                type="text"
+                value={phoneNumberUpdateInput}
+                onChange={handlePhoneNumberInput}
+                className="border-2 rounded-lg p-2"
+              />
+            </div>
+            <div className="my-4 p-2">
+              <FormLabel className="text-2xl">이메일</FormLabel>
+              <Input
+                type="email"
+                value={emailUpdateInput}
+                onChange={handleEmailUpdateInput}
+                className="border-2 rounded-lg p-2"
+              />
+            </div>
             <button className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white">
               변경하기
             </button>
@@ -108,4 +155,4 @@ const UpdateMyInfo: React.FC = () => {
   );
 };
 
-export default UpdateMyInfo;
+export default TeacherUpdateMyInfo;

@@ -8,9 +8,10 @@ import HomePage from "./pages/main/HomePage.tsx";
 import JosihyeonTest from "./tests/JosihyeonTest.tsx";
 import LectureSignUpPage from "./pages/lecture/DetailPage.tsx";
 import { useEffect } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 // import { fetchLectures } from './store/lecturesSlice.tsx';
-import { AppDispatch } from './store';
+import { AppDispatch } from "./store";
+import TeacherProfilePage from "./pages/teacher/MyRoomPage.tsx";
 
 const App: React.FC = () => {
   // const dispatch = useDispatch<AppDispatch>();
@@ -28,12 +29,11 @@ const App: React.FC = () => {
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
         <Route path="/JosihyeonTest" element={<LectureSignUpPage />}></Route>
+        <Route path="/teacher/profile" element={<TeacherProfilePage />}></Route>
       </Routes>
       <Footer />
     </div>
   );
-
-
-}
+};
 
 export default App;
