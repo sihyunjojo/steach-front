@@ -22,14 +22,15 @@ const Subjects: React.FC = () => {
   // 김헌규
   const subjects: Subject[] = [
     {
-      name: "국어",
+      name: "#국어",
       icon: faBook,
     },
-    { name: "수학", icon: faCalculator },
-    { name: "사회", icon: faLandmark },
-    { name: "과학", icon: faFlask },
-    { name: "미술", icon: faPalette },
-    { name: "음악", icon: faMusic },
+    { name: "#수학", icon: faCalculator },
+    { name: "#사회", icon: faLandmark },
+    { name: "#과학", icon: faFlask },
+    { name: "#예체능", icon: faPalette },
+    { name: "#외국어", icon: faMusic },
+    { name: "#공학", icon: faMusic },
   ];
 
   return (

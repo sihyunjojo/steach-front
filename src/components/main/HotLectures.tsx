@@ -18,6 +18,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // 김헌규 제작
 // 이진송 수정 - 타입스크립트에 맞춰서 변경함
+// 김헌규 수정 - Card Border 둥글게 변경, Card 및 제목 글자 크기 변경
 SwiperCore.use([Navigation, Pagination]);
 
 export default function HotLectures() {
@@ -80,7 +81,7 @@ export default function HotLectures() {
   return (
     <section className="flex justify-center my-6">
       <Box className="container mx-16 px-16">
-        <header className="font-bold text-5xl m-3">
+        <header className="font-bold text-4xl m-3">
           <h1>요즘 뜨는 강의</h1>
         </header>
         <Box className="flex justify-center">
@@ -117,7 +118,7 @@ export default function HotLectures() {
           >
             {samples.map((sample, index) => (
               <SwiperSlide key={index}>
-                <Card className="border-2 m-3">
+                <Card className="m-3 border-2 rounded-xl overflow-hidden">
                   <CardBody>
                     <Image
                       src={sample.image}
@@ -125,7 +126,7 @@ export default function HotLectures() {
                       borderRadius="lg"
                     />
                     <Stack mt="6" spacing="3" className="p-2">
-                      <Heading className="font-bold text-3xl">
+                      <Heading className="font-bold text-2xl">
                         {sample.title}
                       </Heading>
                       <Text>{sample.description}</Text>
