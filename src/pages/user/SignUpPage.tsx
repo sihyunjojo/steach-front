@@ -19,8 +19,8 @@ const SignUpStudentPage: React.FC = () => {
       <div className="flex flex-col items-center justify-center">
         {!selectedRole && (
           <>
-            <p className="text-5xl">회원가입</p>
-            <div className="flex gap-10">
+            <p className="text-5xl p-20">회원가입</p>
+            <div className="flex gap-10 mb-40">
               <div
                 className="flex flex-col items-center justify-center w-96 h-96 border border-black rounded-lg"
                 onClick={() => handleRoleSelect("student")}
@@ -46,6 +46,7 @@ const SignUpStudentPage: React.FC = () => {
                 </button>
               </div>
             </div>
+            {/* 아래 페이지 메인(홈보다 앞)페이지로 옮길 예정, 임시로 여기 둠ㅋ */}
             <IntroductionSignUp />
           </>
         )}

@@ -10,12 +10,12 @@ const Login: React.FC = () => {
   const navigate = useNavigate()
 
   interface FormData {
-    userid: string;
+    userId: string;
     password: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
-    userid: "",
+    userId: "",
     password: "",
   });
 
@@ -53,36 +53,36 @@ const Login: React.FC = () => {
           src={LoginBannerBgImg}
           className="absolute opacity-60 z-0 w-full"
         />
-        <div className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-center h-full ">
           <form
-            className="relative max-w-md mx-auto p-6 bg-rose-200 shadow-md rounded-lg z-10"
+            className="relative max-w-md mx-auto p-6 bg-white shadow-md rounded-lg z-10"
             onSubmit={handleSubmit}
           >
             <div>
-              <label htmlFor="userid" className="block text-gray-700">아이디</label>
+              <label htmlFor="userId" className="text-2xl">아이디</label>
                 <input
                   type='text'
-                  id='userid'
-                  name='userid'
-                  value={formData.userid}
+                  id='userId'
+                  name='userId'
+                  value={formData.userId}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border-2 rounded-lg p-2 mb-4"
                   required
                 />
-                <label htmlFor="password" className="block text-gray-700">비밀번호</label>
+                <label htmlFor="password" className="text-2xl">비밀번호</label>
                 <input
                   type='password'
                   id='password'
                   name='password'
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border-2 rounded-lg p-2w-full border-2 rounded-lg p-2"
                   required
               />
               {/* 해당부분 로그인 버튼 확인하고 수정해야겠음 - 이진송이 할거임 */}
-                <button type='submit' className="w-full py-1 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-10"
+                <button type='submit' className="w-full text-center bg-orange-300 p-2 mt-4 mb-2 rounded-lg hover:bg-orange-400 hover:text-white"
                 onClick={() => { console.log(formData); axiosLogin(formData) }}>로그인</button>
-                <button type='submit' className="w-full py-1 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-1"
+                <button type='submit' className="w-full text-center bg-orange-300 p-2 mt-2 rounded-lg hover:bg-orange-400 hover:text-white"
                 onClick={() => { navigate('/user/signup') }}>회원가입</button>
             </div>
           </form>
