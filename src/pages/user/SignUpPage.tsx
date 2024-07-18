@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import student from "../../../assets/student.png";
-import teacher from "../../../assets/teacher.png";
-import StudentSignUp from "../../../components/user/SignUp/StudentSignUp";
-import TeacherSignUp from "../../../components/user/SignUp/TeacherSignUp";
-import IntroductionSignUp from "../../../components/user/SignUp/IntroductionSignUp";
+import student from "../../assets/student.png";
+import teacher from "../../assets/teacher.png";
+import StudentSignUp from "../../components/user/SignUp/StudentSignUp";
+import TeacherSignUp from "../../components/user/SignUp/TeacherSignUp";
+import IntroductionSignUp from "../../components/user/SignUp/IntroductionSignUp";
 
 const SignUpStudentPage: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");

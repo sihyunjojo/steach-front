@@ -12,7 +12,6 @@ import ProfileLectureHistory from "../../components/student/ProfileLectureHistor
 import MyLecturePreference from "../../components/student/MyLecturePreference";
 import CareerRecommendation from "../../components/student/CareerRecommendation";
 import SchduledLectures from "../../components/student/ScheduledLectures";
-import MyInfo from "../../components/student/MyInfo";
 import UpdateMyInfo from "../../components/student/UpdateMyInfo";
 
 const ProfilePage: React.FC = () => {
@@ -25,7 +24,7 @@ const ProfilePage: React.FC = () => {
     <Box flex="3" className="rounded-lg shadow border-2 p-2 m-6">
       <Tabs orientation="vertical">
         <Flex>
-          <TabList className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5 ">
+          <TabList className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5  min-h-screen">
             <Tab
               className={`my-2 text-2xl p-3 ${
                 selectedTab === 0 ? "bg-green-300 text-white rounded-3xl" : ""
