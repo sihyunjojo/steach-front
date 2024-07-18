@@ -16,6 +16,8 @@ import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+// 김헌규 제작
+// 이진송 수정 - 타입스크립트에 맞춰서 변경함
 SwiperCore.use([Navigation, Pagination]);
 
 export default function HotLectures() {

@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
+// 이진송
+// axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
 export interface Lecture {
   id: number;
   sub_title: string;

@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+// 이진송
+// 수정이 필요한 axios 틀 짜둔거임 위에꺼가 더 정확할듯
 export interface Lecture {
   id: number;
   sub_title: string;

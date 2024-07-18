@@ -5,6 +5,8 @@ import StudentSignUp from "../../components/user/SignUp/StudentSignUp";
 import TeacherSignUp from "../../components/user/SignUp/TeacherSignUp";
 import IntroductionSignUp from "../../components/user/SignUp/IntroductionSignUp";
 
+// 이진송
+// 디자인 수정 필요
 const SignUpStudentPage: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");
 

@@ -4,6 +4,8 @@ import myschedule from '../../../assets/signup/myschedule.jpg'
 import myteachers from '../../../assets/signup/myteachers.jpg'
 import myvideo from '../../../assets/signup/myvideo.jpg'
 
+// 이진송
+// 회원가입에 있지만, 초초초메인페이지로 보낼 예정
 const IntroductionSignUp: React.FC = () => {
     return (
     <div className='w-3/5'>

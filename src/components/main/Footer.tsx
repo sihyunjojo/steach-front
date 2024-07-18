@@ -1,4 +1,7 @@
-const Footer = () => {
+
+// 김헌규 제작
+// 이진송 수정 - 타입스크립트에 맞춰서 변경함
+const Footer: React.FC = () => {
   return (
     <footer className="bg-[#282c34] text-white text-center py-2.5">
       <div className="max-w-screen-xl mx-auto">

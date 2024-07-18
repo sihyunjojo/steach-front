@@ -3,7 +3,7 @@ import HomePageCarousel from "../../components/main/Carousel.tsx";
 import Subjects from "../../components/main/Subjects.tsx";
 import LatestLectures from "../../components/main/LatestLectures.tsx";
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
   return (
     <div>
       <HomePageCarousel />
@@ -13,3 +13,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+export default HomePage;

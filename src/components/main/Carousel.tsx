@@ -6,7 +6,9 @@ import sampleImage from "../../assets/sample-image.jpg";
 import sampleImage2 from "../../assets/sample-image2.jpg";
 import sampleImage3 from "../../assets/sample-image3.gif";
 
-export default function HomePageCarousel() {
+// 김헌규 제작
+// 이진송 수정 - 타입스크립트에 맞춰서 변경함
+const HomePageCarousel: React.FC = () => {
   return (
     <Swiper
       navigation={true}
@@ -25,3 +27,4 @@ export default function HomePageCarousel() {
     </Swiper>
   );
 }
+export default HomePageCarousel;

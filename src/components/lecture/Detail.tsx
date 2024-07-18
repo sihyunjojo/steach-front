@@ -1,27 +1,14 @@
 import React, { useState, Component } from 'react';
 import { Link } from 'react-router-dom'
-import axios from 'axios';
 import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store'
 import { Lecture } from '../../store/lecturesSlice';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Stack, Divider, Text } from "@chakra-ui/react";
 
 const LectureDetail: React.FC = () => {
 
-  const [editorData, setEditorData] = useState('<p>Hello from CKEditor 5!</p>');
-
-  const handleEditorChange = (event, editor) => {
-    const data = editor.getData();
-    setEditorData(data);
-    console.log('Editor data:', data);
-    const jsonData = JSON.stringify({ content: data });
-    console.log('JSON encoded data:', jsonData);
-  };
-
-
+  // 이진송
+  // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
   const lectures = useSelector((state: RootState) => state.lectures.lectures)
   const status = useSelector((state: RootState) => state.lectures.status);
   const error = useSelector((state: RootState) => state.lectures.error);
@@ -34,6 +21,7 @@ const LectureDetail: React.FC = () => {
   if (status === 'failed') {
     return <div>Error: {error}</div>;
   }
+  // 윗부분 분석 필요
 
   return (
     <>
@@ -71,10 +59,6 @@ const LectureDetail: React.FC = () => {
       <div className='col-span-8 bg-[#999999] p-4'>
         <div className='whitespace-pre-line break-words'>
           <h1 className='text-6xl'>강의 소개-information</h1>
-          <Stack direction='row' h='100px' p={4}>
-            <Divider orientation='vertical' />
-            <Text>Chakra UI</Text>
-          </Stack>
             informationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformationinformation
           </div>
           <br className='text-black'></br>
@@ -118,28 +102,6 @@ const LectureDetail: React.FC = () => {
       <div className='col-span-2'></div>
       </div>
       <div>
-      <div className="App">
-            <h2>Using CKEditor 5 in React</h2>
-            <CKEditor
-                editor={ClassicEditor}
-                data={editorData}
-                onReady={editor => {
-                    console.log('Editor is ready to use!', editor);
-                }}
-                onChange={handleEditorChange}
-                onBlur={(event, editor) => {
-                    console.log('Blur.', editor);
-                }}
-                onFocus={(event, editor) => {
-                    console.log('Focus.', editor);
-                }}
-            />
-            <div>
-            <h2>Output:</h2>
-            
-                <div dangerouslySetInnerHTML={{ __html: editorData }} />
-            </div>
-        </div>
       </div>
 
     </>

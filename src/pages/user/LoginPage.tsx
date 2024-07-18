@@ -3,10 +3,11 @@ import LoginBannerBgImg from '../../assets/banner.jpg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
+// 이진송
+// 디자인 변경 필요함
 const Login: React.FC = () => {
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   interface FormData {
     userid : string;
@@ -71,7 +72,8 @@ const Login: React.FC = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
-                />
+              />
+              {/* 해당부분 로그인 버튼 확인하고 수정해야겠음 - 이진송이 할거임 */}
                 <button type='submit' className="w-full py-1 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-10"
                 onClick={() => { console.log(formData); axiosLogin(formData) }}>로그인</button>
                 <button type='submit' className="w-full py-1 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-1"

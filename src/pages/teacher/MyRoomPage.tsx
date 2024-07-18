@@ -22,7 +22,7 @@ const TeacherProfilePage: React.FC = () => {
   return (
     <Box flex="3" className="rounded-lg shadow border-2 p-2 m-6">
       <Tabs orientation="vertical">
-        <Flex>
+        <Flex>  
           <TabList className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5  min-h-screen">
             <Tab
               className={`my-2 text-2xl p-3 ${

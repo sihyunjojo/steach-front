@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import ax from '../../assets/teacher.png'
 
-
+  // 이진송
+  // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
 const LectureSignUp: React.FC = () => {
   
 

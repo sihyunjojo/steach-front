@@ -4,23 +4,12 @@ import axios from 'axios';
 import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store'
-import { Lecture } from '../../store/lecturesSlice';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+
+// 이진송 - 디자인 정한것에 맞춰서 짜야 함
+// 디자인 이외에 구체적인건 axios 받고 해야할 듯
 const TeacherInfoDetail: React.FC = () => {
-    let navigate = useNavigate();
-
-  const [editorData, setEditorData] = useState('<p>Hello from CKEditor 5!</p>');
-
-  const handleEditorChange = (event, editor) => {
-    const data = editor.getData();
-    setEditorData(data);
-    console.log('Editor data:', data);
-    const jsonData = JSON.stringify({ content: data });
-    console.log('JSON encoded data:', jsonData);
-  };
-
+  const navigate = useNavigate();
 
   const lectures = useSelector((state: RootState) => state.lectures.lectures)
   const status = useSelector((state: RootState) => state.lectures.status);

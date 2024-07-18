@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import teacher from '../../../assets/teacher.png';
 import axios from 'axios';
 
+// 이진송
 const TeacherSignUp: React.FC = () => {
 
   interface FormData {
@@ -12,6 +13,7 @@ const TeacherSignUp: React.FC = () => {
       uploadfile : File | null;
   }
 
+  // 확인이 필요한데, uploadfile에 대해서 null값으로 지정
   const [formData, setFormData] = useState<FormData>({
       userid: '',
       password: '',
@@ -20,14 +22,7 @@ const TeacherSignUp: React.FC = () => {
       uploadfile: null,
   });
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const { name, value } = e.target;
-  //     setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //     });
-  // };
-
+  // 학생 회원가입 페이지와 같지만, file 추가로 조금 다름
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
 
@@ -44,11 +39,13 @@ const TeacherSignUp: React.FC = () => {
     }
   };
 
+  // 회원가입 버튼 눌렀을때 onChange로 실시간으로 폼에 들어감
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     axiosSignUp(formData)
   };
     
+  // 빈값을 찾아 alert 알림
   const axiosSignUp = (event: FormData) => {
     if (Object.values(formData).some(File => File === null)) {
       alert('파일넣어')
@@ -64,10 +61,9 @@ const TeacherSignUp: React.FC = () => {
     formDataToSend.append('password', event.password);
     formDataToSend.append('confirmPassword', event.confirmPassword);
     formDataToSend.append('email', event.email);
-    // formDataToSend.append('uploadfile', event.uploadfile);
 
 
-    axios.post(`/teacher/join`, formDataToSend , {
+    axios.post(`API`, formDataToSend , {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -132,7 +128,6 @@ const TeacherSignUp: React.FC = () => {
             type='file'
             id='uploadfile'
             name='uploadfile'
-            // value={formData.uploadfile}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required

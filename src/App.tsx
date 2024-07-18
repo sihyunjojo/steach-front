@@ -6,7 +6,7 @@ import SignUpPage from "./pages/user/SignUpPage.tsx";
 import ProfilePage from "./pages/student/ProfilePage.tsx";
 import HomePage from "./pages/main/HomePage.tsx";
 import JosihyeonTest from "./tests/JosihyeonTest.tsx";
-import LectureSignUpPage from "./pages/lecture/DetailPage.tsx";
+import LectureSignUpPage from "./pages/lecture/UpdatePage.tsx";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 // import { fetchLectures } from './store/lecturesSlice.tsx';
@@ -15,6 +15,9 @@ import TeacherProfilePage from "./pages/teacher/MyRoomPage.tsx";
 import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
 import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
 
+
+// 이진송 해당 부분 import 불필요한거 추후에 정리 할 것이니 조금만 참아주세요
+//  아래 dispatch는 처음 데이터 로딩을 위해 필요하므로, 지우지 말아주세요
 const App: React.FC = () => {
   // const dispatch = useDispatch<AppDispatch>();
 
