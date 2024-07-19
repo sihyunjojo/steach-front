@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import teacher from '../../../assets/teacher.png';
 import axios from 'axios';
+import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 // 이진송
 const TeacherSignUp: React.FC = () => {
 
   interface FormData {
-      userid : string;
+      userId : string;
       password : string;
       confirmPassword : string;
       email : string;
@@ -15,7 +16,7 @@ const TeacherSignUp: React.FC = () => {
 
   // 확인이 필요한데, uploadfile에 대해서 null값으로 지정
   const [formData, setFormData] = useState<FormData>({
-      userid: '',
+      userId: '',
       password: '',
       confirmPassword: '',
       email: '',
@@ -41,26 +42,20 @@ const TeacherSignUp: React.FC = () => {
 
   // 회원가입 버튼 눌렀을때 onChange로 실시간으로 폼에 들어감
   const handleSubmit = (e: React.FormEvent) => {
+    axiosSignUp();
     e.preventDefault();
-    axiosSignUp(formData)
   };
-    
-  // 빈값을 찾아 alert 알림
-  const axiosSignUp = (event: FormData) => {
-    if (Object.values(formData).some(File => File === null)) {
-      alert('파일넣어')
-      return;
-    }
-    if (Object.values(formData).some(value => value === '')) {
-      alert('모든 필드를 채워주세요.');
-      return;
-    }
+  
+  const axiosSignUp = () => {
 
     const formDataToSend = new FormData();
-    formDataToSend.append('userid', event.userid);
-    formDataToSend.append('password', event.password);
-    formDataToSend.append('confirmPassword', event.confirmPassword);
-    formDataToSend.append('email', event.email);
+    formDataToSend.append('userId', formData.userId);
+    formDataToSend.append('password', formData.password);
+    formDataToSend.append('confirmPassword', formData.confirmPassword);
+    formDataToSend.append('email', formData.email);
+    if (formData.uploadfile) {
+      formDataToSend.append('uploadfile', formData.uploadfile);
+    }
 
 
     axios.post(`API`, formDataToSend , {
@@ -81,60 +76,60 @@ const TeacherSignUp: React.FC = () => {
         <div>
           <img src={teacher} />
         </div>
-        <form className="max-w-md mx-auto p-6 bg-rose-200 shadow-md rounded-lg" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="userid" className="block text-gray-700">아이디</label>
-          <input 
+        <form className="max-w-md mx-auto border-2 rounded-xl p-6 mb-28" onSubmit={handleSubmit}>
+        <FormControl>
+          <FormLabel htmlFor="userId" className="text-2xl">아이디</FormLabel>
+          <Input 
             type='text'
-            id='userid'
-            name='userid'
-            value={formData.userid}
+            id='userId'
+            name='userId'
+            value={formData.userId}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border-2 rounded-lg w-full p-2 mb-5"
             required
           />
-          <label htmlFor="password" className="block text-gray-700">비밀번호</label>
-          <input
+          <FormLabel htmlFor="password" className="text-2xl">비밀번호</FormLabel>
+          <Input
             type='password'
             id='password'
             name='password'
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border-2 rounded-lg w-full p-2 mb-5"
             required
           />
-          <label htmlFor="confirmPassword" className="block text-gray-700">비밀번호확인</label>
-          <input
+          <FormLabel htmlFor="confirmPassword" className="text-2xl">비밀번호확인</FormLabel>
+          <Input
             type='password'
             id='confirmPassword'
             name='confirmPassword'
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border-2 rounded-lg w-full p-2 mb-5"
             required
           />
-          <label htmlFor="email" className="block text-gray-700">이메일</label>
-          <input
-            type='text'
+          <FormLabel htmlFor="email" className="text-2xl">이메일</FormLabel>
+          <Input
+            type='email'
             id='email'
             name='email'
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border-2 rounded-lg w-full p-2 mb-5"
             required
           />
-          <label htmlFor="uploadfile" className="block text-gray-700">증명서</label>
-          <input
+          <FormLabel htmlFor="uploadfile" className="text-2xl">증명서</FormLabel>
+          <Input
             type='file'
             id='uploadfile'
             name='uploadfile'
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border-2 rounded-lg w-full p-2 mb-5"
             required
           />
-          <button type='submit' className="w-full py-2 px-4 bg-black text-white font-semibold rounded-md hover:bg-gray-700 mt-10"
-          onClick={()=>{console.log(formData.uploadfile)}}>회원가입</button>
-          </div>
+          <button type='submit' className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white"
+          onSubmit={()=>{}}>회원가입</button>
+          </FormControl>
         </form>
     </>
   );
