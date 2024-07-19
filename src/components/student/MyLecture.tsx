@@ -91,9 +91,9 @@ interface LectureSwiperProps {
 const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
   return (
     <section className="flex justify-center my-6">
-      <Box className="container mx-16 px-16">
+      <Box className="container mx-10 px-6">
         <header className="font-bold m-3">
-          <h1 className="sm:text-sm md:text-2xl lg:text-4xl xl:text-5xl">
+          <h1 className="sm:text-sm md:text-xl lg:text-3xl xl:text-4xl">
             {title}
           </h1>
         </header>
@@ -109,7 +109,7 @@ const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
                 slidesPerView: 1,
               },
               768: {
-                slidesPerView: 1,
+                slidesPerView: 2,
               },
               1024: {
                 slidesPerView: 2,
@@ -130,7 +130,7 @@ const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
                       borderRadius="lg"
                     />
                     <Stack mt="6" spacing="3" className="p-2">
-                      <Heading className="font-bold text-3xl">
+                      <Heading className="font-bold text-2xl">
                         {sample.title}
                       </Heading>
                       <Text>{sample.time}</Text>

@@ -19,6 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 SwiperCore.use([Navigation, Pagination]);
 
 // 김헌규 - 자바스크립트로 작성된 코드를 타입스크립트 방식으로 변경 및 interface 객체 생성
+// 김헌규 - 화면 크기에 따른 슬라이드 출력 갯수 수정
 const LatestLectures: React.FC = () => {
   // 김헌규
   const [swiper, setSwiper] = useState<SwiperClass>();
@@ -89,7 +90,7 @@ const LatestLectures: React.FC = () => {
   return (
     <section className="flex justify-center my-6">
       <Box className="container mx-16 px-16">
-        <header className="font-bold text-4xl m-3">
+        <header className="text-4xl font-bold m-3">
           <h1>최근 등록된 강의</h1>
         </header>
         <Box className="flex justify-center">
@@ -110,13 +111,13 @@ const LatestLectures: React.FC = () => {
                 slidesPerView: 1,
               },
               640: {
-                slidesPerView: 2,
+                slidesPerView: 1,
               },
               768: {
-                slidesPerView: 3,
+                slidesPerView: 2,
               },
               1024: {
-                slidesPerView: 4,
+                slidesPerView: 3,
               },
               1280: {
                 slidesPerView: 5,
@@ -134,9 +135,7 @@ const LatestLectures: React.FC = () => {
                       borderRadius="lg"
                     />
                     <Stack mt="6" spacing="3" className="p-2">
-                      <Heading className="font-bold text-2xl">
-                        {sample.title}
-                      </Heading>
+                      <Heading fontSize="lg">{sample.title}</Heading>
                       <Text>{sample.description}</Text>
                       <Text className="text-slate-500">
                         {sample.teacher} 선생님
