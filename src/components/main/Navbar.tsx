@@ -1,23 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import logoImage from "../../assets/LOGO.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faBars,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 
-// 김헌규 - 자바스크립트로 작성된 형식을 타입스크립트로 변경
 const Navbar: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <nav className="flex justify-between items-center border-b-2 p-2">
-      {/* Nabar 로고 */}
+    <nav className="flex flex-wrap items-center justify-between bg-white border-b-2 lg:p-4 xl:p-1 2xl:p-2">
+      {/* Navbar 로고 */}
       <Link to={"/"}>
-        <div>
-          <img src={logoImage} alt="no-image" className="w-5/5 h-24" />
+        <div className="w-28">
+          <img src={logoImage} alt="no-image" className="w-full h-24" />
         </div>
       </Link>
+
+      {/* 햄버거 메뉴 아이콘 */}
+      <div className="lg:hidden">
+        <button onClick={toggleMenu} className="focus:outline-none">
+          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
+        </button>
+      </div>
+
       {/* 검색창 */}
-      <form className="w-2/5 flex relative">
+      <form className="hidden w-full lg:flex lg:w-1/3 xl:w-1/2 2xl:w-2/5 relative mx-4">
         <input
           type="text"
           placeholder="나의 성장을 도와줄 강의를 검색해보세요."
@@ -27,54 +43,56 @@ const Navbar: React.FC = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} className="size-6" />
         </button>
       </form>
+
       {/* 메뉴 */}
-      <ul className="flex justify-around w-1/5 text-3xl font-bold">
-        <li>
-          <a href="" className="hover:text-orange-300">
-            강의
-          </a>
-        </li>
-        <li>
-          <Link to={"/student/profile"} className="hover:text-orange-300">
-            내 강의실
-          </Link>
-        </li>
-        <li>
-          <a href="" className="hover:text-orange-300">
-            문의하기
-          </a>
-        </li>
-        <li>
-          <Link to={"/JosihyeonTest"} className="hover:text-orange-300">
-            조시현 test용
-          </Link>
-        </li>
-      </ul>
-      {/* 로그인 및 회원가입 버튼 */}
-      <ul className="flex justify-evenly w-1/5 text-3xl font-bold">
-        <li>
-          {/* <Link to={'/login'}> */}
+      <div
+        className={`w-full lg:flex lg:items-center lg:justify-between lg:w-auto ${
+          isMenuOpen ? "block" : "hidden"
+        }`}
+      >
+        <ul className="flex flex-col lg:flex-row lg:justify-evenly w-full lg:w-auto text-xl font-bold mt-4 lg:mt-0 lg:mr-4">
+          <li className="py-2 lg:py-0 lg:px-4">
+            <a href="#" className="hover:text-orange-300">
+              강의
+            </a>
+          </li>
+          <li className="py-2 lg:py-0 lg:px-4">
+            <Link to="/student/profile" className="hover:text-orange-300">
+              내 강의실
+            </Link>
+          </li>
+          <li className="py-2 lg:py-0 lg:px-4">
+            <a href="#" className="hover:text-orange-300">
+              문의하기
+            </a>
+          </li>
+          {/* <li className="py-2 lg:py-0 lg:px-4">
+            <Link to="/JosihyeonTest" className="hover:text-orange-300">
+              조시현 test용
+            </Link>
+          </li> */}
+        </ul>
+
+        {/* 로그인 및 회원가입 버튼 */}
+        <div className="flex flex-col lg:flex-row lg:items-center">
           <button
-            className="border-2 p-3 rounded-md"
+            className="border-2 p-3 rounded-md w-full lg:w-auto lg:ml-4"
             onClick={() => {
               navigate("/user/login");
             }}
           >
             로그인
           </button>
-          {/* </Link> */}
-        </li>
-        <li>
           <button
-            className="text-white bg-red-400 border-2 p-3 rounded-md hover:bg-red-500"
+            className="text-white bg-red-400 border-2 p-3 rounded-md hover:bg-red-500 w-full lg:w-auto lg:ml-4"
             onClick={() => {
               navigate("/user/signup");
             }}
           >
             회원가입
           </button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </nav>
   );
 };
