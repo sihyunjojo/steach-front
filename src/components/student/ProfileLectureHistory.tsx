@@ -11,12 +11,12 @@ import {
 
 const ProfileLectureHistory: React.FC = () => {
   return (
-    <>
-      <h1 className="text-5xl font-bold m-3">지난 강의 내역이에요!</h1>
+    <div className="m-6">
+      <h1 className="my-4 text-4xl font-bold">지난 강의 내역이에요!</h1>
       <Accordion defaultIndex={[0]} allowMultiple>
         <AccordionItem>
           <h2>
-            <AccordionButton className="border-2 bg-orange-300 hover:bg-orange-400">
+            <AccordionButton className="bg-lightOrange hover:bg-darkOrange">
               <Box as="span" flex="1" textAlign="left" className="p-2">
                 <Text className="text-2xl">
                   [김호경의 Unity 정복하자 개발자의꿈] 1. 개발환경 세팅
@@ -28,17 +28,23 @@ const ProfileLectureHistory: React.FC = () => {
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} className="bg-orange-200 border-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+          <AccordionPanel pb={4} className="p-3 bg-veryLightOrange">
+            <div className="grid grid-cols-2">
+              <div>
+                <h2 className=" text-2xl">강의 참여도</h2>
+                <text>dfdfdfffdf</text>
+              </div>
+              <div>
+                <h2 className="text-2xl">퀴즈 통계</h2>
+                <text>dfdfdfffdf</text>
+              </div>
+            </div>
           </AccordionPanel>
         </AccordionItem>
 
         <AccordionItem>
           <h2>
-            <AccordionButton className="border-2 bg-orange-300 hover:bg-orange-400">
+            <AccordionButton className="bg-lightOrange hover:bg-darkOrange">
               <Box as="span" flex="1" textAlign="left" className="p-2">
                 <Text className="text-2xl">
                   [김호경의 Unity 정복하자 개발자의꿈] 2. 유니티 핵심 개념
@@ -50,16 +56,22 @@ const ProfileLectureHistory: React.FC = () => {
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} className="bg-orange-200 border-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+          <AccordionPanel pb={4} className="p-3 bg-veryLightOrange">
+            <div className="grid grid-cols-2">
+              <div>
+                <h2 className=" text-2xl">강의 참여도</h2>
+                <text>dfdfdfffdf</text>
+              </div>
+              <div>
+                <h2 className="text-2xl">퀴즈 통계</h2>
+                <text>dfdfdfffdf</text>
+              </div>
+            </div>
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
           <h2>
-            <AccordionButton className="border-2 bg-orange-300 hover:bg-orange-400">
+            <AccordionButton className="bg-lightOrange hover:bg-darkOrange">
               <Box as="span" flex="1" textAlign="left" className="p-2">
                 <Text className="text-2xl">
                   [김호경의 Unity 정복하자 개발자의꿈] 3. 유니티 심화 개념
@@ -72,15 +84,21 @@ const ProfileLectureHistory: React.FC = () => {
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} className="bg-orange-200 border-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+          <AccordionPanel pb={4} className="p-3 bg-veryLightOrange">
+            <div className="grid grid-cols-2">
+              <div>
+                <h2 className=" text-2xl">강의 참여도</h2>
+                <text>dfdfdfffdf</text>
+              </div>
+              <div>
+                <h2 className="text-2xl">퀴즈 통계</h2>
+                <text>dfdfdfffdf</text>
+              </div>
+            </div>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </>
+    </div>
   );
 };
 
