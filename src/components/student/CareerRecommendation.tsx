@@ -8,12 +8,22 @@ import {
   Box,
   StackDivider,
 } from "@chakra-ui/react";
+import noteImage from "../../assets/noteImage.jpg";
+
 const CareerRecommendation: React.FC = () => {
   return (
-    <>
-      <Card className="rounded-lg flex justify-center">
+    <Box
+      className="relative flex justify-center items-center min-h-screen"
+      style={{
+        backgroundImage: `url(${noteImage})`,
+        backgroundSize: "100% 80%",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <Card className="p-6 max-w-xl">
         <CardHeader>
-          <h2 className="text-4xl text-center">AI 진로추천</h2>
+          <h2 className="text-4xl text-center text-lightNavy">AI 진로추천</h2>
         </CardHeader>
 
         <CardBody className="mt-4">
@@ -27,7 +37,7 @@ const CareerRecommendation: React.FC = () => {
           </Stack>
         </CardBody>
       </Card>
-    </>
+    </Box>
   );
 };
 

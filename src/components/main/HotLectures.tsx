@@ -80,9 +80,9 @@ export default function HotLectures() {
   ];
 
   return (
-    <section className="flex justify-center my-6">
+    <section className="flex justify-center py-6">
       <Box className="container mx-16 px-16">
-        <header className="m-3 text-4xl font-bold">
+        <header className="m-3 text-4xl text-lightNavy font-bold">
           <h1>요즘 뜨는 강의</h1>
         </header>
         <Box className="flex justify-center">
@@ -119,7 +119,7 @@ export default function HotLectures() {
           >
             {samples.map((sample, index) => (
               <SwiperSlide key={index}>
-                <Card className="m-3 border-2 rounded-xl overflow-hidden">
+                <Card className="m-3 bg-white rounded-xl shadow overflow-hidden">
                   <CardBody>
                     <Image
                       src={sample.image}
@@ -138,7 +138,7 @@ export default function HotLectures() {
                     <Button
                       variant="solid"
                       colorScheme="blue"
-                      className="p-2 hover:text-orange-400"
+                      className="p-2 text-lightNavy hover:text-hoverNavy"
                     >
                       자세히 보기
                     </Button>

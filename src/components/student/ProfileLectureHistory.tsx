@@ -12,11 +12,13 @@ import {
 const ProfileLectureHistory: React.FC = () => {
   return (
     <div className="m-6">
-      <h1 className="my-4 text-4xl font-bold">지난 강의 내역이에요!</h1>
-      <Accordion defaultIndex={[0]} allowMultiple>
-        <AccordionItem>
+      <h1 className="my-4 text-4xl text-lightNavy font-bold">
+        지난 강의 내역이에요!
+      </h1>
+      <Accordion className="shadow-lg" defaultIndex={[0]} allowMultiple>
+        <AccordionItem className="rounded-lg">
           <h2>
-            <AccordionButton className="bg-lightOrange hover:bg-darkOrange">
+            <AccordionButton className="bg-hardBeige hover:bg-darkerBeige">
               <Box as="span" flex="1" textAlign="left" className="p-2">
                 <Text className="text-2xl">
                   [김호경의 Unity 정복하자 개발자의꿈] 1. 개발환경 세팅
@@ -28,7 +30,7 @@ const ProfileLectureHistory: React.FC = () => {
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} className="p-3 bg-veryLightOrange">
+          <AccordionPanel pb={4} className="p-3 bg-white">
             <div className="grid grid-cols-2">
               <div>
                 <h2 className=" text-2xl">강의 참여도</h2>
@@ -44,7 +46,7 @@ const ProfileLectureHistory: React.FC = () => {
 
         <AccordionItem>
           <h2>
-            <AccordionButton className="bg-lightOrange hover:bg-darkOrange">
+            <AccordionButton className="bg-hardBeige hover:bg-darkerBeige">
               <Box as="span" flex="1" textAlign="left" className="p-2">
                 <Text className="text-2xl">
                   [김호경의 Unity 정복하자 개발자의꿈] 2. 유니티 핵심 개념
@@ -56,7 +58,7 @@ const ProfileLectureHistory: React.FC = () => {
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} className="p-3 bg-veryLightOrange">
+          <AccordionPanel pb={4} className="p-3 bg-white">
             <div className="grid grid-cols-2">
               <div>
                 <h2 className=" text-2xl">강의 참여도</h2>
@@ -71,7 +73,7 @@ const ProfileLectureHistory: React.FC = () => {
         </AccordionItem>
         <AccordionItem>
           <h2>
-            <AccordionButton className="bg-lightOrange hover:bg-darkOrange">
+            <AccordionButton className="bg-hardBeige hover:bg-darkerBeige">
               <Box as="span" flex="1" textAlign="left" className="p-2">
                 <Text className="text-2xl">
                   [김호경의 Unity 정복하자 개발자의꿈] 3. 유니티 심화 개념
@@ -84,7 +86,7 @@ const ProfileLectureHistory: React.FC = () => {
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} className="p-3 bg-veryLightOrange">
+          <AccordionPanel pb={4} className="p-3 bg-white">
             <div className="grid grid-cols-2">
               <div>
                 <h2 className=" text-2xl">강의 참여도</h2>
