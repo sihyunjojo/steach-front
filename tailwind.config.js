@@ -10,6 +10,8 @@ export default {
         lineseed: ["lineseed", "sans-serif"],
       },
       colors: {
+        hoverNavy: "#36425F",
+        lightNavy: "#536493",
         ivory: "#FFFFF0",
         lightBeige: "#F5F5DC",
         lightPink: "#FFB6C1",
@@ -26,6 +28,9 @@ export default {
         lightOrange: "#FFB74D",
         veryLightOrange: "#FFF3E0",
         darkOrange: "#FF9800",
+        Beige: "#FFF1DB",
+        hardBeige: "#D4BDAC",
+        darkerBeige: "#B29C89",
       },
     },
   },

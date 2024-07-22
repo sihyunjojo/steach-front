@@ -1,51 +1,70 @@
 import React, { useState } from "react";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+// 김헌규 - tostify 추가
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+// 김헌규 - 기존 자바스크립트 방식의 코드를 타입스크립트 방식으로 수정 후 핸들러 함수를 줄였음.
 const UpdateMyInfo: React.FC = () => {
-  // 비밀번호 확인 Input 상태 및 핸들러 함수
-  const [inputPassword, setInputPassword] = useState("");
-
-  function handleInputPassword(event: any) {
-    setInputPassword(event.target.value);
-  }
-
-  // 비밀번호 확인 상태
-  const [checkPassword, setCheckPassword] = useState(false);
-
-  // 현재 비밀번호 일치 여부 핸들러 함수
-  function handleCheckPassword(event: any) {
-    if (event.key === "Enter" || event.type === "click") {
-      if (inputPassword === password) {
-        setCheckPassword((prev) => !prev);
-      }
-    }
-  }
-
-  // 닉네임 상태 및 핸들러 함수
-  const [nickNameUpdate, setNickNameUpdate] = useState("");
-
-  function handleNickNameUpdate(event: any) {
-    setNickNameUpdate(event.target.value);
-  }
-
-  // 비밀번호 변경 Input 상태 및 핸들러 함수
-  const [passwordUpdateInput, setPasswordUpdateInput] = useState("");
-
-  function handlePasswordUpdate(event: any) {
-    setPasswordUpdateInput(event.target.value);
-  }
-
-  // 비밀번호 변경 확인 Input 상태 및 핸들러 함수
-  const [updatePasswordCheckInput, setUpdatePasswordCheckInput] = useState("");
-
-  function handlePasswordUpdateCheck(event: any) {
-    setUpdatePasswordCheckInput(event.target.value);
+  interface FormData {
+    nickName: string;
+    password: string;
+    confirmPassword: string;
   }
 
   const password = "1q2w3e4r";
+  // 비밀번호 확인 상태
+  const [checkPassword, setCheckPassword] = useState(false);
+  const [inputPassword, setInputPassword] = useState("");
+
+  // interface로 생성된 FormData 객체의 정보에 대한 입력을 업데이트 하는 상태 및 함수
+  const [formData, setFormData] = useState<FormData>({
+    nickName: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // 비밀번호 확인 핸들러 함수
+  function handleInputPassword(event: React.ChangeEvent<HTMLInputElement>) {
+    setInputPassword(event.target.value);
+  }
+
+  // 현재 비밀번호 일치 여부 핸들러 함수
+  function handleCheckPassword(
+    event:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLButtonElement>
+  ) {
+    if (
+      event.type === "click" ||
+      (event.type === "keydown" &&
+        (event as React.KeyboardEvent<HTMLInputElement>).key === "Enter")
+    ) {
+      if (inputPassword === password) {
+        setCheckPassword(true);
+        toast.success("비밀번호가 정상적으로 일치합니다!", {
+          position: "top-center",
+        });
+      } else {
+        toast.error("비밀번호가 일치하지 않습니다!", {
+          position: "top-center",
+        });
+      }
+    }
+  }
+  // Form 객체의 정보에 대한 입력을 업데이트 하는 핸들러 함수
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="flex justify-center">
+      <ToastContainer />
       {!checkPassword && (
         <div className="flex flex-col items-center mt-24">
           <h1 className="text-4xl m-2">비밀번호 확인</h1>
@@ -68,33 +87,38 @@ const UpdateMyInfo: React.FC = () => {
         </div>
       )}
       {checkPassword && (
-        <div className="border-2 rounded-xl p-6 mt-12">
+        <div className="w-7/8 border-2 rounded-xl border-hardBeige p-6 mt-12">
           <FormControl>
-            <h1 className="text-center text-4xl my-2 p-2">내정보 수정</h1>
+            <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">
+              내정보 수정
+            </h1>
             <div className="my-4 p-2">
               <FormLabel className="text-2xl">닉네임</FormLabel>
               <Input
+                name="nickName"
                 type="text"
-                value={nickNameUpdate}
-                onChange={handleNickNameUpdate}
+                value={formData.nickName}
+                onChange={handleChange}
                 className="border-2 rounded-lg p-2"
               />
             </div>
             <div className="my-4 p-2">
               <FormLabel className="text-2xl">비밀번호 변경</FormLabel>
               <Input
+                name="password"
                 type="password"
-                value={passwordUpdateInput}
-                onChange={handlePasswordUpdate}
+                value={formData.password}
+                onChange={handleChange}
                 className="border-2 rounded-lg p-2"
               />
             </div>
             <div className="my-4 p-2">
               <FormLabel className="text-2xl">비밀번호 변경 확인</FormLabel>
               <Input
+                name="confirmPassword"
                 type="password"
-                value={updatePasswordCheckInput}
-                onChange={handlePasswordUpdateCheck}
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 className="border-2 rounded-lg p-2"
               />
             </div>
@@ -107,5 +131,4 @@ const UpdateMyInfo: React.FC = () => {
     </div>
   );
 };
-
 export default UpdateMyInfo;

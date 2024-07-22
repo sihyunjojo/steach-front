@@ -20,7 +20,7 @@ const HomePageCarousel: React.FC = () => {
         disableOnInteraction: false,
       }}
       modules={[Autoplay, Navigation]}
-      className="mySwiper w-full h-[30rem]"
+      className="mySwiper w-full h-[20rem]"
       speed={1800}
     >
       <SwiperSlide>

@@ -24,15 +24,18 @@ const ProfilePage: React.FC = () => {
     setSelectedTab(tab);
   };
   return (
-    <Box flex="3" className="p-2 shadow">
+    <Box flex="3" className="p-2 bg-Beige shadow">
       <Tabs orientation="vertical">
         <Flex>
-          <TabList className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5  min-h-screen">
+          <TabList
+            className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5  min-h-screen"
+            sx={{ borderRight: "2px solid #D4BDAC" }}
+          >
             <Tab
               className={`my-2 text-lg p-3 sticky top-[4rem] ${
                 selectedTab === 0
-                  ? "bg-orange-300 text-white rounded-3xl"
-                  : "hover:text-orange-300"
+                  ? "bg-orange-200 text-white rounded-3xl"
+                  : "text-lightNavy hover:text-hoverNavy"
               } flex-col`}
               onClick={() => handleTabClick(0)}
             >
@@ -42,8 +45,8 @@ const ProfilePage: React.FC = () => {
             <Tab
               className={`my-2 text-lg p-3 sticky top-[11rem] ${
                 selectedTab === 1
-                  ? "bg-orange-300 text-white rounded-3xl"
-                  : "hover:text-orange-300"
+                  ? "bg-orange-200 text-white rounded-3xl"
+                  : "text-lightNavy hover:text-hoverNavy"
               } flex-col`}
               onClick={() => handleTabClick(1)}
             >
@@ -53,8 +56,8 @@ const ProfilePage: React.FC = () => {
             <Tab
               className={`my-2 text-lg p-3 sticky top-[18rem] ${
                 selectedTab === 2
-                  ? "bg-orange-300 text-white rounded-3xl"
-                  : "hover:text-orange-300"
+                  ? "bg-orange-200 text-white rounded-3xl"
+                  : "text-lightNavy hover:text-hoverNavy"
               } flex-col`}
               onClick={() => handleTabClick(2)}
             >
@@ -64,8 +67,8 @@ const ProfilePage: React.FC = () => {
             <Tab
               className={`my-2 text-lg p-3 sticky top-[25rem] ${
                 selectedTab === 3
-                  ? "bg-orange-300 text-white rounded-3xl"
-                  : "hover:text-orange-300"
+                  ? "bg-orange-200 text-white rounded-3xl"
+                  : "text-lightNavy hover:text-hoverNavy"
               } flex-col`}
               onClick={() => handleTabClick(3)}
             >
@@ -82,7 +85,7 @@ const ProfilePage: React.FC = () => {
               <ProfileLectureHistory />
             </TabPanel>
             <TabPanel>
-              <div className="flex justify-center">
+              <div className="grid grid-cols-2 divide-x-2 divide-hardBeige">
                 <MyLecturePreference />
                 <CareerRecommendation />
               </div>

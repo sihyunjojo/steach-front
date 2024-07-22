@@ -92,7 +92,7 @@ const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
   return (
     <section className="flex justify-center my-6">
       <Box className="container mx-10 px-6">
-        <header className="font-bold m-3">
+        <header className="text-lightNavy font-bold m-3">
           <h1 className="sm:text-sm md:text-xl lg:text-3xl xl:text-4xl">
             {title}
           </h1>
@@ -122,7 +122,7 @@ const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
           >
             {samples.map((sample, index) => (
               <SwiperSlide key={index}>
-                <Card className="border-2 rounded-lg m-3">
+                <Card className="m-3 bg-white rounded-lg shadow overflow-hidden">
                   <CardBody>
                     <Image
                       src={sample.image}

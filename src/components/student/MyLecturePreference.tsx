@@ -66,24 +66,28 @@ const options = {
     },
   },
 };
+import noteImage from "../../assets/noteImage.jpg";
 
 const MyLecturePreference: React.FC = () => {
   return (
-    <>
-      <Card className="w-3/4 h-full my-6 p-5 flex justify-center">
-        <CardHeader>
-          <h2 className="text-4xl text-center">나의 수업 선호도</h2>
+    <Box
+      className="flex flex-col justify-center items-center"
+      style={{
+        backgroundImage: `url(${noteImage})`,
+        backgroundSize: "100% 80%",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <Card className="w-full h-4/8 p-4">
+        <CardHeader className="text-center">
+          <h2 className="text-4xl text-lightNavy">나의 수업 선호도</h2>
         </CardHeader>
-
-        <CardBody className="w-full h-96 relative">
-          <Stack divider={<StackDivider />} spacing="4" className="text-center">
-            <Box>
-              <Radar data={data} options={options} />
-            </Box>
-          </Stack>
+        <CardBody className="flex justify-center items-center h-full">
+          <Radar data={data} options={options} />
         </CardBody>
       </Card>
-    </>
+    </Box>
   );
 };
 

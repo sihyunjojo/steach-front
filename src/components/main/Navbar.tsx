@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logoImage from "../../assets/LOGO.png";
+import logoImage from "../../assets/LOGO.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="flex flex-wrap items-center justify-between bg-white border-b-2 p-2">
+    <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
       {/* Navbar 로고 */}
       <Link to={"/"}>
         <div className="w-28 ml-4">
@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
           <input
             type="text"
             placeholder="나의 성장을 도와줄 강의를 검색해보세요."
-            className="border-2 w-full h-10 rounded-md p-2"
+            className="p-2 border-2 w-full h-10 rounded-md border-hardBeige"
           />
           <button className="absolute right-3 inset-y-2 hover:text-orange-300">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="size-6" />
@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
       {/* 로그인 및 회원가입 버튼 */}
       <div className="hidden mr-3 lg:flex items-center ml-4 lg:ml-0">
         <button
-          className="border-2 p-2 rounded-md w-auto ml-2"
+          className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
           onClick={() => {
             navigate("/user/login");
           }}
@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
           로그인
         </button>
         <button
-          className="text-white bg-red-400 border-2 p-2 rounded-md hover:bg-red-500 w-auto ml-2"
+          className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
           onClick={() => {
             navigate("/user/signup");
           }}
@@ -109,7 +109,7 @@ const Navbar: React.FC = () => {
 
           <div className="flex flex-col items-center mt-4 mx-2">
             <button
-              className="border-2 p-2 rounded-md w-full mb-2"
+              className="w-full mb-2 p-2 border-2 border-hardBeige rounded-md"
               onClick={() => {
                 navigate("/user/login");
               }}

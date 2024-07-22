@@ -88,9 +88,9 @@ const LatestLectures: React.FC = () => {
   ];
 
   return (
-    <section className="flex justify-center my-6">
+    <section className="flex justify-center py-6">
       <Box className="container mx-16 px-16">
-        <header className="text-4xl font-bold m-3">
+        <header className="text-4xl text-lightNavy font-bold m-3">
           <h1>최근 등록된 강의</h1>
         </header>
         <Box className="flex justify-center">
@@ -127,7 +127,7 @@ const LatestLectures: React.FC = () => {
           >
             {samples.map((sample, index) => (
               <SwiperSlide key={index}>
-                <Card className="m-3 border-2 rounded-xl overflow-hidden">
+                <Card className="m-3 bg-white rounded-xl shadow overflow-hidden">
                   <CardBody>
                     <Image
                       src={sample.image}
@@ -144,7 +144,7 @@ const LatestLectures: React.FC = () => {
                     <Button
                       variant="solid"
                       colorScheme="blue"
-                      className="p-2 hover:text-orange-400"
+                      className="p-2 text-lightNavy hover:text-hoverNavy"
                     >
                       자세히 보기
                     </Button>

@@ -71,7 +71,7 @@ const TeacherUpdateMyInfo: React.FC = () => {
               type="password"
               placeholder="비밀번호를 입력해주세요."
               className="w-full text-base p-2"
-              value={formData.password}
+              value={inputPassword}
               onChange={handleInputPassword}
               onKeyDown={handleCheckPassword}
             />
