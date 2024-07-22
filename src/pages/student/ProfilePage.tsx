@@ -14,8 +14,8 @@ import { FaPencilAlt, FaHistory } from "react-icons/fa";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
 import MyLecturePreference from "../../components/student/MyLecturePreference";
 import CareerRecommendation from "../../components/student/CareerRecommendation";
-import SchduledLectures from "../../components/student/MyLecture";
 import UpdateMyInfo from "../../components/student/UpdateMyInfo";
+import ScheduledLectures from "../../components/student/MyLecture";
 
 const ProfilePage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -79,7 +79,7 @@ const ProfilePage: React.FC = () => {
 
           <TabPanels className="p-3">
             <TabPanel>
-              <SchduledLectures />
+              <ScheduledLectures />
             </TabPanel>
             <TabPanel>
               <ProfileLectureHistory />
