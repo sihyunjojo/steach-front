@@ -46,11 +46,11 @@ const LectureReport: React.FC = () => {
               <p className="p-3">맞춘 갯수 평균 : 9.3개</p>
             </div>
           </section>
-          <section className="my-4">
+          <section className="mt-10">
             <h1 className="mx-3 text-4xl text-lightNavy font-bold">
               개별 통계
             </h1>
-            <div className="grid lg:grid-rows-1 xl:grid-rows-1">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl: gap-4">
               <div className="mx-3 my-4 p-4 bg-white rounded-md shadow-md">
                 <p>학생 이름(student_id) 조시현</p>
                 <p>수업참여도(focus_ratio) 90%</p>
@@ -63,18 +63,19 @@ const LectureReport: React.FC = () => {
                 <p>퀴즈 점수(quiz_total_score) 950</p>
                 <p>퀴즈 점수(quiz_answer_count) 9/10</p>
               </div>
-            </div>
-            <div className="mx-3 my-4 p-4 bg-white rounded-md shadow-md">
-              <p>학생 이름(student_id) 조시현</p>
-              <p>수업참여도(focus_ratio) 90%</p>
-              <p>퀴즈 점수(quiz_total_score) 950</p>
-              <p>퀴즈 점수(quiz_answer_count) 9/10</p>
-            </div>
-            <div className="mx-3 my-4 p-4 bg-white rounded-md shadow-md">
-              <p>학생 이름(student_id) 조시현</p>
-              <p>수업참여도(focus_ratio) 90%</p>
-              <p>퀴즈 점수(quiz_total_score) 950</p>
-              <p>퀴즈 점수(quiz_answer_count) 9/10</p>
+
+              <div className="mx-3 my-4 p-4 bg-white rounded-md shadow-md">
+                <p>학생 이름(student_id) 조시현</p>
+                <p>수업참여도(focus_ratio) 90%</p>
+                <p>퀴즈 점수(quiz_total_score) 950</p>
+                <p>퀴즈 점수(quiz_answer_count) 9/10</p>
+              </div>
+              <div className="mx-3 my-4 p-4 bg-white rounded-md shadow-md">
+                <p>학생 이름(student_id) 조시현</p>
+                <p>수업참여도(focus_ratio) 90%</p>
+                <p>퀴즈 점수(quiz_total_score) 950</p>
+                <p>퀴즈 점수(quiz_answer_count) 9/10</p>
+              </div>
             </div>
           </section>
         </main>
