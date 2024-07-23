@@ -7,6 +7,7 @@ import {
   TabPanel,
   Box,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
 import { FaPencilAlt, FaHistory } from "react-icons/fa";
@@ -22,11 +23,11 @@ const ProfilePage: React.FC = () => {
     setSelectedTab(tab);
   };
   return (
-    <Box flex="3" className="p-2 bg-Beige shadow">
+    <Box flex="3" className="p-2 bg-Beige shadow relative">
       <Tabs orientation="vertical">
         <Flex>
           <TabList
-            className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5  min-h-screen"
+            className="w-52 border-r-2 font-semibold flex flex-col align-middle items-center p-5 min-h-screen"
             sx={{ borderRight: "2px solid #D4BDAC" }}
           >
             <Tab
@@ -53,14 +54,19 @@ const ProfilePage: React.FC = () => {
             </Tab>
             <Tab
               className={`my-2 text-lg p-3 sticky top-[18rem] ${
-                selectedTab === 3
+                selectedTab === 2
                   ? "bg-orange-200 text-white rounded-3xl"
                   : "text-lightNavy hover:text-hoverNavy"
               } flex-col`}
-              onClick={() => handleTabClick(3)}
+              onClick={() => handleTabClick(2)}
             >
               <CgProfile className="size-8 my-2" />
               <h2>내 정보</h2>
+            </Tab>
+            <Tab className="my-2 text-lg p-3 sticky top-[25rem] flex-col">
+              <Button className="p-3 bg-red-200 rounded-md shadow-md text-white hover:bg-red-300">
+                교실 생성
+              </Button>
             </Tab>
           </TabList>
 

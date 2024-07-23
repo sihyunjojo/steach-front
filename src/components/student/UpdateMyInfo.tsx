@@ -68,11 +68,11 @@ const UpdateMyInfo: React.FC = () => {
       {!checkPassword && (
         <div className="flex flex-col items-center mt-24">
           <h1 className="text-4xl m-2">비밀번호 확인</h1>
-          <div className="border-2 rounded-xl w-96 relative m-2">
+          <div className="w-96 relative m-2">
             <input
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              className="w-full text-base p-2"
+              className="p-2 w-full text-base border-2 rounded-xl border-hardBeige"
               value={inputPassword}
               onChange={handleInputPassword}
               onKeyDown={handleCheckPassword}

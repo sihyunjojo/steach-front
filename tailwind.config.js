@@ -15,7 +15,6 @@ export default {
         ivory: "#FFFFF0",
         lightBeige: "#F5F5DC",
         lightPink: "#F4A3AF",
-        pink: "#EF5A6F",
         pastelBlue: "#AEC6CF",
         darkGray: "#A9A9A9",
         darkNavy: "#000080",
