@@ -1,3 +1,5 @@
+# 파일 구조 및 진행 상황
+```xml
 project/
 ├── src/
 │   ├── components/
@@ -56,3 +58,4 @@ project/
 │       └── teacherSlice.tsx                                              - 작업중(axios)  
 ├── store.tsx                            # 스토어                          - 작업중
 └── tests/
+```

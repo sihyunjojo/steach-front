@@ -87,9 +87,9 @@ const samples: Sample[] = [
 const TodayLecture: React.FC = () => {
   return (
     <section className="flex justify-center my-6">
-      <Box className="container mx-16 px-16">
-        <header className="font-bold m-3">
-          <h1 className="sm:text-sm md:text-2xl lg:text-4xl xl:text-5xl">
+      <Box className="container mx-10 px-6">
+        <header className="text-lightNavy font-bold m-3">
+          <h1 className="sm:text-sm md:text-xl lg:text-3xl xl:text-4xl">
             오늘의 강의
           </h1>
         </header>
@@ -105,7 +105,7 @@ const TodayLecture: React.FC = () => {
                 slidesPerView: 1,
               },
               768: {
-                slidesPerView: 1,
+                slidesPerView: 2,
               },
               1024: {
                 slidesPerView: 2,
@@ -118,7 +118,7 @@ const TodayLecture: React.FC = () => {
           >
             {samples.map((sample, index) => (
               <SwiperSlide key={index}>
-                <Card className="border-2 rounded-lg m-3">
+                <Card className="m-3 bg-white rounded-lg shadow overflow-hidden">
                   <CardBody>
                     <Image
                       src={sample.image}
@@ -126,7 +126,7 @@ const TodayLecture: React.FC = () => {
                       borderRadius="lg"
                     />
                     <Stack mt="6" spacing="3" className="p-2">
-                      <Heading className="font-bold text-3xl">
+                      <Heading className="font-bold text-2xl">
                         {sample.title}
                       </Heading>
                       <Text>{sample.time}</Text>

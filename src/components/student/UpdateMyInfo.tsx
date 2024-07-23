@@ -63,7 +63,7 @@ const UpdateMyInfo: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div>
       <ToastContainer />
       {!checkPassword && (
         <div className="flex flex-col items-center mt-24">
@@ -87,42 +87,51 @@ const UpdateMyInfo: React.FC = () => {
         </div>
       )}
       {checkPassword && (
-        <div className="w-7/8 border-2 rounded-xl border-hardBeige p-6 mt-12">
+        <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 mt-12 mx-auto">
           <FormControl>
             <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">
               내정보 수정
             </h1>
             <div className="my-4 p-2">
-              <FormLabel className="text-2xl">닉네임</FormLabel>
+              <FormLabel className="my-2 text-2xl text-lightNavy">
+                닉네임
+              </FormLabel>
               <Input
+                required
                 name="nickName"
                 type="text"
                 value={formData.nickName}
                 onChange={handleChange}
-                className="border-2 rounded-lg p-2"
+                className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="text-2xl">비밀번호 변경</FormLabel>
+              <FormLabel className="my-2 text-2xl text-lightNavy">
+                비밀번호 변경
+              </FormLabel>
               <Input
+                required
                 name="password"
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="border-2 rounded-lg p-2"
+                className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="text-2xl">비밀번호 변경 확인</FormLabel>
+              <FormLabel className="my-2 text-2xl text-lightNavy">
+                비밀번호 변경 확인
+              </FormLabel>
               <Input
+                required
                 name="confirmPassword"
                 type="password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="border-2 rounded-lg p-2"
+                className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
-            <button className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white">
+            <button className="w-full text-center bg-red-400 p-2 rounded-lg hover:bg-red-500 hover:text-white">
               변경하기
             </button>
           </FormControl>
