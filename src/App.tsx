@@ -14,7 +14,10 @@ import { AppDispatch } from "./store";
 import TeacherProfilePage from "./pages/teacher/MyRoomPage.tsx";
 import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
 import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
-
+import CurriculumList from "./components/teacher/CurriculumList.tsx";
+import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
+import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
+import LectureReport from "./components/teacher/LectureReport.tsx";
 
 // 이진송 해당 부분 import 불필요한거 추후에 정리 할 것이니 조금만 참아주세요
 //  아래 dispatch는 처음 데이터 로딩을 위해 필요하므로, 지우지 말아주세요
@@ -36,12 +39,24 @@ const App: React.FC = () => {
         <Route path="/JosihyeonTest" element={<LectureSignUpPage />}></Route>
         <Route path="/teacher/profile" element={<TeacherProfilePage />}></Route>
         <Route
+          path="/teacher/profile/lecture"
+          element={<CurriculumList />}
+        ></Route>
+        <Route
           path="/teacher/profiledetail"
           element={<MyInfoDetailPage />}
         ></Route>
         <Route
           path="/teacher/profiledetail/update"
           element={<MyInfoDetailUpdate />}
+        ></Route>
+        <Route
+          path="/teacher/profile/lecture/createQuiz"
+          element={<CreateQuiz />}
+        ></Route>
+        <Route
+          path="/teacher/profile/lecture/lectureReport"
+          element={<LectureReport />}
         ></Route>
       </Routes>
       <Footer />
