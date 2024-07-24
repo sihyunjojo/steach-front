@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import lecturesReducer from "./store/lecturesSlice";
-import AuthReducer from "./store/AuthSlice.tsx";
+import userReducer from "./store/AuthSlice.tsx";
 
 // 중앙 스토어 설정
 const store = configureStore({
   reducer: {
     lectures: lecturesReducer,
-    authentication: AuthReducer,
+    authentication: userReducer,
   },
 });
 

@@ -1,45 +1,100 @@
-import { Slice, createSlice } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  configureStore,
+} from "@reduxjs/toolkit";
 import axios from "axios";
-// 타입 정의
-export interface AuthState {
+
+// 유저 폼 데이터 형식
+interface UserFormData {
+  userId: string;
+  password: string;
+  name: string;
+  email: string;
+  authCode: string;
+}
+
+// 인증 및 토큰 형식
+interface AuthState {
   isAuthenticated: boolean;
   token: string;
 }
 
-// 초기 상태 정의
-export const initialAuthState: AuthState = {
-  isAuthenticated: false,
-  token: "",
+// 유저 상태 형식
+export interface UserState {
+  auth: AuthState | null;
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+}
+
+// 초기 상태
+export const initialState: UserState = {
+  auth: null,
+  status: "idle",
+  error: null,
 };
 
-// Slice 생성
-const authSlice: Slice<AuthState> = createSlice({
-  name: "authentication",
-  initialState: initialAuthState,
-  // 로그인 로그아웃 axios 요청
-  reducers: {
-    // 로그인
-    login(info) {
-      const data = {
-        username: info.username,
-        password: info.password,
+// createAsyncThunk 첫번째 인수 Returned - 비동기 작업이 성공적으로 완료된 후 반환되는 값의 타입
+// 두번째 인수 ThunkArg - 비동기 작업을 시작할 때 액션 생성 함수에 전달되는 인수의 타입.
+// 회원 가입
+export const signUpUser = createAsyncThunk<AuthState, UserFormData>(
+  "AuthSlice/signUp",
+  async (userFormData, thunkAPI) => {
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("username", userFormData.userId);
+      formDataToSend.append("password", userFormData.password);
+      formDataToSend.append("name", userFormData.name);
+      formDataToSend.append("email", userFormData.email);
+      formDataToSend.append("auth_code", userFormData.authCode);
+
+      const response = await axios.post(
+        "http://43.202.1.52:8080/api/v1/student/join",
+        formDataToSend
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // }
+      );
+
+      const token = response.data.token;
+
+      const data: AuthState = {
+        isAuthenticated: true,
+        token: token,
       };
 
-      axios
-        .post("http://43.202.1.52:8080/api/v1/login", data)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    logout() {
-      initialAuthState.isAuthenticated = false;
-      initialAuthState.token = "";
-    },
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 로그인
+
+const userSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(signUpUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signUpUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.auth = action.payload;
+      })
+      .addCase(signUpUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || null;
+      });
   },
 });
 
-export const authActions = authSlice.actions;
-export default authSlice.reducer;
+export default userSlice.reducer;
