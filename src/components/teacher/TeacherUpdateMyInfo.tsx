@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { useState } from "react";
 // 김헌규 - tostify 추가
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // 김헌규 - 기존 자바스크립트 방식의 코드를 타입스크립트 방식으로 수정 후 핸들러 함수를 줄였음.
+// 김헌규 - 입력 폼 크기 조정 및 항목 수정 완료
 const UpdateMyInfo: React.FC = () => {
   interface FormData {
-    nickName: string;
-    password: string;
-    confirmPassword: string;
+    name: string;
+    passwordChange: string;
+    confirmPasswordChange: string;
+    email: string;
+    lectureField: string;
+    educationalBackground: string;
+    introduce: string;
   }
 
   const password = "1q2w3e4r";
@@ -19,9 +23,13 @@ const UpdateMyInfo: React.FC = () => {
 
   // interface로 생성된 FormData 객체의 정보에 대한 입력을 업데이트 하는 상태 및 함수
   const [formData, setFormData] = useState<FormData>({
-    nickName: "",
-    password: "",
-    confirmPassword: "",
+    name: "",
+    passwordChange: "",
+    confirmPasswordChange: "",
+    email: "",
+    lectureField: "",
+    educationalBackground: "",
+    introduce: "",
   });
 
   // 비밀번호 확인 핸들러 함수
@@ -89,97 +97,87 @@ const UpdateMyInfo: React.FC = () => {
       {/* 이름, 이메일, 비밀번호, 비밀번호 변경 확인, 강사 소개, 강의 분야, 학력 */}
       {checkPassword && (
         <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 mt-12 mx-auto">
-          <FormControl>
+          <form>
             <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">
               내정보 수정
             </h1>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
-                이름
-              </FormLabel>
-              <Input
+              <label className="my-2 text-2xl text-lightNavy">이름</label>
+              <input
                 required
-                name="nickName"
+                name="name"
                 type="text"
-                value={formData.nickName}
+                value={formData.name}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
+              <label className="my-2 text-2xl text-lightNavy">
                 비밀번호 변경
-              </FormLabel>
-              <Input
+              </label>
+              <input
                 required
-                name="password"
+                name="passwordChange"
                 type="password"
-                value={formData.password}
+                value={formData.passwordChange}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
+              <label className="my-2 text-2xl text-lightNavy">
                 비밀번호 변경 확인
-              </FormLabel>
-              <Input
+              </label>
+              <input
                 required
-                name="confirmPassword"
+                name="confirmPasswordChange"
                 type="password"
-                value={formData.confirmPassword}
+                value={formData.confirmPasswordChange}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
-                이메일
-              </FormLabel>
-              <Input
+              <label className="my-2 text-2xl text-lightNavy">이메일</label>
+              <input
                 required
-                name="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
+                name="email"
+                type="email"
+                value={formData.email}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
-                강의분야
-              </FormLabel>
-              <Input
+              <label className="my-2 text-2xl text-lightNavy">강의분야</label>
+              <input
                 required
-                name="confirmPassword"
+                name="lectureField"
                 type="password"
-                value={formData.confirmPassword}
+                value={formData.lectureField}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
-                학력
-              </FormLabel>
-              <Input
+              <label className="my-2 text-2xl text-lightNavy">학력</label>
+              <input
                 required
-                name="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
+                name="educationalBackground"
+                type="file"
+                value={formData.educationalBackground}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
             </div>
             <div className="my-4 p-2">
-              <FormLabel className="my-2 text-2xl text-lightNavy">
-                자기소개
-              </FormLabel>
-              <Input
+              <label className="my-2 text-2xl text-lightNavy">자기소개</label>
+              <input
                 required
-                name="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
+                name="introduce"
+                type="text"
+                value={formData.introduce}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg border-hardBeige"
               />
@@ -187,7 +185,7 @@ const UpdateMyInfo: React.FC = () => {
             <button className="w-full text-center bg-red-400 p-2 rounded-lg hover:bg-red-500 hover:text-white">
               변경하기
             </button>
-          </FormControl>
+          </form>
         </div>
       )}
     </div>
