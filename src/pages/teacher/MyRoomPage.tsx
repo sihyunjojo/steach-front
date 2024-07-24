@@ -14,11 +14,13 @@ import { FaPencilAlt, FaHistory } from "react-icons/fa";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
 import MyLecture from "../../components/teacher/MyLecture";
 import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
+import { useNavigate } from 'react-router-dom';
 
 // 선생님 페이지
 const ProfilePage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
+  const navigate = useNavigate();
   const handleTabClick = (tab: number) => {
     setSelectedTab(tab);
   };
@@ -64,7 +66,10 @@ const ProfilePage: React.FC = () => {
               <h2>내 정보</h2>
             </Tab>
             <Tab className="my-2 text-lg p-3 sticky top-[25rem] flex-col">
-              <Button className="p-3 bg-red-200 rounded-md shadow-md text-white hover:bg-red-300">
+              <Button 
+                onClick={() => {navigate('/lecture/signup')}}
+                className="p-3 bg-red-200 rounded-md shadow-md text-white hover:bg-red-300"
+              >
                 교실 생성
               </Button>
             </Tab>
