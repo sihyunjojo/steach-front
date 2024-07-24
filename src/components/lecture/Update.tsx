@@ -226,9 +226,9 @@ const LectureUpdate: React.FC = () => {
             </div>
             <hr className='my-3'></hr>
             <FormLabel htmlFor="datetime" className="mt-3 mx-3 text-2xl">수업 요일</FormLabel>
-            <div>
+            <div className='flex justify-center'>
               {Object.keys(WEEKDAY_VALUES).map((day) => (
-                <label key={day} className="flex items-center">
+                <label key={day}>
                   <img
                     src={activeDays[day] ? checkimg : uncheckimg}
                     onClick={() => handleCheckboxChange(day)}
