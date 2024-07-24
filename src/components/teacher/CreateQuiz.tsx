@@ -1,180 +1,218 @@
-import React, { useState } from 'react';
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-
+import React, { useState } from "react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button
+} from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 // 퀴즈 생성 컴포넌트
 const CreateQuiz: React.FC = () => {
+
   interface QuizData {
     // 수업 고유 ID
-    lectureId: number,
+    lectureId: number;
     // 퀴즈 번호
-    quizNumber: number,
+    quizNumber: number;
     // 퀴즈 문제 내용
-    question: string,
+    question: string;
     // 퀴즈 정답 여부
-    isAnswer: number[],
+    isAnswer: number;
     // 퀴즈 선택지 문항(리스트)
-    choiceSentence: string[],
-    //   `lecture_id`  INTEGER(11)  NOT NULL,                -- 수업 고유 ID 1
-    //   `quiz_number` TINYINT(4)   NOT NULL,                -- 퀴즈 번호(몇 번째 퀴즈인지) 1
-    //   `question`    VARCHAR(255) NOT NULL, --퀴즈 문제 내용 1
-    //   `is_answer`       BIT(1)       NOT NULL,                -- 정답 여부(정답 : 1(true), 오답 : 0(false)) 1
-    //   `choice_sentence` VARCHAR(255) NOT NULL,                -- 선택지 문장(제공해야 하는 선택지들 내용) 1
-    
+    choiceSentence: string[];
+  }
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [tab, setTab] = useState<number>(1);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const [qui, setQui] = useState<QuizData[]>([
+    {
+      lectureId: 0, // params로 받을듯?
+      quizNumber: 1,
+      question: "",
+      isAnswer: 1,
+      choiceSentence: ['', '', '', ''],
+    }
+  ]);
+
+  const plusTab = () => {
+    const counTab = qui.length + 1;
+    if (counTab > 4) {
+      alert("최대4개"); return;
+    }
+    else {
+      setQui([
+        ...qui,
+        {
+          lectureId: 0, // params로 받을듯?
+          quizNumber: counTab,
+          question: "",
+          isAnswer: 1,
+          choiceSentence: ['', '', '', ''],
+        }
+      ])
+    }
   }
   
-  const [quizData, setQuizData] = useState<QuizData>({
-    lectureId: 0,
-    quizNumber: 0,
-    question: '',
-    isAnswer: [],
-    choiceSentence: [],
-  })
-  
-  const [tab, setTab] = useState(1)
-  
+  const handleSaveQuizzes = () => {
+    // axios 추가해야함
+    console.log(qui);
+  };
+  // handleChange, handleChoiceChange 아래 두 함수는 받은 값을 qui배열에 저장하는 역할, 특별한 이유 없이 수정x
+  const handleChange = (index: number, name: string, value: string | number) => {
+    const newQuizzes = [...qui];
+    newQuizzes[index] = { ...newQuizzes[index], [name]: value };
+    setQui(newQuizzes);
+  };
+
+  const handleChoiceChange = (quizIndex: number, choiceIndex: number, value: string) => {
+    const newQuizzes = [...qui];
+    newQuizzes[quizIndex].choiceSentence[choiceIndex] = value;
+    setQui(newQuizzes);
+  };
+
   return (
-    <div className="grid grid-cols-12 gap-4">
-      <div className="col-span-2 bg-blue-500">2/12</div>
-
-        <div className=" flex col-span-8 bg-green-500">
-          <div className="flex">
-          <button
-            onClick={() => setTab(1)}
-            className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${tab === 1 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`}>
-              Tab 1
-            </button>
-          <button
-          onClick={() => setTab(2)}
-          className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${tab === 2 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`}>
-              Tab 2
+    <div className="grid grid-cols-12 bg-Beige">
+      <div className="col-span-3"></div>
+      <div className=" flex col-span-6 p-4">
+        <div className="hidden lg:flex lg:flex-row lg:justify-between lg:ml-0 my-auto">
+          {
+            Array.from({ length: qui.length }, (a, i) => (
+              <div key={i}>
+                <button
+            onClick={() => setTab(i + 1)}
+            className={`text-gray-600 py-4 px-6 mt-3 block rounded-2xl focus:outline-none ${
+              tab === i + 1
+              ? "bg-orange-200 text-white rounded-2xl"
+              : "text-lightNavy hover:text-lightOrange"
+              }`}
+              >
+            Quiz {i+1}
           </button>
-          <button
-            onClick={() => setTab(3)}
-            className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${tab === 3 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`}>
-              Tab 3
-          </button>
-          <button
-              onClick={() => setTab(4)}
-              className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${tab === 4 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`}>
-              Tab 4
-            </button>
-          </div>
-        </div>
-      <div className="col-span-2 bg-red-500">2/12</div>
-      
-      <div className="col-span-2 bg-red-500">2/12</div>
-      <div className="col-span-8 bg-red-500">
-        <div className='p-4'>
-        <FormControl>
-        <FormLabel htmlFor="question" className="mt-3 mx-3 text-2xl ">문제 - question</FormLabel>
-          <Input 
-            type='text'
-            id='question'
-            name='question'
-            value={quizData.question}
-            // onChange={handleChange}
-            className="border-2 rounded-lg w-1/3 p-2 mt-3"
-            required
-            />
-        <FormLabel htmlFor="choiceSentence" className="mt-3 mx-3 text-2xl ">답 - choiceSentence</FormLabel>
-          <Input 
-            type='text'
-            id='choiceSentence1'
-            name='choiceSentence1'
-            value={quizData.question}
-            // onChange={handleChange}
-            className="border-2 rounded-lg w-1/3 p-2 mt-3"
-            required
-            />
-            <Input 
-              type='checkbox'
-              id='isAnswer1'
-              name='isAnswer1'
-              value={quizData.question}
-              // onChange={handleChange}
-              className="border-2 rounded-lg w-1/3 p-2 mt-3"
-              required
-              />
-          <Input 
-            type='text'
-            id='choiceSentence2'
-            name='choiceSentence2'
-            value={quizData.question}
-            // onChange={handleChange}
-            className="border-2 rounded-lg w-1/3 p-2 mt-3"
-            required
-            />
-            <Input 
-              type='checkbox'
-              id='isAnswer2'
-              name='isAnswer2'
-              value={quizData.question}
-              // onChange={handleChange}
-              className="border-2 rounded-lg w-1/3 p-2 mt-3"
-              required
-              />
-          <Input 
-            type='text'
-            id='choiceSentence3'
-            name='choiceSentence3'
-            value={quizData.question}
-            // onChange={handleChange}
-            className="border-2 rounded-lg w-1/3 p-2 mt-3"
-            required
-            />
-            <Input 
-              type='checkbox'
-              id='isAnswer3'
-              name='isAnswer3'
-              value={quizData.question}
-              // onChange={handleChange}
-              className="border-2 rounded-lg w-1/3 p-2 mt-3"
-              required
-              />
-          <Input 
-            type='text'
-            id='choiceSentence4'
-            name='choiceSentence4'
-            value={quizData.question}
-            // onChange={handleChange}
-            className="border-2 rounded-lg w-1/3 p-2 mt-3"
-            required
-            />
-          <Input 
-            type='checkbox'
-            id='isAnswer4'
-            name='isAnswer4'
-            value={quizData.question}
-            // onChange={handleChange}
-            className="border-2 rounded-lg w-1/3 p-2 mt-3"
-            required
-            />
-            </FormControl>
-          {tab === 1 &&
-            <div>1번임
-
             </div>
+            ))
           }
-          {tab === 2 && <div>2번임</div>}
-          {tab === 3 && <div>3번임</div>}
-          {tab === 4 && <div>4번임</div>}
-      {/* // 수업 고유 ID
-      lectureId: number,
-      // 퀴즈 번호
-      quizNumber: number,
-      // 퀴즈 문제 내용
-      question: string,
-      // 퀴즈 정답 여부 (리스트)
-      isAnswer: number[],
-      // 퀴즈 선택지 문항(리스트)
-      choiceSentence: string[], */}
+        </div>
+          <div className='hidden lg:flex lg:flex-row ml-auto mr-10 my-auto hover:text-lightOrange'>
+          <button onClick={plusTab} className="flex justify-end">
+            퀴즈 추가하기
+          </button>
+            </div>
+        {/* --------------------------------------------------------------- */}
+        {/* 모바일 메뉴 */}
+        {isMenuOpen && (
+          <div className="flex flex-grow p-4 lg:hidden">
+            <ul className="flex flex-col mx-auto text-lg font-bold mt-4">
+            {
+              Array.from({ length: qui.length }, (a, i) => (
+                <div key={i} className="w-full flex flex-col">
+                    <li className="p-2">
+                  <button
+                    onClick={() => setTab(i + 1)}
+                    className={`hover:text-orange-300 ${tab === i + 1
+                      ? ""
+                      : "text-lightNavy hover:text-lightOrange"
+                    }`}
+                    >
+                    Quiz {i + 1}
+                  </button>
+                    </li>
+                </div>
+              ))
+            }
+            <div className='flex items-center mx-auto hover:text-lightOrange'>
+              <button onClick={plusTab}>
+                퀴즈 추가하기
+              </button>
+            </div>
+            </ul>
           </div>
+        )}
+        {/* 햄버거 */}
+        <div className="ml-auto mt-5 lg:hidden">
+        <button onClick={toggleMenu} className="focus:outline-none">
+          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
+        </button>
       </div>
-      <div className="col-span-2 bg-red-500">2/12</div>
+        {/* --------------------------------------------------------------- */}
+      </div>
+      <div className="col-span-3"></div>
+      <div className="col-span-3"></div>
+      <div className="col-span-6 ">
+        <div className="p-4 flex justify-center">
+          {
+            qui.map((a, i) => {
+              return (
+                tab === i + 1 &&
+                <div
+                    key={i}
+                    className="w-full"
+                  >
+                <FormControl>
+                  <hr className="border-2 border-hardBeige"></hr>
+                  <FormLabel htmlFor="question" className="mt-3 mx-3 text-2xl ">
+                    퀴즈 문제를 입력하세요! - question
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    id="question"
+                    name="question"
+                    value={a.question}
+                    onChange={(e) => handleChange(i, 'question', e.target.value)}
+                    className="border-2 rounded-lg w-full p-2 mt-3"
+                    required
+                  />
+                  <FormLabel htmlFor="choiceSentence" className="mt-3 mx-3 text-2xl ">
+                    퀴즈 보기를 입력하세요! - choiceSentence
+                  </FormLabel>
+                    {a.choiceSentence.map((choice, choicei) => (
+                    <div key={choicei}>
+                      <label className="mx-2">보기 {choicei + 1}</label>
+                      <br></br>
+                      <Input
+                        type="text"
+                        value={choice}
+                        onChange={(e) => handleChoiceChange(i, choicei, e.target.value)}
+                        className="border-2 rounded-lg p-2 mt-3"
+                        required
+                      />
+                    </div>
+                  ))}
+                    <FormLabel htmlFor="isAnswer" className="text-2xl">정답</FormLabel>
+                    <select
+                      id='isAnswer'
+                      name='isAnswer'
+                      value={a.isAnswer}
+                      onChange={(e) => handleChange(i, 'isAnswer', parseInt(e.target.value))}
+                      className="border-2 rounded-lg p-2 mb-5"
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+                    <br></br>
+                    <div className="flex">
+                    <Button
+                      className="bg-orange-300 w-20 p-2 ml-auto mr-3 rounded-lg hover:bg-orange-400 hover:text-white"
+                      onClick={handleSaveQuizzes}
+                    >저장</Button>
+                    </div>
+                  </FormControl>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
+      <div className="col-span-3"></div>
     </div>
-  )
+  );
 };
 
 export default CreateQuiz;
