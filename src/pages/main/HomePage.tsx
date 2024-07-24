@@ -5,13 +5,13 @@ import LatestLectures from "../../components/main/LatestLectures.tsx";
 
 const HomePage: React.FC = () => {
   return (
-    <div>
+    <div className="bg-Beige">
       <HomePageCarousel />
       <Subjects />
       <HotLectures />
       <LatestLectures />
     </div>
   );
-}
+};
 
 export default HomePage;

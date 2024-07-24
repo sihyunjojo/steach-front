@@ -42,9 +42,9 @@ const Subjects: React.FC = () => {
             <a href="#" className="mx-6 my-12" key={index}>
               <FontAwesomeIcon
                 icon={subject.icon}
-                className="sm:size-8 md:size-12 lg:size-16"
+                className="sm:size-8 md:size-12 lg:size-16 text-indigo-950"
               />
-              <div>{subject.name}</div>
+              <div className="text-lightNavy">{subject.name}</div>
             </a>
           ))}
         </div>
