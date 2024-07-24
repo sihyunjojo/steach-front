@@ -3,13 +3,13 @@ import student from "../../../assets/student.png";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authActions } from "../../../store/AuthSlice";
-import axios from "axios";
+import { signUpUser } from "../../../store/AuthSlice";
+import { AppDispatch } from "../../../store";
 
 // 이진송
 const StudentSignUp: React.FC = () => {
   // dispatch
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   // useNavigate
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const StudentSignUp: React.FC = () => {
     password: string;
     name: string;
     email: string;
-    AuthCode: string;
+    authCode: string;
   }
 
   // 데이터를 담기 위한 박스 개념, 함수를 위의 interface에 맞춰서 작성
@@ -29,7 +29,7 @@ const StudentSignUp: React.FC = () => {
     password: "",
     name: "",
     email: "",
-    AuthCode: "",
+    authCode: "",
   });
 
   // 비밀번호 확인 검증
@@ -56,7 +56,7 @@ const StudentSignUp: React.FC = () => {
     event.preventDefault();
     // 만약 8자이상 16자이하라면 axios요청 보내기
     if (formData.password.length >= 8 && formData.password.length <= 16) {
-      axiosSignUp();
+      requestSignUp();
       // 아니면 경고 alert
     } else {
       toast.warn("비밀번호를 다시 입력해주세요.", {
@@ -65,39 +65,20 @@ const StudentSignUp: React.FC = () => {
     }
   };
 
-  // formData를 확인해서 빈 곳이 잇다면 alert 뜸
-  const axiosSignUp = () => {
+  // 회원가입 요청 함수
+  const requestSignUp = () => {
     // form의 id값 따라서 받은 값을 넣어줌
-    const formDataToSend = new FormData();
-    formDataToSend.append("username", formData.userId);
-    formDataToSend.append("password", formData.password);
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("auth_code", formData.AuthCode);
+    const formDataToSend: FormData = {
+      userId: formData.userId,
+      password: formData.password,
+      name: formData.name,
+      email: formData.email,
+      authCode: formData.authCode,
+    };
+    const resultRequest = dispatch(signUpUser(formDataToSend));
 
-    // API 통신
-    axios
-      .post("http://43.202.1.52:8080/api/v1/student/join", formDataToSend, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((response) => {
-        toast.success("회원가입이 완료되었습니다.", {
-          position: "top-center",
-        });
-        const info = {
-          username: formData.userId,
-          password: formData.password,
-        };
-
-        dispatch(authActions.login(info));
-        navigate("/");
-      })
-      .catch((err) => {
-        toast.error("회원가입에 실패했습니다.", {
-          position: "top-center",
-        });
-        console.log(err);
-      });
+    if (signUpUser.fulfilled.match(resultRequest)) {
+    }
   };
 
   return (
