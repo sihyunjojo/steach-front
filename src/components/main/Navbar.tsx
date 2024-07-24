@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import logoImage from "../../assets/LOGO.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,10 +7,15 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import { RootState } from "../../store";
+import { toast, ToastContainer } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 // 김헌규 - Navbar 반응형 구현
 const Navbar: React.FC = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.authentication.isAuthenticated
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -17,15 +23,23 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // 로그인을 안했을때 로그인 하라고 하면서 로그인 창으로 이동시키기
+  const handleIsLogin = () => {
+    toast.warn("로그인을 해야 이용 가능합니다.", {
+      position: "top-center",
+    });
+    navigate("/user/login");
+  };
+
   return (
     <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
+      <ToastContainer />
       {/* Navbar 로고 */}
       <Link to={"/"}>
         <div className="w-28 ml-4">
           <img src={logoImage} alt="logo" className="w-full h-20" />
         </div>
       </Link>
-
       {/* 검색창 */}
       <div className="flex-1 flex items-center justify-between lg:justify-around">
         <form className="relative mx-2 lg:mx-4 flex-grow lg:flex-grow-0 lg:w-1/2">
@@ -47,9 +61,16 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            <Link to="/student/profile" className="hover:text-orange-300">
-              내 강의실
-            </Link>
+            {isAuthenticated && (
+              <Link to="/student/profile" className="hover:text-orange-300">
+                내 강의실
+              </Link>
+            )}
+            {!isAuthenticated && (
+              <button onClick={handleIsLogin} className="hover:text-orange-300">
+                내 강의실
+              </button>
+            )}
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
             <a href="#" className="hover:text-orange-300">
@@ -58,25 +79,38 @@ const Navbar: React.FC = () => {
           </li>
         </ul>
       </div>
-
       {/* 로그인 및 회원가입 버튼 */}
       <div className="hidden mr-3 lg:flex items-center ml-4 lg:ml-0">
-        <button
-          className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
-          onClick={() => {
-            navigate("/user/login");
-          }}
-        >
-          로그인
-        </button>
-        <button
-          className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
-          onClick={() => {
-            navigate("/user/signup");
-          }}
-        >
-          회원가입
-        </button>
+        {!isAuthenticated && (
+          <button
+            className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
+            onClick={() => {
+              navigate("/user/login");
+            }}
+          >
+            로그인
+          </button>
+        )}
+        {isAuthenticated && (
+          <button className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md">
+            내정보
+          </button>
+        )}
+        {!isAuthenticated && (
+          <button
+            className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
+            onClick={() => {
+              navigate("/user/signup");
+            }}
+          >
+            회원가입
+          </button>
+        )}
+        {isAuthenticated && (
+          <button className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500">
+            로그아웃
+          </button>
+        )}
       </div>
       {/* 햄버거 메뉴 아이콘 */}
       <div className="lg:hidden">
@@ -84,7 +118,6 @@ const Navbar: React.FC = () => {
           <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
         </button>
       </div>
-
       {/*  ------------------------------------------------------------------------------------------------------- */}
       {/* 모바일 메뉴 */}
       {isMenuOpen && (

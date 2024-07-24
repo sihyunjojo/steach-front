@@ -25,7 +25,10 @@ const SignUpStudentPage: React.FC = () => {
                 className="flex flex-col items-center justify-center w-40 h-40 border border-black rounded-lg md:w-64 md:h-64 lg:w-96 lg:h-96"
                 onClick={() => handleRoleSelect("student")}
               >
-                <img src={student} className="h-auto object-contain size-2/5 md:size-3/5 lg:size-4/5" />
+                <img
+                  src={student}
+                  className="h-auto object-contain size-2/5 md:size-3/5 lg:size-4/5"
+                />
                 <button
                   onClick={() => handleRoleSelect("student")}
                   className="mt-4 text-lg font-semibold"
@@ -37,7 +40,10 @@ const SignUpStudentPage: React.FC = () => {
                 className="flex flex-col items-center justify-center w-40 h-40 border border-black rounded-lg  md:w-64 md:h-64 lg:w-96 lg:h-96"
                 onClick={() => handleRoleSelect("teacher")}
               >
-                <img src={teacher} className="h-auto object-contain size-2/5 md:size-3/5 lg:size-4/5" />
+                <img
+                  src={teacher}
+                  className="h-auto object-contain size-2/5 md:size-3/5 lg:size-4/5"
+                />
                 <button
                   onClick={() => handleRoleSelect("teacher")}
                   className="mt-4 text-lg font-semibold"
