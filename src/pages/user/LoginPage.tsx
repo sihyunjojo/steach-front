@@ -63,13 +63,13 @@ const Login: React.FC = () => {
             onSubmit={handleSubmit}
           >
             <div>
-              <label htmlFor="userId" className="text-2xl">
+              <label htmlFor="username" className="text-2xl">
                 아이디
               </label>
               <input
                 type="text"
-                id="userId"
-                name="userId"
+                id="username"
+                name="username"
                 value={formData.username}
                 onChange={handleChange}
                 className="w-full border-2 rounded-lg p-2 mb-4"

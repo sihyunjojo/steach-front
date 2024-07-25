@@ -10,29 +10,32 @@ import banner from '../../assets/banner2.jpg'
 
 const LectureSignUp: React.FC = () => {
     
-    interface FormData {
+  interface FormData {
+    title: string;
       // 부제목
-      sub_title : string;
-      // 강의 중분류
-      sub_category : string;
+    sub_title : string;
+    // 강의 중분류
+    category: string;
+
+    sub_category : string;
       // 배너 이미지
-      banner_img_url : File | null;
+    banner_img_url : File | null;
       // 강의 소개
-      intro : string;
+    intro : string;
       // 강의 시작일
-      start_date : string;
+    lecture_start_date : string;
       // 강의 종료일
-      end_date : string;
+    lecture_end_date : string;
       // 강의 시작 시간
-      lecture_start_time : string;
+    lecture_start_time : string;
       // 강의 종료 시간
-      lecture_close_time: string;
+    lecture_end_time: string;
       // 수업 요일
-      weekdays_bitmask: number;
+    weekdays_bitmask: number;
       // 최대 수강 정원
-      max_attendees: number;
+    max_attendees: number;
       // 강의 상세 설명
-      information: string;
+    information: string;
     }
     
   
@@ -47,15 +50,17 @@ const LectureSignUp: React.FC = () => {
     });
   
     // 데이터를 담기 위한 박스 개념, 함수를 위의 interface에 맞춰서 작성
-    const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormData>({
+      title: '',
       sub_title: '',
+      category: '',
       sub_category: '',
       banner_img_url: null,
       intro: '',
-      start_date: new Date().toISOString().substr(0, 10),
-      end_date: new Date().toISOString().substr(0, 10),
+      lecture_start_date: new Date().toISOString().substr(0, 10),
+      lecture_end_date: new Date().toISOString().substr(0, 10),
       lecture_start_time: new Date().toTimeString().substr(0, 5),
-      lecture_close_time: new Date().toTimeString().substr(0, 5),
+      lecture_end_time: new Date().toTimeString().substr(0, 5),
       weekdays_bitmask: 0,
       max_attendees: 4,
       information: '<예시> <br> 강의 대상: 초등생 4~5학년 수준의 강의입니다. <br> 학습 요구사항: 자바 객체지향 선행학습 필수 <br> 강의 설명 : 자바스크립트 언어의 기초부터 심화까지 완전 정복',
