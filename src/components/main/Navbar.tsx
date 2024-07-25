@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import logoImage from "../../assets/LOGO.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,13 +8,16 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { RootState } from "../../store";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { studentAuthActions } from "../../store/AuthSlice";
 
 // 김헌규 - Navbar 반응형 구현
 const Navbar: React.FC = () => {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.authentication.isAuthenticated
+  const dispatch = useDispatch();
+  const isStudent = useSelector((state: RootState) => state.studentAuth.role);
+  const studentUsername = useSelector(
+    (state: RootState) => state.studentAuth.username
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,9 +34,14 @@ const Navbar: React.FC = () => {
     navigate("/user/login");
   };
 
+  // 로그아웃 요청 함수
+  const logoutStudent = () => {
+    dispatch(studentAuthActions.logout());
+    navigate("/");
+  };
+
   return (
     <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
-      <ToastContainer />
       {/* Navbar 로고 */}
       <Link to={"/"}>
         <div className="w-28 ml-4">
@@ -61,12 +69,12 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            {isAuthenticated && (
+            {isStudent && (
               <Link to="/student/profile" className="hover:text-orange-300">
                 내 강의실
               </Link>
             )}
-            {!isAuthenticated && (
+            {!isStudent && (
               <button onClick={handleIsLogin} className="hover:text-orange-300">
                 내 강의실
               </button>
@@ -81,7 +89,7 @@ const Navbar: React.FC = () => {
       </div>
       {/* 로그인 및 회원가입 버튼 */}
       <div className="hidden mr-3 lg:flex items-center ml-4 lg:ml-0">
-        {!isAuthenticated && (
+        {!isStudent && (
           <button
             className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
             onClick={() => {
@@ -91,12 +99,7 @@ const Navbar: React.FC = () => {
             로그인
           </button>
         )}
-        {isAuthenticated && (
-          <button className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md">
-            내정보
-          </button>
-        )}
-        {!isAuthenticated && (
+        {!isStudent && (
           <button
             className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
             onClick={() => {
@@ -106,8 +109,17 @@ const Navbar: React.FC = () => {
             회원가입
           </button>
         )}
-        {isAuthenticated && (
-          <button className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500">
+        {isStudent && (
+          <button className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md">
+            {studentUsername}님
+          </button>
+        )}
+
+        {isStudent && (
+          <button
+            className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
+            onClick={logoutStudent}
+          >
             로그아웃
           </button>
         )}
