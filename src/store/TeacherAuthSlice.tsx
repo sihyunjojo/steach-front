@@ -2,19 +2,12 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // 이진송
-// axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
 export interface Teacher {
   username: string;
   password: string;
   name: string;
   email: string;
   file?: File;
-}
-
-// 인증 및 토큰 형식
-interface AuthState {
-  isAuthenticated: boolean;
-  token: string;
 }
 
 export interface TeacherLoginState {
@@ -34,7 +27,6 @@ const initialState: TeacherLoginState = {
 export const SignUpTeacher = createAsyncThunk<Teacher, Teacher>(
   "teacher/signup",
   async (newUserData) => {
-    console.log(newUserData)
     const formData = new FormData();
     formData.append('teacherSignUpDto', JSON.stringify({
       username: newUserData.username,
