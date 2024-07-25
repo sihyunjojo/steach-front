@@ -16,45 +16,23 @@ import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
 
 const App: React.FC = () => {
-
   return (
     <div>
       <Navbar />
       <Routes>
-        <Route 
-        path="/" 
-        element={<HomePage />}
-        ></Route>
-        <Route 
-        path="/student/profile" 
-        element={<ProfilePage />}
-        ></Route>
-        <Route 
-        path="/user/login" 
-        element={<LoginPage />}
-        ></Route>
-        <Route 
-        path="/user/signup" 
-        element={<SignUpPage />}
-        ></Route>
-        <Route 
-        path="/lecture/signup" 
-        element={<LectureSignUpPage />}
-        ></Route>
-        <Route 
-        path="/lecture/update" 
-        element={<LectureUpdatePage />}
-        ></Route>
-        <Route 
-        path="/teacher/profile" 
-        element={<TeacherProfilePage />}
-        ></Route>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/student/profile" element={<ProfilePage />}></Route>
+        <Route path="/user/login" element={<LoginPage />}></Route>
+        <Route path="/user/signup" element={<SignUpPage />}></Route>
+        <Route path="/lecture/signup" element={<LectureSignUpPage />}></Route>
+        <Route path="/lecture/update" element={<LectureUpdatePage />}></Route>
+        <Route path="/teacher/profile" element={<TeacherProfilePage />}></Route>
         <Route
           path="/teacher/profile/lecture"
           element={<CurriculumList />}
         ></Route>
         <Route
-          path="/teacher/profiledetail"
+          path="/teacher/profiledetail/:id"
           element={<MyInfoDetailPage />}
         ></Route>
         <Route
