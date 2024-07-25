@@ -2,9 +2,9 @@ import { useState } from "react";
 import student from "../../../assets/student.png";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../../../store/AuthSlice";
-import { AppDispatch } from "../../../store";
+import { AppDispatch, RootState } from "../../../store";
 
 // 이진송
 const StudentSignUp: React.FC = () => {
@@ -66,7 +66,7 @@ const StudentSignUp: React.FC = () => {
   };
 
   // 회원가입 요청 함수
-  const requestSignUp = () => {
+  const requestSignUp = async () => {
     // form의 id값 따라서 받은 값을 넣어줌
     const formDataToSend: FormData = {
       userId: formData.userId,
@@ -75,9 +75,12 @@ const StudentSignUp: React.FC = () => {
       email: formData.email,
       authCode: formData.authCode,
     };
-    const resultRequest = dispatch(signUpUser(formDataToSend));
+    const resultRequest = await dispatch(signUpUser(formDataToSend));
+    const { auth, status, error } = useSelector(
+      (state: RootState) => state.authentication
+    );
 
-    if (signUpUser.fulfilled.match(resultRequest)) {
+    if (auth?.isAuthenticated === true) {
     }
   };
 
@@ -181,7 +184,7 @@ const StudentSignUp: React.FC = () => {
             type="text"
             id="AuthCode"
             name="AuthCode"
-            value={formData.AuthCode}
+            value={formData.authCode}
             onChange={handleChange}
             className="border-2 rounded-lg w-full p-2 mb-5"
             required
