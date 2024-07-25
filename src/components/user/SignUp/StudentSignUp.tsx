@@ -3,7 +3,7 @@ import student from "../../../assets/student.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUser } from "../../../store/AuthSlice";
+import { signUpStudent, loginStudent } from "../../../store/AuthSlice";
 import { AppDispatch, RootState } from "../../../store";
 import SpinnerComponent from "../../main/Spinner";
 
@@ -16,7 +16,7 @@ const StudentSignUp: React.FC = () => {
   const navigate = useNavigate();
 
   // 회원 인증 상태 및 에러
-  const { status } = useSelector((state: RootState) => state.authentication);
+  const { status } = useSelector((state: RootState) => state.studentAuth);
 
   // FormData 타입 포함해서 만듦
   interface FormData {
@@ -85,26 +85,35 @@ const StudentSignUp: React.FC = () => {
       auth_code: formData.auth_code,
     };
 
-    const resultAction = await dispatch(signUpUser(formDataToSend));
+    const resultSignUpAction = await dispatch(signUpStudent(formDataToSend));
 
     const loginInfo: loginInfoData = {
-      username: resultAction.meta.arg.userId,
-      password: resultAction.meta.arg.password,
+      username: resultSignUpAction.meta.arg.userId,
+      password: resultSignUpAction.meta.arg.password,
     };
 
-    if (signUpUser.fulfilled.match(resultAction)) {
+    if (signUpStudent.fulfilled.match(resultSignUpAction)) {
       toast.success("회원가입에 성공하였습니다.", {
         position: "top-center",
       });
 
       // 회원가입과 동시에 로그인하러 가야함.
-      // dispatch(studentLogin(loginInfo));
-      navigate("/");
-    } else {
-      if (resultAction.payload) {
-        toast.error(`회원가입에 실패하였습니다: ${resultAction.payload}`, {
+      const resultLoginAction = await dispatch(loginStudent(loginInfo));
+      if (loginStudent.fulfilled.match(resultLoginAction)) {
+        toast.success("로그인에 성공하였습니다.", {
           position: "top-center",
         });
+      }
+
+      navigate("/");
+    } else {
+      if (resultSignUpAction.payload) {
+        toast.error(
+          `회원가입에 실패하였습니다: ${resultSignUpAction.payload}`,
+          {
+            position: "top-center",
+          }
+        );
       } else {
         toast.error("회원가입에 실패하였습니다.", {
           position: "top-center",
