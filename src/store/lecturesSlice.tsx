@@ -4,18 +4,32 @@ import axios from "axios";
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
 export interface Lecture {
-  id: number;
-  sub_title: string;
-  intro: string;
-  target: string;
-  requirement: string;
-  information: string;
-  sub_category: string;
-  weekdays: string;
-  start_date: string;
-  end_date: string;
-  lecture_start_time: string;
-  lecture_end_time: string;
+    // 제목
+    title: string;
+    // 부제목
+    sub_title : string;
+    // 강의 소개
+    intro : string;
+    // 강의 상세 설명
+    information: string;
+    // 강의 대분류
+    category: string;
+    // 강의 중분류
+    sub_category : string;
+    // 배너 이미지
+    banner_img_url : File | null;
+    // 강의 시작일
+    start_date : string;
+    // 강의 종료일
+    end_date : string;
+    // 강의 시작 시간
+    lecture_start_time : string;
+    // 강의 종료 시간
+    lecture_end_time: string;
+    // 수업 요일
+    weekdays_bitmask: number;
+    // 최대 수강 정원
+    max_attendees: number;
 }
 
 export interface LecturesState {
@@ -32,83 +46,58 @@ const initialState: LecturesState = {
 
 // Thunks
 
-export const fetchLectures = createAsyncThunk<Lecture[]>(
-  "lectures/fetchLectures",
-  async () => {
-    const response = await axios.get("http://localhost:3000/students");
-    return response.data;
-  }
-);
+export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
+  "lecture/signup",
+  async (newLectureData) => {
+    const response = await axios.post("http://43.202.1.52:8080/api/v1/curricula", {
+      title: newLectureData.title,
+      sub_title : newLectureData.sub_title,
+      intro : newLectureData.intro,
+      information: newLectureData.information,
+      category: newLectureData.category,
+      sub_category : newLectureData.sub_category,
+      banner_img_url : newLectureData.banner_img_url,
+      start_date : newLectureData.start_date,
+      end_date : newLectureData.end_date,
+      lecture_start_time : newLectureData.lecture_start_time,
+      lecture_end_time: newLectureData.lecture_end_time,
+      weekdays_bitmask: newLectureData.weekdays_bitmask,
+      max_attendees: newLectureData.max_attendees,
 
-export const addLectures = createAsyncThunk<Lecture, Omit<Lecture, "id">>(
-  "lectures/addLecture",
-  async (newLecture) => {
-    const formData = new FormData();
-    formData.append("sub_title", newLecture.sub_title);
-    formData.append("intro", newLecture.intro);
-    formData.append("target", newLecture.target);
-    formData.append("requirement", newLecture.requirement);
-    formData.append("information", newLecture.information);
-    formData.append("sub_category", newLecture.sub_category);
-    formData.append("weekdays", newLecture.weekdays);
-    formData.append("start_date", newLecture.start_date);
-    formData.append("end_date", newLecture.end_date);
-    formData.append("lecture_start_time", newLecture.lecture_start_time);
-    formData.append("lecture_end_time", newLecture.lecture_end_time);
-    const response = await axios.post(
-      "http://localhost:3000/students",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    }, {
+      headers : {
+        'Content-Type': 'application/json',
       }
-    );
-    return response.data;
-  }
+    })
+    return response.data
+  } 
 );
 
-const lecturesSlice = createSlice<LecturesState, {}, "lectures">({
+
+
+const lecturesSlice = createSlice({
   name: "lectures",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLectures.pending, (state) => {
+      .addCase(SignUpLecture.pending, (state) => {
         state.status = "loading";
       })
       .addCase(
-        fetchLectures.fulfilled,
-        (state, action: PayloadAction<Lecture[]>) => {
+        SignUpLecture.fulfilled,
+        (state, action: PayloadAction<Lecture>) => {
           state.status = "succeeded";
-          state.lectures = action.payload;
+          state.lectures.push(action.payload);
         }
       )
-      .addCase(fetchLectures.rejected, (state, action) => {
+      .addCase(SignUpLecture.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       });
     // peding : 로딩중
     // fulfilled : 비동기 작업이 완료된 시점
     // rejected : 비동기 작업이 실패한 시점
-    builder
-      .addCase(addLectures.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(
-        addLectures.fulfilled,
-        (state, action: PayloadAction<Lecture>) => {
-          state.status = "succeeded";
-          state.lectures.push(action.payload);
-        }
-      )
-      .addCase(addLectures.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || "ERROR!";
-      });
-    // .addCase(addLectures.pending, (state) => {
-    //   state.status = 'loading';
-    // })
   },
 });
 

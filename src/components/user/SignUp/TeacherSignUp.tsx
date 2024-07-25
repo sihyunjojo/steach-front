@@ -112,17 +112,17 @@ const TeacherSignUp: React.FC = () => {
   //   })
   // } 
 
-  const test = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(formData)
-    dispatch(SignUpTeacher(formData))
-  };
+  // const test = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log(formData)
+  //   dispatch(SignUpTeacher(formData))
+  // };
     
   return (
     <>
       <ToastContainer autoClose={2000} />
-{/*     */}
-      <button className='w-20 h-20 color-red' onClick={test}>ㅎㅇ</button>
+    {/* */}
+      {/* <button className='w-20 h-20 color-red' onClick={test}>ㅎㅇ</button> */}
 {/*     */}
       <div>
           <img src={teacher} />
