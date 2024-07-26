@@ -17,7 +17,7 @@ export interface Lecture {
     // 강의 중분류
     sub_category : string;
     // 배너 이미지
-    banner_img_url : string;
+    banner_img_url : File | null;
     // 강의 시작일
     start_date : string;
     // 강의 종료일
@@ -50,7 +50,17 @@ const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxd3F3IiwiaWF0IjoxNzIxOTc3MDg2LCJl
 export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
   "lecture/signup",
   async (newLectureData) => {
-    const imgPost = await axios.post(`http://steach.ssafy.io:8082/img-upload/upload`)
+    const formData = new FormData();
+    formData.append('userName', newLectureData.title);
+    formData.append('file', newLectureData.banner_img_url);
+    console.log(formData)
+    const imgPost = await axios.post(`http://steach.ssafy.io:8082/img-upload/upload`, formData ,{
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(imgPost.data, '1')
+    return imgPost.data
     
     const response = await axios.post("http://43.202.1.52:8080/api/v1/curricula", {
       title: newLectureData.title,
