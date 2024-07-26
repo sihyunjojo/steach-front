@@ -26,7 +26,7 @@ const LectureSignUp: React.FC = () => {
     // 강의 중분류
     sub_category : string;
     // 배너 이미지
-    banner_img_url : File | null;
+    banner_img_url : string;
     // 강의 시작일
     start_date : string;
     // 강의 종료일
@@ -58,7 +58,7 @@ const LectureSignUp: React.FC = () => {
       sub_title: '',
       category: 'KOREAN',
       sub_category: '',
-      banner_img_url: null,
+      banner_img_url: '',
       intro: '',
       start_date: new Date().toISOString().substr(0, 10),
       end_date: new Date().toISOString().substr(0, 10),
