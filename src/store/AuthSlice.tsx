@@ -10,7 +10,6 @@ interface studentFormData {
   auth_code: string;
 }
 
-
 // 선생님 회원가입 폼 형식
 interface TeacherFormData {
   username: string;
@@ -55,9 +54,9 @@ export const initialState: UserState = {
 
 // createAsyncThunk 첫번째 인수 Returned - 비동기 작업이 성공적으로 완료된 후 반환되는 값의 타입
 // 두번째 인수 ThunkArg - 비동기 작업을 시작할 때 액션 생성 함수에 전달되는 인수의 타입.
-// 회원 가입
+// 학생 회원가입
 export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
-  "signUpStudent",
+  "student/signup",
   async (userFormData, thunkAPI) => {
     try {
       const formDataToSend = {
@@ -88,84 +87,77 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
   }
 );
 
-// 
-
-// Thunks
-
-export const SignUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
+// 선생님 회원가입
+export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
   "teacher/signup",
   async (newUserData) => {
     const formData = new FormData();
-    formData.append('teacherSignUpDto', JSON.stringify({
-      username: newUserData.username,
-      password: newUserData.password,
-      name: newUserData.name,
-      email: newUserData.email
-    }));
+    formData.append(
+      "teacherSignUpDto",
+      JSON.stringify({
+        username: newUserData.username,
+        password: newUserData.password,
+        name: newUserData.name,
+        email: newUserData.email,
+      })
+    );
     if (newUserData.file) {
       formData.append("file", newUserData.file);
     }
-      // FormData에 잘 추가되었는지 확인
-    const response = await axios.post("http://43.202.1.52:8080/api/v1/teacher/join", formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+    // FormData에 잘 추가되었는지 확인
+    const response = await axios.post(
+      "http://43.202.1.52:8080/api/v1/teacher/join",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
-    });
+    );
     return response.data;
   }
 );
 
-
-
-
-
-
-
-
-
-
-// 
-
 // 통합 로그인
-export const loginSteach = createAsyncThunk<
-  LoginReturnForm,
-  LoginForm
->("login", async (loginFormData, thunkAPI) => {
-  try {
-    const formDataToSend: LoginForm = {
-      username: loginFormData.username,
-      password: loginFormData.password,
-    };
+export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
+  "login",
+  async (loginFormData, thunkAPI) => {
+    try {
+      const formDataToSend: LoginForm = {
+        username: loginFormData.username,
+        password: loginFormData.password,
+      };
 
-    const response = await axios.post(
-      "http://43.202.1.52:8080/api/v1/login",
-      formDataToSend,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await axios.post(
+        "http://43.202.1.52:8080/api/v1/login",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data: LoginReturnForm = {
+        username: response.data.username,
+        name: response.data.name,
+        email: response.data.email,
+        token: response.data.token,
+        role: response.data.role,
+      };
+      console.log(data);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
       }
-    );
-
-    const data: LoginReturnForm = {
-      username: response.data.username,
-      name: response.data.name,
-      email: response.data.email,
-      token: response.data.token,
-      role: response.data.role,
-    };
-    console.log(data);
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error);
     }
-    return thunkAPI.rejectWithValue(error);
   }
-});
+);
 
-const studentSlice = createSlice({
-  name: "user",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     logout(state) {
@@ -178,6 +170,7 @@ const studentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // 학생 관련 addCase
       .addCase(signUpStudent.pending, (state) => {
         state.status = "loading";
       })
@@ -185,6 +178,17 @@ const studentSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(signUpStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || null;
+      })
+      // 선생님 addCase
+      .addCase(signUpTeacher.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signUpTeacher.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(signUpTeacher.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
       })
@@ -206,6 +210,6 @@ const studentSlice = createSlice({
   },
 });
 
-export const studentAuthActions = studentSlice.actions;
+export const authActions = authSlice.actions;
 
-export default studentSlice.reducer;
+export default authSlice.reducer;

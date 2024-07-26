@@ -1,5 +1,5 @@
 import Footer from "./components/main/Footer.tsx";
-import Navbar from "./components/main/Navbar.tsx";
+import Navbar from "./components/main/navBar/Navbar.tsx";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/user/LoginPage.tsx";
 import SignUpPage from "./pages/user/SignUpPage.tsx";

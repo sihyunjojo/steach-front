@@ -1,24 +1,22 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import logoImage from "../../assets/LOGO.jpg";
+import { useDispatch } from "react-redux";
+import logoImage from "../../../assets/LOGO.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { RootState } from "../../store";
-import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { studentAuthActions } from "../../store/AuthSlice";
+import { authActions } from "../../../store/AuthSlice";
 
-// 김헌규 - Navbar 반응형 구현
-const Navbar: React.FC = () => {
+// Props 타입 정의
+interface Props {
+  username: string;
+}
+
+const NavbarStudent: React.FC<Props> = ({ username }) => {
   const dispatch = useDispatch();
-  const isStudent = useSelector((state: RootState) => state.studentAuth.role);
-  const studentUsername = useSelector(
-    (state: RootState) => state.studentAuth.username
-  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -26,17 +24,9 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // 로그인을 안했을때 로그인 하라고 하면서 로그인 창으로 이동시키기
-  const handleIsLogin = () => {
-    toast.warn("로그인을 해야 이용 가능합니다.", {
-      position: "top-center",
-    });
-    navigate("/user/login");
-  };
-
   // 로그아웃 요청 함수
   const logoutStudent = () => {
-    dispatch(studentAuthActions.logout());
+    dispatch(authActions.logout());
     navigate("/");
   };
 
@@ -69,16 +59,9 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            {isStudent && (
-              <Link to="/student/profile" className="hover:text-orange-300">
-                내 강의실
-              </Link>
-            )}
-            {!isStudent && (
-              <button onClick={handleIsLogin} className="hover:text-orange-300">
-                내 강의실
-              </button>
-            )}
+            <Link to="/student/profile" className="hover:text-orange-300">
+              내 강의실
+            </Link>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
             <a href="#" className="hover:text-orange-300">
@@ -89,40 +72,16 @@ const Navbar: React.FC = () => {
       </div>
       {/* 로그인 및 회원가입 버튼 */}
       <div className="hidden mr-3 lg:flex items-center ml-4 lg:ml-0">
-        {!isStudent && (
-          <button
-            className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
-            onClick={() => {
-              navigate("/user/login");
-            }}
-          >
-            로그인
-          </button>
-        )}
-        {!isStudent && (
-          <button
-            className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
-            onClick={() => {
-              navigate("/user/signup");
-            }}
-          >
-            회원가입
-          </button>
-        )}
-        {isStudent && (
-          <button className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md">
-            {studentUsername}님
-          </button>
-        )}
+        <button className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md">
+          {username} 학생
+        </button>
 
-        {isStudent && (
-          <button
-            className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
-            onClick={logoutStudent}
-          >
-            로그아웃
-          </button>
-        )}
+        <button
+          className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
+          onClick={logoutStudent}
+        >
+          로그아웃
+        </button>
       </div>
       {/* 햄버거 메뉴 아이콘 */}
       <div className="lg:hidden">
@@ -153,21 +112,14 @@ const Navbar: React.FC = () => {
           </ul>
 
           <div className="flex flex-col items-center mt-4 mx-2">
-            <button
-              className="w-full mb-2 p-2 border-2 border-hardBeige rounded-md"
-              onClick={() => {
-                navigate("/user/login");
-              }}
-            >
-              로그인
+            <button className="w-full mb-2 p-2 border-2 border-hardBeige rounded-md">
+              {username} 학생
             </button>
             <button
               className="text-white bg-red-400 border-2 p-2 rounded-md hover:bg-red-500 w-full"
-              onClick={() => {
-                navigate("/user/signup");
-              }}
+              onClick={logoutStudent}
             >
-              회원가입
+              로그아웃
             </button>
           </div>
         </div>
@@ -176,4 +128,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default NavbarStudent;

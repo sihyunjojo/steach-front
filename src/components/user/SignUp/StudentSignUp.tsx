@@ -16,7 +16,7 @@ const StudentSignUp: React.FC = () => {
   const navigate = useNavigate();
 
   // 회원 인증 상태 및 에러
-  const { status } = useSelector((state: RootState) => state.studentAuth);
+  const { status } = useSelector((state: RootState) => state.auth);
 
   // FormData 타입 포함해서 만듦
   interface FormData {
