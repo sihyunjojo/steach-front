@@ -3,7 +3,7 @@ import student from "../../../assets/student.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpStudent, loginStudent } from "../../../store/AuthSlice";
+import { signUpStudent, loginSteach } from "../../../store/AuthSlice";
 import { AppDispatch, RootState } from "../../../store";
 import SpinnerComponent from "../../main/Spinner";
 
@@ -20,7 +20,7 @@ const StudentSignUp: React.FC = () => {
 
   // FormData 타입 포함해서 만듦
   interface FormData {
-    userId: string;
+    username: string;
     password: string;
     name: string;
     email: string;
@@ -34,7 +34,7 @@ const StudentSignUp: React.FC = () => {
 
   // 데이터를 담기 위한 박스 개념, 함수를 위의 interface에 맞춰서 작성
   const [formData, setFormData] = useState<FormData>({
-    userId: "",
+    username: "",
     password: "",
     name: "",
     email: "",
@@ -78,7 +78,7 @@ const StudentSignUp: React.FC = () => {
   const requestSignUp = async () => {
     // form의 id값 따라서 받은 값을 넣어줌
     const formDataToSend: FormData = {
-      userId: formData.userId,
+      username: formData.username,
       password: formData.password,
       name: formData.name,
       email: formData.email,
@@ -88,7 +88,7 @@ const StudentSignUp: React.FC = () => {
     const resultSignUpAction = await dispatch(signUpStudent(formDataToSend));
 
     const loginInfo: loginInfoData = {
-      username: resultSignUpAction.meta.arg.userId,
+      username: resultSignUpAction.meta.arg.username,
       password: resultSignUpAction.meta.arg.password,
     };
 
@@ -98,8 +98,8 @@ const StudentSignUp: React.FC = () => {
       });
 
       // 회원가입과 동시에 로그인하러 가야함.
-      const resultLoginAction = await dispatch(loginStudent(loginInfo));
-      if (loginStudent.fulfilled.match(resultLoginAction)) {
+      const resultLoginAction = await dispatch(loginSteach(loginInfo));
+      if (loginSteach.fulfilled.match(resultLoginAction)) {
         toast.success("로그인에 성공하였습니다.", {
           position: "top-center",
         });
@@ -135,14 +135,14 @@ const StudentSignUp: React.FC = () => {
           onSubmit={handleSubmit}
         >
           <section>
-            <label htmlFor="userId" className="text-2xl">
+            <label htmlFor="username" className="text-2xl">
               아이디
             </label>
             <input
               type="text"
-              id="userId"
-              name="userId"
-              value={formData.userId}
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               className="border-2 rounded-lg w-full p-2 mb-5"
               required
