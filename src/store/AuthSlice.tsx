@@ -66,7 +66,6 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
         email: userFormData.email,
         auth_code: userFormData.auth_code,
       };
-
       const response = await axios.post(
         "http://43.202.1.52:8080/api/v1/student/join",
         formDataToSend,
@@ -76,7 +75,6 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
           },
         }
       );
-
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -86,6 +84,7 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
     }
   }
 );
+
 
 // 선생님 회원가입
 export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
@@ -119,6 +118,7 @@ export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
 );
 
 // 통합 로그인
+
 export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
   "login",
   async (loginFormData, thunkAPI) => {
@@ -152,6 +152,7 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
         return thunkAPI.rejectWithValue(error.response.data);
       }
       return thunkAPI.rejectWithValue(error);
+
     }
   }
 );
@@ -213,3 +214,4 @@ const authSlice = createSlice({
 export const authActions = authSlice.actions;
 
 export default authSlice.reducer;
+

@@ -9,6 +9,7 @@ import banner from '../../assets/banner2.jpg'
 import { SignUpLecture } from '../../store/lecturesSlice'
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../store.tsx'
+import parse from 'html-react-parser';
 
 const LectureSignUp: React.FC = () => {
     
@@ -93,6 +94,7 @@ const LectureSignUp: React.FC = () => {
         ...prevFormData,
         intro: data,
       }));
+      console.log(data)
     };
   
     const handleCheckboxChange = (day: string) => {
@@ -112,19 +114,30 @@ const LectureSignUp: React.FC = () => {
       }));
     };
     
-    const decode = () => {
-      const decodedData = he.decode(formData.intro);
-      console.log(formData)
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        intro: decodedData
-      }));
-    }
+  //   const decode = () => {
+  //     const decodedData = he.decode(formData.intro);
+  //     console.log(formData)
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       intro: decodedData
+  //     }));
+  // }
+  
+  const decode = (e:string) => {
+    const a = e.replace(/<\/?[^>]+(>|$)/g, "");
+    console.log(a)
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      intro: a,
+    }));
+    console.log(formData.intro)
+  }
     
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      decode();
-      dispatch(SignUpLecture(formData))
+      decode(formData.intro);
+      console.log(formData)
+      // dispatch(SignUpLecture(formData))
     }
   
     return (
