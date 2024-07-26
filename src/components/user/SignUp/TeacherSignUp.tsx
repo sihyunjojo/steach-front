@@ -4,15 +4,15 @@ import axios from 'axios';
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { SignUpTeacher } from '../../../store/TeacherAuthSlice.tsx';
+import { SignUpTeacher, loginSteach } from '../../../store/AuthSlice.tsx';
 import { RootState, AppDispatch } from '../../../store.tsx';
 
 // 이진송
 const TeacherSignUp: React.FC = () => {
   // dispatch
   const dispatch: AppDispatch = useDispatch();
-  const status = useSelector((state: RootState) => state.user.status);
-  const error = useSelector((state: RootState) => state.user.error);
+  // const status = useSelector((state: RootState) => state.user.status);
+  // const error = useSelector((state: RootState) => state.user.error);
   // useNavigate
   const navigate = useNavigate();
   // 비밀번호 확인 검증
@@ -32,6 +32,11 @@ const TeacherSignUp: React.FC = () => {
       name : string;
       email : string;
       file?: File;
+  }
+
+  interface loginInfoData {
+    username: string;
+    password: string;
   }
 
   // 확인이 필요한데, file에 대해서 null값으로 지정
@@ -65,7 +70,7 @@ const TeacherSignUp: React.FC = () => {
     e.preventDefault();
     // 만약 8자이상 16자이하라면 axios요청 보내기
     if (formData.password.length >= 8 && formData.password.length <= 16) {
-      dispatch(SignUpTeacher(formData))
+      requestSignUp();
       // axiosSignUp();
       // 아니면 경고 alert
     } else {
@@ -74,56 +79,47 @@ const TeacherSignUp: React.FC = () => {
       });
     }
   };
-  
-  // const axiosSignUp = () => {
+  const requestSignUp = async () => {
 
-  //   const formDataToSend = new FormData();
-  //   formDataToSend.append('username', formData.username);
-  //   formDataToSend.append('password', formData.password);
-  //   formDataToSend.append('name', formData.name);
-  //   formDataToSend.append('email', formData.email);
-  //   if (formData.file) {
-  //     formDataToSend.append('file', formData.file);
-  //   }
-
-
-  //   axios.post(`http://43.202.1.52:8080/api/v1/teacher/join`, formDataToSend , {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     }
-  //   })
-  //     .then((response) => {
-  //       toast.success("회원가입이 완료되었습니다.", {
-  //         position: "top-center",
-  //       });
-  //       const info = {
-  //         username: formData.username,
-  //         password: formData.password,
-  //       };
-
-  //       // dispatch(authActions.login(info));
-  //       navigate("/");
-  //   })
-  //   .catch((err) => {
-  //     toast.error("회원가입에 실패했습니다.", {
-  //       position: "top-center",
-  //     });
-  //     console.log(err);
-  //   })
-  // } 
-
-  // const test = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   console.log(formData)
-  //   dispatch(SignUpTeacher(formData))
-  // };
+    const resultSignUpAction = await dispatch(SignUpTeacher(formData));
     
+    const loginInfo: loginInfoData = {
+      username: resultSignUpAction.meta.arg.username,
+      password: resultSignUpAction.meta.arg.password,
+    };
+    if (SignUpTeacher.fulfilled.match(resultSignUpAction)) {
+      toast.success("회원가입에 성공하였습니다.", {
+        position: "top-center",
+      });
+
+      // 회원가입과 동시에 로그인하러 가야함.
+      const resultLoginAction = await dispatch(loginSteach(loginInfo));
+      if (loginSteach.fulfilled.match(resultLoginAction)) {
+        toast.success("로그인에 성공하였습니다.", {
+          position: "top-center",
+        });
+      }
+
+      navigate("/");
+    } else {
+      if (resultSignUpAction.payload) {
+        toast.error(
+          `회원가입에 실패하였습니다: ${resultSignUpAction.payload}`,
+          {
+            position: "top-center",
+          }
+        );
+      } else {
+        toast.error("회원가입에 실패하였습니다.", {
+          position: "top-center",
+        });
+      }
+    }
+  }
+
   return (
     <>
       <ToastContainer autoClose={2000} />
-    {/* */}
-      {/* <button className='w-20 h-20 color-red' onClick={test}>ㅎㅇ</button> */}
-{/*     */}
       <div>
           <img src={teacher} />
         </div>
@@ -221,8 +217,11 @@ const TeacherSignUp: React.FC = () => {
               className="border-2 rounded-lg w-full p-2 mb-5"
             />
           </section>
-          <button type='submit' className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white"
-          onSubmit={()=>{}}>회원가입</button>
+        <button
+          type='submit'
+          className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white"
+        >
+          회원가입</button>
         </form>
     </>
   );
