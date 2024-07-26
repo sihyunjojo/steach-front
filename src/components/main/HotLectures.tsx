@@ -14,7 +14,7 @@ import "swiper/swiper-bundle.css";
 import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { fetchPopularCurriculaAvailable } from "/src/api/main/mainAPI";
+import { fetchPopularCurricula } from "/src/api/main/mainAPI";
 
 // 김헌규 제작
 // 이진송 수정 - 타입스크립트에 맞춰서 변경함
@@ -24,21 +24,13 @@ SwiperCore.use([Navigation, Pagination]);
 
 interface Curriculum {
   curriculum_id: number;
-  title: string;
-  sub_title: string;
-  intro: string;
-  information: string;
-  category: string;
-  sub_category: string;
   banner_img_url: string;
-  start_date: string;
-  end_date: string;
-  weekdays_bitmask: string;
-  lecture_start_time: string;
-  lecture_end_time: string;
-  current_attendees: number;
+  title: string;
+  intro: string;
   max_attendees: number;
+  current_attendees: number;
   created_at: string;
+  teacher_name: string;
 }
 
 export default function HotLectures() {
@@ -50,7 +42,7 @@ export default function HotLectures() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchPopularCurriculaAvailable();
+        const data = await fetchPopularCurricula();
         setCurricula(data.curricula);
         console.log(data.curricula);
       } catch (error) {
@@ -107,12 +99,10 @@ export default function HotLectures() {
                       borderRadius="lg"
                     />
                     <Stack mt="6" spacing="3" className="p-2">
-                      <Heading className="font-bold text-2xl">
-                        {curriculum.title}
-                      </Heading>
+                      <Heading className="font-bold text-2xl">{curriculum.title}</Heading>
                       <Text>{curriculum.intro}</Text>
                       <Text className="text-slate-500">
-                        {curriculum.information}
+                        {curriculum.teacher_name}
                       </Text>
                     </Stack>
                     <Button

@@ -24,13 +24,16 @@ const HomePageCarousel: React.FC = () => {
       speed={1800}
     >
       <SwiperSlide>
-        <img src={sampleImage} alt="no-image" className="w-full h-full" />
+        <img src="https://cdn.m-i.kr/news/photo/202405/1119678_887147_344.jpg" alt="no-image" className="w-full h-full" />
       </SwiperSlide>
       <SwiperSlide>
-        <img src={sampleImage2} alt="no-image" className="w-full h-full" />
+        <img src="https://mblogthumb-phinf.pstatic.net/MjAyNDAxMzFfMTE5/MDAxNzA2NjkwOTQ1NjY1.DE4CKXk67V-GF8veQ4uGeWY_oEbwBLgf2pCXCWDRDwkg.32FUNPUbJAfEuHGVlL0JAcfgoIdM75KBlOuv6EFg5HEg.PNG.bee4sunset/%EB%A7%88%EB%A3%A8_%EC%98%88%EC%8B%9C-01.png?type=w800" alt="no-image" className="w-full h-full" />
       </SwiperSlide>
       <SwiperSlide>
-        <img src={sampleImage3} alt="no-image" className="w-full h-full" />
+        <img src="https://i.ytimg.com/vi/NhRUZyZGU_E/maxresdefault.jpg" alt="no-image" className="w-full h-full" />
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src="https://i.ytimg.com/vi/uYP8tzntElI/mqdefault.jpg" alt="no-image" className="w-full h-full" />
       </SwiperSlide>
     </Swiper>
   );
