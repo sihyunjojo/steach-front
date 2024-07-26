@@ -15,8 +15,6 @@ import "swiper/swiper-bundle.css";
 import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getLectures } from "../../store/lectureslist";
-import { useDispatch, useSelector } from 'react-redux';
 
 
 // 김헌규 제작
@@ -29,13 +27,7 @@ export default function HotLectures() {
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const dispatch = useDispatch();
 
-  // console.log(getLectures)
-  
-  const a = dispatch(getLectures());
-
-  console.log(a)
 
   const samples = [
     {
