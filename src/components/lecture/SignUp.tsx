@@ -6,35 +6,41 @@ import he from 'he';
 import checkimg from '../../assets/checked.jpg'
 import uncheckimg from '../../assets/unchecked.jpg'
 import banner from '../../assets/banner2.jpg'
-
+import { SignUpLecture } from '../../store/lecturesSlice'
+import { useDispatch } from "react-redux";
+import { AppDispatch } from '../../store.tsx'
 
 const LectureSignUp: React.FC = () => {
     
-    interface FormData {
-      // 부제목
-      sub_title : string;
-      // 강의 중분류
-      sub_category : string;
-      // 배너 이미지
-      banner_img_url : File | null;
-      // 강의 소개
-      intro : string;
-      // 강의 시작일
-      start_date : string;
-      // 강의 종료일
-      end_date : string;
-      // 강의 시작 시간
-      lecture_start_time : string;
-      // 강의 종료 시간
-      lecture_close_time: string;
-      // 수업 요일
-      weekdays_bitmask: number;
-      // 최대 수강 정원
-      max_attendees: number;
-      // 강의 상세 설명
-      information: string;
+  interface FormData {
+    // 제목
+    title: string;
+    // 부제목
+    sub_title : string;
+    // 강의 소개
+    intro : string;
+    // 강의 상세 설명
+    information: string;
+    // 강의 대분류
+    category: string;
+    // 강의 중분류
+    sub_category : string;
+    // 배너 이미지
+    banner_img_url : File | null;
+    // 강의 시작일
+    start_date : string;
+    // 강의 종료일
+    end_date : string;
+    // 강의 시작 시간
+    lecture_start_time : string;
+    // 강의 종료 시간
+    lecture_end_time: string;
+    // 수업 요일
+    weekdays_bitmask: number;
+    // 최대 수강 정원
+    max_attendees: number;
     }
-    
+    const dispatch: AppDispatch = useDispatch();
   
     const [activeDays, setActiveDays] = useState<{ [key: string]: boolean }>({
       월: false,
@@ -47,27 +53,29 @@ const LectureSignUp: React.FC = () => {
     });
   
     // 데이터를 담기 위한 박스 개념, 함수를 위의 interface에 맞춰서 작성
-    const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormData>({
+      title: '',
       sub_title: '',
+      category: '국어',
       sub_category: '',
       banner_img_url: null,
       intro: '',
       start_date: new Date().toISOString().substr(0, 10),
       end_date: new Date().toISOString().substr(0, 10),
       lecture_start_time: new Date().toTimeString().substr(0, 5),
-      lecture_close_time: new Date().toTimeString().substr(0, 5),
+      lecture_end_time: new Date().toTimeString().substr(0, 5),
       weekdays_bitmask: 0,
       max_attendees: 4,
       information: '<예시> <br> 강의 대상: 초등생 4~5학년 수준의 강의입니다. <br> 학습 요구사항: 자바 객체지향 선행학습 필수 <br> 강의 설명 : 자바스크립트 언어의 기초부터 심화까지 완전 정복',
     });
     
     const WEEKDAY_VALUES = {
-      월: 64,
-      화: 32,
-      수: 16,
-      목: 8,
-      금: 4,
-      토: 2,
+      월: 1000000,
+      화: 100000,
+      수: 10000,
+      목: 1000,
+      금: 100,
+      토: 10,
       일: 1,
     }
     
@@ -116,6 +124,7 @@ const LectureSignUp: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       decode();
+      dispatch(SignUpLecture(formData))
     }
   
     return (
@@ -128,7 +137,17 @@ const LectureSignUp: React.FC = () => {
         <form onSubmit={handleSubmit}>
             <FormControl>
               <div className='flex items-center mb-5'>
-            <FormLabel htmlFor="sub_title" className="mt-3 mx-3 text-2xl ">강의 제목</FormLabel>
+            <FormLabel htmlFor="title" className="mt-3 mx-3 text-2xl ">강의 제목</FormLabel>
+            <Input 
+              type='text'
+              id='title'
+              name='title'
+              value={formData.title}
+              onChange={handleChange}
+              className="border-2 rounded-lg w-1/3 p-2 mt-3"
+              required
+              />
+            <FormLabel htmlFor="sub_title" className="mt-3 mx-3 text-2xl ">강의 부제목</FormLabel>
             <Input 
               type='text'
               id='sub_title'
@@ -138,6 +157,24 @@ const LectureSignUp: React.FC = () => {
               className="border-2 rounded-lg w-1/3 p-2 mt-3"
               required
               />
+            </div>
+            <hr></hr>
+              <div className='flex items-center mb-5'>
+            <FormLabel htmlFor="category" className="mt-3 mx-3 text-2xl">강의 대분류</FormLabel>
+            <select
+              id='category'
+              name='category'
+              value={formData.category}
+              onChange={handleChange}
+              className="border-2 rounded-lg w-1/3 p-2 mt-3"
+              >
+                <option value="1">국어</option>
+                <option value="2">수학</option>
+                <option value="3">영어</option>
+                <option value="4">코딩</option>
+                <option value="4">장원영</option>
+                <option value="4">이뻐요</option>
+              </select>
             <FormLabel htmlFor="sub_category" className="mt-3 mx-3 text-2xl">강의 중분류</FormLabel>
             <Input 
               type='text'
@@ -148,7 +185,7 @@ const LectureSignUp: React.FC = () => {
               className="border-2 rounded-lg w-1/3 p-2 mt-3"
               required
               />
-              </div>
+            </div>
             <hr></hr>
             {/* url 이니까 assets에 이미지가 등록되고, url을 받는것인지? 토론 필요 */}
             <FormLabel htmlFor="banner_img_url" className="mt-3 mx-3 text-2xl">강의 배너 이미지</FormLabel>
@@ -212,9 +249,9 @@ const LectureSignUp: React.FC = () => {
             <span className='inline-block align-middle p-3'><TbArrowsRight /></span>  
             <Input 
               type='time'
-              id='lecture_close_time'
-              name='lecture_close_time'
-              value={formData.lecture_close_time}
+              id='lecture_end_time'
+              name='lecture_end_time'
+              value={formData.lecture_end_time}
               onChange={handleChange}
               className="border-2 rounded-lg w-40 p-2 mb-5"
               required

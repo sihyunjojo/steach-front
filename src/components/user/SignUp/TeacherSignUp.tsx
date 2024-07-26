@@ -3,12 +3,16 @@ import teacher from '../../../assets/teacher.png';
 import axios from 'axios';
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SignUpTeacher } from '../../../store/TeacherAuthSlice.tsx';
+import { RootState, AppDispatch } from '../../../store.tsx';
 
 // 이진송
 const TeacherSignUp: React.FC = () => {
   // dispatch
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+  const status = useSelector((state: RootState) => state.user.status);
+  const error = useSelector((state: RootState) => state.user.error);
   // useNavigate
   const navigate = useNavigate();
   // 비밀번호 확인 검증
@@ -23,28 +27,30 @@ const TeacherSignUp: React.FC = () => {
 
   
   interface FormData {
-      userId : string;
+      username : string;
       password : string;
+      name : string;
       email : string;
-      uploadfile : File | null;
+      file?: File;
   }
 
-  // 확인이 필요한데, uploadfile에 대해서 null값으로 지정
+  // 확인이 필요한데, file에 대해서 null값으로 지정
   const [formData, setFormData] = useState<FormData>({
-      userId: '',
+      username: '',
       password: '',
+      name: '',
       email: '',
-      uploadfile: null,
+      file: undefined,
   });
 
   // 학생 회원가입 페이지와 같지만, file 추가로 조금 다름
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
 
-    if (name === 'uploadfile' && files) {
+    if (name === 'file' && files) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        uploadfile: files[0],
+        file: files[0],
       }));
     } else {
       setFormData((prevFormData) => ({
@@ -59,7 +65,8 @@ const TeacherSignUp: React.FC = () => {
     e.preventDefault();
     // 만약 8자이상 16자이하라면 axios요청 보내기
     if (formData.password.length >= 8 && formData.password.length <= 16) {
-      axiosSignUp();
+      dispatch(SignUpTeacher(formData))
+      // axiosSignUp();
       // 아니면 경고 alert
     } else {
       toast.warn("비밀번호를 다시 입력해주세요.", {
@@ -68,46 +75,56 @@ const TeacherSignUp: React.FC = () => {
     }
   };
   
-  const axiosSignUp = () => {
+  // const axiosSignUp = () => {
 
-    const formDataToSend = new FormData();
-    formDataToSend.append('userId', formData.userId);
-    formDataToSend.append('password', formData.password);
-    formDataToSend.append('email', formData.email);
-    if (formData.uploadfile) {
-      formDataToSend.append('uploadfile', formData.uploadfile);
-    }
+  //   const formDataToSend = new FormData();
+  //   formDataToSend.append('username', formData.username);
+  //   formDataToSend.append('password', formData.password);
+  //   formDataToSend.append('name', formData.name);
+  //   formDataToSend.append('email', formData.email);
+  //   if (formData.file) {
+  //     formDataToSend.append('file', formData.file);
+  //   }
 
 
-    axios.post(`API`, formDataToSend , {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then((response) => {
-        toast.success("회원가입이 완료되었습니다.", {
-          position: "top-center",
-        });
-        const info = {
-          username: formData.userId,
-          password: formData.password,
-        };
+  //   axios.post(`http://43.202.1.52:8080/api/v1/teacher/join`, formDataToSend , {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //     }
+  //   })
+  //     .then((response) => {
+  //       toast.success("회원가입이 완료되었습니다.", {
+  //         position: "top-center",
+  //       });
+  //       const info = {
+  //         username: formData.username,
+  //         password: formData.password,
+  //       };
 
-        dispatch(authActions.login(info));
-        navigate("/");
-    })
-    .catch((err) => {
-      toast.error("회원가입에 실패했습니다.", {
-        position: "top-center",
-      });
-      console.log(err);
-    })
-  } 
+  //       // dispatch(authActions.login(info));
+  //       navigate("/");
+  //   })
+  //   .catch((err) => {
+  //     toast.error("회원가입에 실패했습니다.", {
+  //       position: "top-center",
+  //     });
+  //     console.log(err);
+  //   })
+  // } 
+
+  // const test = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log(formData)
+  //   dispatch(SignUpTeacher(formData))
+  // };
     
   return (
     <>
       <ToastContainer autoClose={2000} />
-        <div>
+    {/* */}
+      {/* <button className='w-20 h-20 color-red' onClick={test}>ㅎㅇ</button> */}
+{/*     */}
+      <div>
           <img src={teacher} />
         </div>
         <form 
@@ -115,14 +132,14 @@ const TeacherSignUp: React.FC = () => {
           onSubmit={handleSubmit}
         >
           <section>
-            <label htmlFor="userId" className="text-2xl">
+            <label htmlFor="username" className="text-2xl">
               아이디
             </label>
             <input 
               type='text'
-              id='userId'
-              name='userId'
-              value={formData.userId}
+              id='username'
+              name='username'
+              value={formData.username}
               onChange={handleChange}
               className="border-2 rounded-lg w-full p-2 mb-5"
               required
@@ -171,6 +188,18 @@ const TeacherSignUp: React.FC = () => {
               </div>
           </section>
           <section>
+            <label htmlFor="name" className="text-2xl">닉네임</label>
+            <input
+              type='text'
+              id='name'
+              name='name'
+              value={formData.name}
+              onChange={handleChange}
+              className="border-2 rounded-lg w-full p-2 mb-5"
+              required
+            />
+          </section>
+          <section>
             <label htmlFor="email" className="text-2xl">이메일</label>
             <input
               type='email'
@@ -183,14 +212,13 @@ const TeacherSignUp: React.FC = () => {
             />
           </section>
           <section>
-            <label htmlFor="uploadfile" className="text-2xl">증명서</label>
+            <label htmlFor="file" className="text-2xl">증명서</label>
             <input
               type='file'
-              id='uploadfile'
-              name='uploadfile'
+              id='file'
+              name='file'
               onChange={handleChange}
               className="border-2 rounded-lg w-full p-2 mb-5"
-              required
             />
           </section>
           <button type='submit' className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white"
