@@ -10,14 +10,24 @@ interface studentFormData {
   auth_code: string;
 }
 
-// 학생 로그인 폼
-interface studentLoginForm {
+
+// 선생님 회원가입 폼 형식
+interface TeacherFormData {
+  username: string;
+  password: string;
+  name: string;
+  email: string;
+  file?: File;
+}
+
+// 통합 로그인 폼
+interface LoginForm {
   username: string;
   password: string;
 }
 
-// 학생 로그인 반환 폼
-interface studentLoginReturnForm {
+// 통합 로그인 반환 폼
+interface LoginReturnForm {
   username: string;
   name: string;
   email: string;
@@ -78,13 +88,51 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
   }
 );
 
+// 
+
+// Thunks
+
+export const SignUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
+  "teacher/signup",
+  async (newUserData) => {
+    const formData = new FormData();
+    formData.append('teacherSignUpDto', JSON.stringify({
+      username: newUserData.username,
+      password: newUserData.password,
+      name: newUserData.name,
+      email: newUserData.email
+    }));
+    if (newUserData.file) {
+      formData.append("file", newUserData.file);
+    }
+      // FormData에 잘 추가되었는지 확인
+    const response = await axios.post("http://43.202.1.52:8080/api/v1/teacher/join", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  }
+);
+
+
+
+
+
+
+
+
+
+
+// 
+
 // 통합 로그인
 export const loginSteach = createAsyncThunk<
-  studentLoginReturnForm,
-  studentLoginForm
+  LoginReturnForm,
+  LoginForm
 >("login", async (loginFormData, thunkAPI) => {
   try {
-    const formDataToSend: studentLoginForm = {
+    const formDataToSend: LoginForm = {
       username: loginFormData.username,
       password: loginFormData.password,
     };
@@ -99,7 +147,7 @@ export const loginSteach = createAsyncThunk<
       }
     );
 
-    const data: studentLoginReturnForm = {
+    const data: LoginReturnForm = {
       username: response.data.username,
       name: response.data.name,
       email: response.data.email,

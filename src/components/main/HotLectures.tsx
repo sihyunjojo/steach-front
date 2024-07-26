@@ -31,8 +31,8 @@ export default function HotLectures() {
   const [isEnd, setIsEnd] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(getLectures)
-
+  // console.log(getLectures)
+  
   const a = dispatch(getLectures());
 
   console.log(a)
