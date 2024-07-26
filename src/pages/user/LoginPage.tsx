@@ -1,13 +1,14 @@
 import { useState } from "react";
 import LoginBannerBgImg from "../../assets/banner.jpg";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useTransform } from "framer-motion";
-import login from "../../api/loginApi";
+import { loginSteach } from "../../store/AuthSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
 
 // 이진송
 // 디자인 변경 필요함
 const Login: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   // 학생 상태
   // 선생님 상태
@@ -33,12 +34,12 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const loginFormData = {
+    const loginFormData: FormData = {
       username: formData.username,
       password: formData.password,
     };
 
-    const loginResult = login(loginFormData);
+    const loginResult = dispatch(loginSteach(loginFormData));
 
     console.log(loginResult);
     navigate("/");
