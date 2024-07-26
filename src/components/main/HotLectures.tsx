@@ -49,7 +49,6 @@ export default function HotLectures() {
         console.error("Failed to fetch popular curricula:", error);
       }
     };
-
     getData();
   }, []);
 
