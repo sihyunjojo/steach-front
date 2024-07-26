@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Heading,
@@ -15,6 +15,9 @@ import "swiper/swiper-bundle.css";
 import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { getLectures } from "../../store/lectureslist";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 // 김헌규 제작
 // 이진송 수정 - 타입스크립트에 맞춰서 변경함
@@ -26,6 +29,13 @@ export default function HotLectures() {
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const dispatch = useDispatch();
+
+  console.log(getLectures)
+
+  const a = dispatch(getLectures());
+
+  console.log(a)
 
   const samples = [
     {

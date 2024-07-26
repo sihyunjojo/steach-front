@@ -221,8 +221,11 @@ const TeacherSignUp: React.FC = () => {
               className="border-2 rounded-lg w-full p-2 mb-5"
             />
           </section>
-          <button type='submit' className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white"
-          onSubmit={()=>{}}>회원가입</button>
+        <button
+          type='submit'
+          className="w-full text-center bg-orange-300 p-2 rounded-lg hover:bg-orange-400 hover:text-white"
+        >
+          회원가입</button>
         </form>
     </>
   );

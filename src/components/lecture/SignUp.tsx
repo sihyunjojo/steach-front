@@ -56,7 +56,7 @@ const LectureSignUp: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
       title: '',
       sub_title: '',
-      category: '국어',
+      category: 'KOREAN',
       sub_category: '',
       banner_img_url: null,
       intro: '',
@@ -137,7 +137,7 @@ const LectureSignUp: React.FC = () => {
         <form onSubmit={handleSubmit}>
             <FormControl>
               <div className='flex items-center mb-5'>
-            <FormLabel htmlFor="title" className="mt-3 mx-3 text-2xl ">강의 제목</FormLabel>
+            <FormLabel htmlFor="title" className="mt-3 ml-3 mr-8 text-2xl ">강의 제목</FormLabel>
             <Input 
               type='text'
               id='title'
@@ -168,12 +168,14 @@ const LectureSignUp: React.FC = () => {
               onChange={handleChange}
               className="border-2 rounded-lg w-1/3 p-2 mt-3"
               >
-                <option value="1">국어</option>
-                <option value="2">수학</option>
-                <option value="3">영어</option>
-                <option value="4">코딩</option>
-                <option value="4">장원영</option>
-                <option value="4">이뻐요</option>
+                <option value="1">KOREAN</option>
+                <option value="2">MATH</option>
+                <option value="3">FOREIGN_LANGUAGE</option>
+                <option value="4">SCIENCE</option>
+                <option value="5">ENGINEERING</option>
+                <option value="6">ARTS_AND_PHYSICAL</option>
+                <option value="7">EDUCATION</option>
+                <option value="8">ETC</option>
               </select>
             <FormLabel htmlFor="sub_category" className="mt-3 mx-3 text-2xl">강의 중분류</FormLabel>
             <Input 
