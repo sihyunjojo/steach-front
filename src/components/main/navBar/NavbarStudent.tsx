@@ -8,7 +8,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { authActions } from "../../../store/AuthSlice";
+import { authActions } from "../../../store/userInfo/AuthSlice";
 
 // Props 타입 정의
 interface Props {
