@@ -109,6 +109,7 @@ export const SignUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
   }
 );
 
+
 // 통합 로그인
 export const loginSteach = createAsyncThunk<
   LoginReturnForm,
@@ -144,6 +145,9 @@ export const loginSteach = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+
+
 const studentSlice = createSlice({
   name: "user",
   initialState,

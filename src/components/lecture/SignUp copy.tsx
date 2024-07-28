@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import CKEditor from '../main/FroalaEditor.tsx'
+import CKEditor from '../main/CKEditor'
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { TbArrowsRight } from "react-icons/tb";
+import he from 'he';
 import checkimg from '../../assets/checked.jpg'
 import uncheckimg from '../../assets/unchecked.jpg'
 import banner from '../../assets/banner2.jpg'
 import { SignUpLecture } from '../../store/lecturesSlice'
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../store.tsx'
+import parse from 'html-react-parser';
 
 const LectureSignUp: React.FC = () => {
     
@@ -41,8 +43,7 @@ const LectureSignUp: React.FC = () => {
     }
     const dispatch: AppDispatch = useDispatch();
   
-    type Weekday = '월' | '화' | '수' | '목' | '금' | '토' | '일';
-    const [activeDays, setActiveDays] = useState<{ [key in Weekday]: boolean }>({
+    const [activeDays, setActiveDays] = useState<{ [key: string]: boolean }>({
       월: false,
       화: false,
       수: false,
@@ -66,16 +67,16 @@ const LectureSignUp: React.FC = () => {
       lecture_end_time: new Date().toTimeString().substr(0, 5),
       weekdays_bitmask: 0,
       max_attendees: 4,
-      information: '<예시> 강의 대상: 초등생 4~5학년 수준의 강의입니다. <br>학습 요구사항: 자바 객체지향 선행학습 필수  <br>강의 설명 : 자바스크립트 언어의 기초부터 심화까지 완전 정복',
+      information: '<예시> <br> 강의 대상: 초등생 4~5학년 수준의 강의입니다. <br> 학습 요구사항: 자바 객체지향 선행학습 필수 <br> 강의 설명 : 자바스크립트 언어의 기초부터 심화까지 완전 정복',
     });
     
-    const WEEKDAY_VALUES: Record<Weekday, number> = {
-      월: 64,
-      화: 32,
-      수: 16,
-      목: 8,
-      금: 4,
-      토: 2,
+    const WEEKDAY_VALUES = {
+      월: 1000000,
+      화: 100000,
+      수: 10000,
+      목: 1000,
+      금: 100,
+      토: 10,
       일: 1,
     }
     
@@ -91,61 +92,52 @@ const LectureSignUp: React.FC = () => {
     const handleEditorChange = (data: string) => {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        information: data,
+        intro: data,
       }));
       console.log(data)
     };
   
-    const handleCheckboxChange = (day: Weekday) => {
-      setActiveDays((prevActiveDays) => {
-        const newActiveDays = {
-          ...prevActiveDays,
-          [day]: !prevActiveDays[day],
-        };
-        const newBitmask = Object.keys(newActiveDays).reduce((bitmask, key) => {
-          const weekday = key as Weekday;
-          if (newActiveDays[weekday]) {
-            return bitmask + WEEKDAY_VALUES[weekday];
-          }
-          return bitmask;
-        }, 0);
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          weekdays_bitmask: newBitmask,
-        }));
-        return newActiveDays;
-      });
+    const handleCheckboxChange = (day: string) => {
+      const value = WEEKDAY_VALUES[day as keyof typeof WEEKDAY_VALUES];
+      const isActive = !activeDays[day];
+  
+      setActiveDays((prevActiveDays) => ({
+        ...prevActiveDays,
+        [day]: isActive,
+      }));
+  
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        weekdays_bitmask: isActive
+          ? prevFormData.weekdays_bitmask + value
+          : prevFormData.weekdays_bitmask - value,
+      }));
     };
-
-  const formatBitmask = (bitmask: number): string => {
-    return bitmask.toString(2).padStart(7, '0');
-  };
-
-  const stripHtmlTags = (htmlContent: string): string => {
-    const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
-    const textContent = Array.from(doc.body.childNodes).map(node => {
-      if (node.nodeName === 'BR') {
-        return '\n';
-      } else if (node.nodeName === 'P') {
-        return node.textContent + '\n';
-      } else {
-        return node.textContent;
-      }
-    }).join('');
-    return textContent.trim();
-  };
+    
+  //   const decode = () => {
+  //     const decodedData = he.decode(formData.intro);
+  //     console.log(formData)
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       intro: decodedData
+  //     }));
+  // }
+  
+  const decode = (e:string) => {
+    const a = e.replace(/<\/?[^>]+(>|$)/g, "");
+    console.log(a)
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      intro: a,
+    }));
+    console.log(formData.intro)
+  }
     
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      const formDataToSend = {
-        ...formData,
-        intro: stripHtmlTags(formData.intro),
-        information: stripHtmlTags(formData.information),
-        weekdays_bitmask: formatBitmask(formData.weekdays_bitmask)
-      };
+      decode(formData.intro);
       console.log(formData)
-      console.log(formDataToSend)
-      dispatch(SignUpLecture(formDataToSend))
+      // dispatch(SignUpLecture(formData))
     }
   
     return (
@@ -223,14 +215,9 @@ const LectureSignUp: React.FC = () => {
               />
             <hr></hr>
             <FormLabel htmlFor="intro" className="my-3 mx-3 text-2xl">강의 소개</FormLabel>
-            <Input 
-              type='text'
-              id='intro'
-              name='intro'
-              value={formData.intro}
-              onChange={handleChange}
-              className="border-2 rounded-lg w-1/3 p-2 mt-3"
-              required
+            <CKEditor 
+              data={formData.intro} 
+              onChange={handleEditorChange}
               />
               <hr className='my-3'></hr>
               <FormLabel htmlFor="datetime" className="mt-3 mx-3 text-2xl">강의 커리큘럼</FormLabel>
@@ -292,8 +279,8 @@ const LectureSignUp: React.FC = () => {
                 {Object.keys(WEEKDAY_VALUES).map((day) => (
                   <label key={day}>
                     <img
-                      src={activeDays[day as Weekday] ? checkimg : uncheckimg}
-                      onClick={() => handleCheckboxChange(day as Weekday)}
+                      src={activeDays[day] ? checkimg : uncheckimg}
+                      onClick={() => handleCheckboxChange(day)}
                       style={{ cursor: 'pointer', width: '80px', height: '80px', marginRight: '8px' }}
                       alt={day}
                     />
