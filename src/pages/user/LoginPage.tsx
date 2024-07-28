@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LoginBannerBgImg from "../../assets/banner.jpg";
 import { useNavigate } from "react-router-dom";
-import { loginSteach } from "../../store/AuthSlice";
+import { loginSteach } from "../../store/userInfo/AuthSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 

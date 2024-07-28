@@ -85,7 +85,6 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
   }
 );
 
-
 // 선생님 회원가입
 export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
   "teacher/signup",
@@ -118,7 +117,6 @@ export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
 );
 
 // 통합 로그인
-
 export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
   "login",
   async (loginFormData, thunkAPI) => {
@@ -152,7 +150,6 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
         return thunkAPI.rejectWithValue(error.response.data);
       }
       return thunkAPI.rejectWithValue(error);
-
     }
   }
 );
@@ -182,7 +179,7 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message || null;
       })
-      // 선생님 addCase
+      // 선생님 관련 addCase
       .addCase(signUpTeacher.pending, (state) => {
         state.status = "loading";
       })
@@ -193,6 +190,7 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message || null;
       })
+      // login 관련 addCase
       .addCase(loginSteach.pending, (state) => {
         state.status = "loading";
       })
@@ -203,6 +201,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.role = action.payload.role;
         state.username = action.payload.username;
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(loginSteach.rejected, (state, action) => {
         state.status = "failed";
@@ -214,4 +213,3 @@ const authSlice = createSlice({
 export const authActions = authSlice.actions;
 
 export default authSlice.reducer;
-

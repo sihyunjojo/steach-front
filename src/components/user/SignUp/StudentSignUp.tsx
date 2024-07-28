@@ -3,7 +3,7 @@ import student from "../../../assets/student.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpStudent, loginSteach } from "../../../store/AuthSlice";
+import { signUpStudent, loginSteach } from "../../../store/userInfo/AuthSlice";
 import { AppDispatch, RootState } from "../../../store";
 import SpinnerComponent from "../../main/Spinner";
 

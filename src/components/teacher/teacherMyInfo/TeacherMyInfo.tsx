@@ -1,36 +1,30 @@
+import TeacherUpdateInfoModal from "./TeacherUpdateInfoModal";
+import { AppDispatch, RootState } from "../../../store";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { teacherInfo } from "../../../store/userInfo/profileSlice";
+import TeacherMyInfoForm from "./TeacherMyInfoForm";
+// import { RootState } from "../../../store";
+
 const TeacherMyInfo: React.FC = () => {
+  // store에서 password 가져오기
+  // const authorizedPassword = useSelector((state:RootState) => state.auth.)
+  // 내정보 수정 여부
+  const [isUpdateInfo, setIsUpdateInfo] = useState(false);
+
+  // 비밀번호 확인이 된 후 내 정보 수정 폼을 띄우기 위한 핸들러 함수
+  const handleIsUpdateInfo = (password) => {
+    // 입력한 password와
+    setIsUpdateInfo(true);
+  };
+
+  // 비밀번호를 확인하여 확인이 되면 내정보 폼을 띄워주는 용도
   return (
-    <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto">
-      <form>
-        <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">내정보</h1>
-        <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">이름</label>
-          <p>선생님 이름</p>
-        </div>
-        <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">이메일</label>
-          <p>선생님 이메일</p>
-        </div>
-        <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">
-            간단한 소개 문구
-          </label>
-          <p>소개 문구</p>
-        </div>
-        <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">학력</label>
-          <p>학력</p>
-        </div>
-        <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">전공분야</label>
-          <p>전공분야</p>
-        </div>
-        <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">봉사 시간</label>
-          <p>10시간</p>
-        </div>
-      </form>
-    </div>
+    <>
+      {!isUpdateInfo && (
+        <TeacherMyInfoForm handleIsUpdateInfoSubmit={handleIsUpdateInfo} />
+      )}
+    </>
   );
 };
 
