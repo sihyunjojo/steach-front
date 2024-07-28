@@ -17,7 +17,6 @@ export const fetchLatestCurricula = async () => {
                 currentPageNumber: 1,
             },
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -35,7 +34,6 @@ export const fetchPopularCurricula = async () => {
                 currentPageNumber: 1,
             },
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);

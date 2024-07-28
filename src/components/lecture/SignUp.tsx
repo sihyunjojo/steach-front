@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CKEditor from '../main/FroalaEditor.tsx'
+import Froala from '../main/FroalaEditor.tsx'
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { TbArrowsRight } from "react-icons/tb";
 import checkimg from '../../assets/checked.jpg'
@@ -320,7 +320,7 @@ const LectureSignUp: React.FC = () => {
           
           
           <FormLabel htmlFor="datetime" className="text-2xl">강의 상세 설명</FormLabel>
-            <CKEditor
+            <Froala
               data={formData.information} 
               onChange={handleEditorChange}
             />

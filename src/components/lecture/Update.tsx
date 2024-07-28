@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CKEditor from '../main/CKEditor'
+import Froala from '../main/FroalaEditor.tsx'
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { TbArrowsRight } from "react-icons/tb";
 import he from 'he';
@@ -166,7 +166,7 @@ const LectureUpdate: React.FC = () => {
             />
           <hr></hr>
           <FormLabel htmlFor="intro" className="my-3 mx-3 text-2xl">강의 소개</FormLabel>
-          <CKEditor 
+          <Froala 
             data={formData.intro} 
             onChange={handleEditorChange}
             />
@@ -258,7 +258,7 @@ const LectureUpdate: React.FC = () => {
         
         
         <FormLabel htmlFor="datetime" className="text-2xl">강의 상세 설명</FormLabel>
-          <CKEditor
+          <Froala
             data={formData.information} 
             onChange={handleEditorChange}
           />
