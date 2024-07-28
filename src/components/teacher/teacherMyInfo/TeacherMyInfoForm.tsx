@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { teacherInfo } from "../../../store/userInfo/profileSlice";
 
 interface TeacherMyInfoProps {
-  handleIsUpdateInfoSubmit: () => void;
+  handleIsUpdateInfoSubmit: (password: string) => void;
 }
 
 const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface TeacherUpdateInfoModalProps {
-  handleIsUpdateInfoSubmit: () => void;
+  handleIsUpdateInfoSubmit: (password: string) => void;
 }
 
 const TeacherUpdateInfoModal: React.FC<TeacherUpdateInfoModalProps> = ({
@@ -19,6 +19,13 @@ const TeacherUpdateInfoModal: React.FC<TeacherUpdateInfoModalProps> = ({
     setPassordInput(event.target.value);
   };
 
+  // 비밀번호 확인 요청 메서드
+  const handlePasswordCheck = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleIsUpdateInfoSubmit(passwordInput);
+    closeModal();
+  };
+
   return (
     <div className="absolute top-7 right-5">
       <button
@@ -29,7 +36,7 @@ const TeacherUpdateInfoModal: React.FC<TeacherUpdateInfoModalProps> = ({
       </button>
 
       {isOpen && (
-        <form onSubmit={handleIsUpdateInfoSubmit}>
+        <form onSubmit={handlePasswordCheck}>
           <div
             className="relative z-10"
             aria-labelledby="modal-title"
@@ -76,6 +83,7 @@ const TeacherUpdateInfoModal: React.FC<TeacherUpdateInfoModalProps> = ({
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                      onClick={handlePasswordCheck}
                     >
                       확인
                     </button>

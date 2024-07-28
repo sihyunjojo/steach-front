@@ -39,9 +39,7 @@ export const teacherInfo = createAsyncThunk<teacherInfo>(
   "teacher/get",
   async (_, thunkAPI) => {
     try {
-      const token = localStorage.getItem("token") ?? "";
-      const response = await teacherInfoGet(token);
-      console.log(response);
+      const response = await teacherInfoGet();
       return response;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

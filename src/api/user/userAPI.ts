@@ -3,8 +3,29 @@ import { teacherInfo } from "../../store/userInfo/profileSlice";
 
 const BASE_URL = "http://43.202.1.52:8080";
 
+const token = localStorage.getItem("token");
+
+// 비밀번호 체크
+export const passwordCheck = async (password: string) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/check/password`,
+      { password },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 선생님 정보 조회
-export const teacherInfoGet = async (token: string) => {
+export const teacherInfoGet = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/api/v1/teachers`, {
       headers: {

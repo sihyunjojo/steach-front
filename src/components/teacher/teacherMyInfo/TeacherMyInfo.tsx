@@ -1,21 +1,21 @@
-import TeacherUpdateInfoModal from "./TeacherUpdateInfoModal";
-import { AppDispatch, RootState } from "../../../store";
-import { useSelector } from "react-redux";
 import { useState } from "react";
-import { teacherInfo } from "../../../store/userInfo/profileSlice";
 import TeacherMyInfoForm from "./TeacherMyInfoForm";
-// import { RootState } from "../../../store";
+import { passwordCheck } from "../../../api/user/userAPI";
+import TeacherMyInfoUpdateForm from "./TeacherMyInfoUpdateForm";
 
 const TeacherMyInfo: React.FC = () => {
-  // store에서 password 가져오기
-  // const authorizedPassword = useSelector((state:RootState) => state.auth.)
   // 내정보 수정 여부
   const [isUpdateInfo, setIsUpdateInfo] = useState(false);
 
   // 비밀번호 확인이 된 후 내 정보 수정 폼을 띄우기 위한 핸들러 함수
-  const handleIsUpdateInfo = (password) => {
-    // 입력한 password와
-    setIsUpdateInfo(true);
+  const handleIsUpdateInfo = async (password: string) => {
+    const trueOrFalse = await passwordCheck(password);
+
+    if (trueOrFalse) {
+      setIsUpdateInfo(true);
+    } else {
+      console.log("에러가 발생했습니다.");
+    }
   };
 
   // 비밀번호를 확인하여 확인이 되면 내정보 폼을 띄워주는 용도
@@ -24,6 +24,7 @@ const TeacherMyInfo: React.FC = () => {
       {!isUpdateInfo && (
         <TeacherMyInfoForm handleIsUpdateInfoSubmit={handleIsUpdateInfo} />
       )}
+      {isUpdateInfo && <TeacherMyInfoUpdateForm />}
     </>
   );
 };
