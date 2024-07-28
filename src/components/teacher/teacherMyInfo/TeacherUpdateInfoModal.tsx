@@ -1,14 +1,23 @@
 import { useState } from "react";
 
-const TeacherUpdateInfoModal: React.FC = () => {
+interface TeacherUpdateInfoModalProps {
+  handleIsUpdateInfoSubmit: () => void;
+}
+
+const TeacherUpdateInfoModal: React.FC<TeacherUpdateInfoModalProps> = ({
+  handleIsUpdateInfoSubmit,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  // 비밀번호 입력 바인딩
   const [passwordInput, setPassordInput] = useState("");
 
-  
+  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassordInput(event.target.value);
+  };
 
   return (
     <div className="absolute top-7 right-5">
@@ -20,7 +29,7 @@ const TeacherUpdateInfoModal: React.FC = () => {
       </button>
 
       {isOpen && (
-        <form>
+        <form onSubmit={handleIsUpdateInfoSubmit}>
           <div
             className="relative z-10"
             aria-labelledby="modal-title"
@@ -46,9 +55,11 @@ const TeacherUpdateInfoModal: React.FC = () => {
                         </h3>
                         <div className="mt-4">
                           <input
-                            type="text"
+                            type="password"
                             className="p-2 border-2 rounded-md"
                             placeholder="비밀번호를 입력해주세요."
+                            value={passwordInput}
+                            onChange={handlePasswordInput}
                           />
                         </div>
                       </div>

@@ -5,7 +5,13 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { teacherInfo } from "../../../store/userInfo/profileSlice";
 
-const TeacherMyInfoForm: React.FC = () => {
+interface TeacherMyInfoProps {
+  handleIsUpdateInfoSubmit: () => void;
+}
+
+const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({
+  handleIsUpdateInfoSubmit,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(teacherInfo());
@@ -51,10 +57,12 @@ const TeacherMyInfoForm: React.FC = () => {
         </div>
         <div className="my-4 p-2">
           <label className="my-2 text-2xl text-lightNavy">봉사 시간</label>
-          <p>{teacherData?.volunteer_time}</p>
+          <p>{teacherData?.volunteer_time} 시간</p>
         </div>
       </form>
-      <TeacherUpdateInfoModal />
+      <TeacherUpdateInfoModal
+        handleIsUpdateInfoSubmit={handleIsUpdateInfoSubmit}
+      />
     </div>
   );
 };
