@@ -195,8 +195,6 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(loginSteach.fulfilled, (state, action) => {
-        console.log(action);
-        console.log(state);
         state.status = "succeeded";
         state.token = action.payload.token;
         state.role = action.payload.role;
