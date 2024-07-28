@@ -1,8 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import axios from "axios";
 
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
+function aa () {
+  const a = useSelector((state: Rootstate) => state) 
+  console.log(a)
+}
+
 export interface Lecture {
     // 제목
     title: string;
@@ -27,7 +34,7 @@ export interface Lecture {
     // 강의 종료 시간
     lecture_end_time: string;
     // 수업 요일
-    weekdays_bitmask: number;
+    weekdays_bitmask: string;
     // 최대 수강 정원
     max_attendees: number;
 }
@@ -45,7 +52,7 @@ const initialState: LecturesState = {
 };
 
 // Thunks
-const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxd3F3IiwiaWF0IjoxNzIxOTc3MDg2LCJleHAiOjE3MjE5ODkwODYsInRva2VuX3R5cGUiOiJhY2Nlc3MifQ.-6AbYIRkpJ8UYt2sFeMiRLdHpPFajAhDKhYVGXh_sKw"
+const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxdyIsImlhdCI6MTcyMjE2NjkyMiwiZXhwIjoxNzIyMTc4OTIyLCJ0b2tlbl90eXBlIjoiYWNjZXNzIn0.HbuhTjuzEkTl5g2D0QnRdElN8eEHQccKQBllVGJoHdw"
 
 export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
   "lecture/signup",

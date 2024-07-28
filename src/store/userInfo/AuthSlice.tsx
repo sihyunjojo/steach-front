@@ -116,6 +116,7 @@ export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
   }
 );
 
+
 // 통합 로그인
 export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
   "login",
@@ -152,10 +153,19 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
       return thunkAPI.rejectWithValue(error);
     }
   }
+<<<<<<< HEAD:src/store/AuthSlice.tsx
+});
+
+
+
+const studentSlice = createSlice({
+  name: "user",
+=======
 );
 
 const authSlice = createSlice({
   name: "auth",
+>>>>>>> upstream/develop:src/store/userInfo/AuthSlice.tsx
   initialState,
   reducers: {
     logout(state) {
