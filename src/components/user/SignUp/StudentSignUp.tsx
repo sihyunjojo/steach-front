@@ -3,7 +3,7 @@ import student from "../../../assets/student.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpStudent, loginSteach } from "../../../store/AuthSlice";
+import { signUpStudent, loginSteach } from "../../../store/userInfo/AuthSlice";
 import { AppDispatch, RootState } from "../../../store";
 import SpinnerComponent from "../../main/Spinner";
 
@@ -16,7 +16,7 @@ const StudentSignUp: React.FC = () => {
   const navigate = useNavigate();
 
   // 회원 인증 상태 및 에러
-  const { status } = useSelector((state: RootState) => state.studentAuth);
+  const { status } = useSelector((state: RootState) => state.auth);
 
   // FormData 타입 포함해서 만듦
   interface FormData {

@@ -2,20 +2,24 @@ import { useState } from "react";
 // 김헌규 - tostify 추가
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+//import TeacherUpdateInfoModal from "./teacherMyInfo/TeacherUpdateInfoModal";
+import TeacherMyInfo from "./teacherMyInfo/TeacherMyInfo";
 
+interface FormData {
+  name: string;
+  passwordChange: string;
+  confirmPasswordChange: string;
+  email: string;
+  lectureField: string;
+  educationalBackground: string;
+  introduce: string;
+}
 // 김헌규 - 기존 자바스크립트 방식의 코드를 타입스크립트 방식으로 수정 후 핸들러 함수를 줄였음.
 // 김헌규 - 입력 폼 크기 조정 및 항목 수정 완료
 const UpdateMyInfo: React.FC = () => {
-  interface FormData {
-    name: string;
-    passwordChange: string;
-    confirmPasswordChange: string;
-    email: string;
-    lectureField: string;
-    educationalBackground: string;
-    introduce: string;
-  }
-
+  const username = useSelector((state: RootState) => state.auth);
   const password = "1q2w3e4r";
   // 비밀번호 확인 상태
   const [checkPassword, setCheckPassword] = useState(false);
@@ -74,25 +78,29 @@ const UpdateMyInfo: React.FC = () => {
     <div>
       <ToastContainer />
       {!checkPassword && (
-        <div className="flex flex-col items-center mt-24">
-          <h1 className="text-4xl m-2">비밀번호 확인</h1>
-          <div className="w-96 relative m-2">
-            <input
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-              className="p-2 w-full text-base border-2 rounded-lg border-hardBeige"
-              value={inputPassword}
-              onChange={handleInputPassword}
-              onKeyDown={handleCheckPassword}
-            />
-            <button
-              onClick={handleCheckPassword}
-              className="absolute right-2 rounded-xl p-2 w-14 h-8 text-sm bg-orange-200 inset-y-1 hover:text-white hover:bg-orange-300"
-            >
-              확인
-            </button>
-          </div>
+        <div className="relative">
+          <TeacherMyInfo />
+          {/* <TeacherUpdateInfoModal /> */}
         </div>
+        // <div className="flex flex-col items-center mt-24">
+        //   <h1 className="text-4xl m-2">비밀번호 확인</h1>
+        //   <div className="w-96 relative m-2">
+        //     <input
+        //       type="password"
+        //       placeholder="비밀번호를 입력해주세요."
+        //       className="p-2 w-full text-base border-2 rounded-lg border-hardBeige"
+        //       value={inputPassword}
+        //       onChange={handleInputPassword}
+        //       onKeyDown={handleCheckPassword}
+        //     />
+        //     <button
+        //       onClick={handleCheckPassword}
+        //       className="absolute right-2 rounded-xl p-2 w-14 h-8 text-sm bg-orange-200 inset-y-1 hover:text-white hover:bg-orange-300"
+        //     >
+        //       확인
+        //     </button>
+        //   </div>
+        // </div>
       )}
       {/* 이름, 이메일, 비밀번호, 비밀번호 변경 확인, 강사 소개, 강의 분야, 학력 */}
       {checkPassword && (
