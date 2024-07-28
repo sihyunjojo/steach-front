@@ -14,8 +14,23 @@ import CurriculumList from "./components/teacher/CurriculumList.tsx";
 import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RootState } from "./store.tsx";
+import { useEffect } from "react";
+import { checkLoginStatus } from "../src/store/userInfo/AuthSlice.tsx"
 
 const App: React.FC = () => {
+  const { token, status } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!token && localStorage.getItem('auth')) {
+      dispatch(checkLoginStatus());
+    }
+  }, [dispatch, token]) 
+
+
   return (
     <div>
       <Navbar />

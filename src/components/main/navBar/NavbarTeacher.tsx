@@ -10,6 +10,9 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../../store/userInfo/AuthSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { logout } from "../../../store/userInfo/AuthSlice"
 
 // Props 타입 정의
 interface Props {
@@ -17,19 +20,23 @@ interface Props {
 }
 
 const NavbarTeacher: React.FC<Props> = ({ username }) => {
-  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+    const logoutbtn = () => {
+      dispatch(logout())
+    }
+
   // 로그아웃 요청 함수
-  const logout = () => {
-    dispatch(authActions.logout());
-    navigate("/");
-  };
+  // const logout = () => {
+  //   dispatch(authActions.logout());
+  //   navigate("/");
+  // };
 
   return (
     <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
@@ -79,7 +86,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
 
         <button
           className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
-          onClick={logout}
+          onClick={logoutbtn}
         >
           로그아웃
         </button>

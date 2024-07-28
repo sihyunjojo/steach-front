@@ -116,7 +116,6 @@ export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
   }
 );
 
-
 // 통합 로그인
 export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
   "login",
@@ -144,7 +143,7 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
         token: response.data.token,
         role: response.data.role,
       };
-      console.log(data);
+      localStorage.setItem("auth", JSON.stringify(data));
       return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -153,29 +152,37 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
       return thunkAPI.rejectWithValue(error);
     }
   }
-<<<<<<< HEAD:src/store/AuthSlice.tsx
-});
+);
 
+export const logout = createAsyncThunk(
+  'user/logout',
+  async (_, thunkAPI) => {
+    // 로컬 스토리지에서 사용자 정보 삭제
+    localStorage.removeItem('auth');
+    return {};
+  }
+);
 
-
-const studentSlice = createSlice({
-  name: "user",
-=======
+export const checkLoginStatus = createAsyncThunk(
+  'user/checkLoginStatus',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const localStorageData = localStorage.getItem('auth');
+      if (!localStorageData) {
+        return rejectWithValue('No user data in local storage');
+      }
+      const userData = JSON.parse(localStorageData);
+      return userData; // 로컬 스토리지에서 불러온 사용자 데이터를 반환
+    } catch (error) {
+      return rejectWithValue('Failed to parse user data');
+    }
+  }
 );
 
 const authSlice = createSlice({
   name: "auth",
->>>>>>> upstream/develop:src/store/userInfo/AuthSlice.tsx
   initialState,
-  reducers: {
-    logout(state) {
-      state.role = "";
-      state.status = "idle";
-      state.token = "";
-      state.username = "";
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       // 학생 관련 addCase
@@ -205,17 +212,32 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(loginSteach.fulfilled, (state, action) => {
-        console.log(action);
-        console.log(state);
         state.status = "succeeded";
         state.token = action.payload.token;
         state.role = action.payload.role;
         state.username = action.payload.username;
-        localStorage.setItem("token", action.payload.token);
       })
       .addCase(loginSteach.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
+      })
+      // logout 관련 addCase
+      .addCase(logout.fulfilled, (state, action) => {
+        state.role = '';
+        state.token = '';
+        state.username = '';
+        state.status = 'idle';
+      })
+      // login 상태 확인 addCase
+      .addCase(checkLoginStatus.fulfilled, (state, action) => {
+        state.role = action.payload.role;
+        state.token = action.payload.token;
+        state.username = action.payload.username;
+        state.status = 'succeeded';
+      })
+      .addCase(checkLoginStatus.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
       });
   },
 });

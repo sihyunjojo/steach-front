@@ -14,7 +14,8 @@ import "swiper/swiper-bundle.css";
 import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { fetchLatestCurricula } from "/src/api/main/mainAPI";
+import { fetchLatestCurricula } from "../../api/main/mainAPI";
+
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -41,7 +42,6 @@ export default function LatestLectures() {
       try {
         const data = await fetchLatestCurricula();
         setCurricula(data.curricula);
-        console.log(data.curricula);
       } catch (error) {
         console.error("Failed to fetch latest curricula:", error);
       }

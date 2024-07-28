@@ -5,10 +5,10 @@ import axios from "axios";
 
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
-function aa () {
-  const a = useSelector((state: Rootstate) => state) 
-  console.log(a)
-}
+// function aa () {
+//   const a = useSelector((state: Rootstate) => state) 
+//   console.log(a)
+// }
 
 export interface Lecture {
     // 제목
