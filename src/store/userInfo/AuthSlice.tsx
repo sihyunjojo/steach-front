@@ -158,7 +158,8 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   // 로컬 스토리지에서 사용자 정보 삭제
   localStorage.removeItem("auth");
-  await thunkAPI.dispatch(reset()); // 프로필 상태 초기화
+  // 프로필 상태 초기화
+  await thunkAPI.dispatch(reset());
 });
 
 const authSlice = createSlice({

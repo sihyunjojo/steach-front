@@ -14,7 +14,7 @@ import { FaPencilAlt, FaHistory } from "react-icons/fa";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
 import MyLecturePreference from "../../components/student/MyLecturePreference";
 import CareerRecommendation from "../../components/student/CareerRecommendation";
-import UpdateMyInfo from "../../components/student/UpdateMyInfo";
+import UpdateMyInfo from "../../components/student/studentMyInfo/StudentMyInfo";
 import ScheduledLectures from "../../components/student/MyLecture";
 
 const ProfilePage: React.FC = () => {

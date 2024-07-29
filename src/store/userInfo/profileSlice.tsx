@@ -3,11 +3,14 @@ import axios from "axios";
 import { teacherInfoGet } from "../../api/user/userAPI";
 import { teacherInfoUpdate } from "../../api/user/userAPI";
 import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/TeacherMyInfoUpdateForm";
+import { StudentInfoUpdateForm } from "../../components/student/studentMyInfo/StudentMyInfoUpdateForm";
+import { studentInfoGet } from "../../api/user/userAPI";
+import { studentInfoUpdate } from "../../api/user/userAPI";
 
 // 학생 정보 형식
 export interface studentInfo {
   username: string;
-  name: string;
+  nickname: string;
   email: string;
 }
 
@@ -70,6 +73,40 @@ export const teacherInfoPatch = createAsyncThunk<
   }
 });
 
+// 학생 정보 조회
+export const studentInfo = createAsyncThunk<studentInfo>(
+  "student/get",
+  async (_, thunkAPI) => {
+    try {
+      const response = await studentInfoGet();
+
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 학생 정보 수정
+export const studentInfoPatch = createAsyncThunk<
+  studentInfo,
+  StudentInfoUpdateForm
+>("student/patch", async (updateFormData, thunkAPI) => {
+  try {
+    const response = await studentInfoUpdate(updateFormData);
+
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -100,6 +137,23 @@ const profileSlice = createSlice({
         state.info = teacherData;
       })
       .addCase(teacherInfo.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || null;
+      })
+      // 학생 프로필 정보 get
+      .addCase(studentInfo.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(studentInfo.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const studentData: studentInfo = {
+          username: action.payload.username,
+          nickname: action.payload.nickname,
+          email: action.payload.email,
+        };
+        state.info = studentData;
+      })
+      .addCase(studentInfo.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
       });
