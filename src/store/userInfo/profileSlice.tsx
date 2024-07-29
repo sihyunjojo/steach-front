@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { teacherInfoGet } from "../../api/user/userAPI";
+import { teacherInfoUpdate } from "../../api/user/userAPI";
+import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/TeacherMyInfoUpdateForm";
 
 // 학생 정보 형식
 export interface studentInfo {
@@ -12,7 +14,7 @@ export interface studentInfo {
 // 선생님 정보 형식
 export interface teacherInfo {
   username: string | null;
-  name: string;
+  nickname: string;
   email: string;
   volunteer_time: number;
   brief_introduction: string | null;
@@ -40,6 +42,7 @@ export const teacherInfo = createAsyncThunk<teacherInfo>(
   async (_, thunkAPI) => {
     try {
       const response = await teacherInfoGet();
+
       return response;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -50,10 +53,33 @@ export const teacherInfo = createAsyncThunk<teacherInfo>(
   }
 );
 
+// 선생님 내정보 수정
+export const teacherInfoPatch = createAsyncThunk<
+  teacherInfo,
+  TeacherInfoUpdateForm
+>("teacher/patch", async (updateFormData, thunkAPI) => {
+  try {
+    const response = await teacherInfoUpdate(updateFormData);
+
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 const profileSlice = createSlice({
   name: "profile",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.status = "";
+      state.info = null;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // 선생님 프로필 정보 get
@@ -64,7 +90,7 @@ const profileSlice = createSlice({
         state.status = "succeeded";
         const teacherData: teacherInfo = {
           username: action.payload.username,
-          name: action.payload.name,
+          nickname: action.payload.nickname,
           email: action.payload.email,
           volunteer_time: action.payload.volunteer_time,
           brief_introduction: action.payload.brief_introduction,
@@ -80,6 +106,6 @@ const profileSlice = createSlice({
   },
 });
 
-export const profileActions = profileSlice.actions;
+export const { reset } = profileSlice.actions;
 
 export default profileSlice.reducer;

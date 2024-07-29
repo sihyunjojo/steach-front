@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import teacher from "../../../assets/teacher.png";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   signUpTeacher,
   loginSteach,
 } from "../../../store/userInfo/AuthSlice.tsx";
-import { RootState, AppDispatch } from "../../../store.tsx";
+import { AppDispatch } from "../../../store.tsx";
 
 // 이진송
 const TeacherSignUp: React.FC = () => {

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { reset } from "./profileSlice";
 
 // 학생 회원가입 폼 형식
 interface studentFormData {
@@ -154,30 +155,11 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
   }
 );
 
-export const logout = createAsyncThunk(
-  'user/logout',
-  async (_, thunkAPI) => {
-    // 로컬 스토리지에서 사용자 정보 삭제
-    localStorage.removeItem('auth');
-    return {};
-  }
-);
-
-export const checkLoginStatus = createAsyncThunk(
-  'user/checkLoginStatus',
-  async (_, { getState, rejectWithValue }) => {
-    try {
-      const localStorageData = localStorage.getItem('auth');
-      if (!localStorageData) {
-        return rejectWithValue('No user data in local storage');
-      }
-      const userData = JSON.parse(localStorageData);
-      return userData; // 로컬 스토리지에서 불러온 사용자 데이터를 반환
-    } catch (error) {
-      return rejectWithValue('Failed to parse user data');
-    }
-  }
-);
+export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
+  // 로컬 스토리지에서 사용자 정보 삭제
+  localStorage.removeItem("auth");
+  await thunkAPI.dispatch(reset()); // 프로필 상태 초기화
+});
 
 const authSlice = createSlice({
   name: "auth",
@@ -222,22 +204,11 @@ const authSlice = createSlice({
         state.error = action.error.message || null;
       })
       // logout 관련 addCase
-      .addCase(logout.fulfilled, (state, action) => {
-        state.role = '';
-        state.token = '';
-        state.username = '';
-        state.status = 'idle';
-      })
-      // login 상태 확인 addCase
-      .addCase(checkLoginStatus.fulfilled, (state, action) => {
-        state.role = action.payload.role;
-        state.token = action.payload.token;
-        state.username = action.payload.username;
-        state.status = 'succeeded';
-      })
-      .addCase(checkLoginStatus.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
+      .addCase(logout.fulfilled, (state) => {
+        state.status = "idle";
+        state.role = "";
+        state.token = "";
+        state.username = "";
       });
   },
 });

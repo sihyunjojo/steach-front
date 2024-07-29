@@ -4,15 +4,16 @@ import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store'
 import { Lecture } from '../../store/lecturesSlice';
+import { fetchCurriculumDetails } from '../../api/lecture/curriculumAPI'
 
-const LectureDetail: React.FC = () => {
+const LectureDetail: React.FC = (props) => {
 
   // 이진송
   // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
   const lectures = useSelector((state: RootState) => state.lectures.lectures)
   const status = useSelector((state: RootState) => state.lectures.status);
   const error = useSelector((state: RootState) => state.lectures.error);
-  console.log(lectures)
+  console.log(lectures, 1)
 
   if (status === 'loading') {
     return <div>Loading...</div>;
@@ -21,8 +22,7 @@ const LectureDetail: React.FC = () => {
   if (status === 'failed') {
     return <div>Error: {error}</div>;
   }
-  // 윗부분 분석 필요
-
+  console.log(props.dataCurriculum)
   return (
     <>
       {

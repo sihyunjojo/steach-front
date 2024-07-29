@@ -2,14 +2,13 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import axios from "axios";
+import { useState } from "react";
 
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
-// function aa () {
-//   const a = useSelector((state: Rootstate) => state) 
-//   console.log(a)
-// }
-
+const zz = localStorage.getItem("auth")
+const Jzz = JSON.parse(zz)
+console.log(Jzz)
 export interface Lecture {
     // 제목
     title: string;
@@ -24,7 +23,7 @@ export interface Lecture {
     // 강의 중분류
     sub_category : string;
     // 배너 이미지
-    banner_img_url : File | null;
+    banner_img_url : File;
     // 강의 시작일
     start_date : string;
     // 강의 종료일
@@ -52,22 +51,18 @@ const initialState: LecturesState = {
 };
 
 // Thunks
-const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxdyIsImlhdCI6MTcyMjE2NjkyMiwiZXhwIjoxNzIyMTc4OTIyLCJ0b2tlbl90eXBlIjoiYWNjZXNzIn0.HbuhTjuzEkTl5g2D0QnRdElN8eEHQccKQBllVGJoHdw"
-
 export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
   "lecture/signup",
   async (newLectureData) => {
     const formData = new FormData();
-    formData.append('userName', newLectureData.title);
+    formData.append('userName', Jzz.username);
     formData.append('file', newLectureData.banner_img_url);
-    console.log(formData)
     const imgPost = await axios.post(`http://steach.ssafy.io:8082/img-upload/upload`, formData ,{
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(imgPost.data, '1')
-    return imgPost.data
+    console.log(imgPost.data.url, '1')
     
     const response = await axios.post("http://43.202.1.52:8080/api/v1/curricula", {
       title: newLectureData.title,
@@ -76,7 +71,7 @@ export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
       information: newLectureData.information,
       category: newLectureData.category,
       sub_category : newLectureData.sub_category,
-      banner_img_url : newLectureData.banner_img_url,
+      banner_img_url : imgPost.data.url,
       start_date : newLectureData.start_date,
       end_date : newLectureData.end_date,
       lecture_start_time : newLectureData.lecture_start_time,
@@ -87,7 +82,7 @@ export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
     }, {
       headers : {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${Jzz.token}`
       }
     })
     return response.data

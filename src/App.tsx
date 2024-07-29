@@ -5,6 +5,7 @@ import LoginPage from "./pages/user/LoginPage.tsx";
 import SignUpPage from "./pages/user/SignUpPage.tsx";
 import ProfilePage from "./pages/student/ProfilePage.tsx";
 import HomePage from "./pages/main/HomePage.tsx";
+import LectureDetailPage from "./pages/lecture/DetailPage.tsx";
 import LectureUpdatePage from "./pages/lecture/UpdatePage.tsx";
 import LectureSignUpPage from "./pages/lecture/SignUpPage.tsx";
 import TeacherProfilePage from "./pages/teacher/MyRoomPage.tsx";
@@ -14,22 +15,20 @@ import CurriculumList from "./components/teacher/CurriculumList.tsx";
 import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./store.tsx";
 import { useEffect } from "react";
-import { checkLoginStatus } from "../src/store/userInfo/AuthSlice.tsx"
+import { checkLoginStatus } from "../src/store/userInfo/AuthSlice.tsx";
 
 const App: React.FC = () => {
-  const { token, status } = useSelector((state: RootState) => state.auth)
+  // const { token, status } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!token && localStorage.getItem('auth')) {
-      dispatch(checkLoginStatus());
-    }
-  }, [dispatch, token]) 
-
+  // useEffect(() => {
+  //   if (!token && localStorage.getItem('auth')) {
+  //     dispatch(checkLoginStatus());
+  //   }
+  // }, [dispatch, token])
 
   return (
     <div>
@@ -39,6 +38,7 @@ const App: React.FC = () => {
         <Route path="/student/profile" element={<ProfilePage />}></Route>
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
+        <Route path="/lecture/detail/:id" element={<LectureDetailPage />}></Route>
         <Route path="/lecture/signup" element={<LectureSignUpPage />}></Route>
         <Route path="/lecture/update" element={<LectureUpdatePage />}></Route>
         <Route path="/teacher/profile" element={<TeacherProfilePage />}></Route>
