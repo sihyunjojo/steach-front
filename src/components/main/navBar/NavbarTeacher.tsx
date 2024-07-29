@@ -8,8 +8,6 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { authActions } from "../../../store/userInfo/AuthSlice";
-import { useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { logout } from "../../../store/userInfo/AuthSlice";
 
@@ -35,7 +33,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
   };
 
   return (
-    <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
+    <nav className="sticky top-0 flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige z-10">
       {/* Navbar 로고 */}
       <Link to={"/"}>
         <div className="w-28 ml-4">
@@ -83,7 +81,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
         <button
           className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
           onClick={logoutbtn}
-        >
+          >
           로그아웃
         </button>
       </div>
@@ -122,7 +120,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
             <button
               className="text-white bg-red-400 border-2 p-2 rounded-md hover:bg-red-500 w-full"
               onClick={logoutbtn}
-            >
+              >
               로그아웃
             </button>
           </div>

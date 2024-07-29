@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import axios from "axios";
 import { useState } from "react";
-import { fetchCurriculumDetails } from "../api/lecture/curriculumAPI"
+import { fetchCurriculumDetails, fetchCurriculumLectures } from "../api/lecture/curriculumAPI"
 
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
@@ -42,8 +42,16 @@ export interface Lecture {
   current_attendees: string;
 }
 
+export interface Lectures {
+  lecture_id: number,
+  lecture_title: string,
+  lecture_order: number,
+  lecture_start_time: string
+}
+
 export interface LecturesState {
   lectures: Lecture[];
+  lectureslist: Lectures;
   selectlectures: Lecture | null
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -51,6 +59,7 @@ export interface LecturesState {
 
 const initialState: LecturesState = {
   lectures: [],
+  lectureslist: "",
   selectlectures: null,
   status: "idle",
   error: null,
@@ -103,6 +112,14 @@ export const getLectureDetails = createAsyncThunk<Lecture, string>(
   }
 )
 
+export const getLecturelist = createAsyncThunk<Lectures, string>(
+  "lectures/list",
+  async (id) => {
+    const data = await fetchCurriculumLectures(id);
+    console.log(data)
+    return data
+  }
+)
 
 
 const lecturesSlice = createSlice({
@@ -133,10 +150,24 @@ const lecturesSlice = createSlice({
         getLectureDetails.fulfilled, (state, action) => {
           state.status = "succeeded";
           state.selectlectures = action.payload;
-          console.log(action.payload)
         }
       )
       .addCase(getLectureDetails.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // 커리큘럼에 해당하는 강의
+      .addCase(getLecturelist.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        getLecturelist.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          state.lectureslist = action.payload
+          console.log(action.payload)
+        }
+      )
+      .addCase(getLecturelist.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       });
