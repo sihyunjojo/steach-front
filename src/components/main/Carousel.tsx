@@ -8,7 +8,7 @@ const imageUrls = [
   "https://cdn.m-i.kr/news/photo/202405/1119678_887147_344.jpg",
   "https://mblogthumb-phinf.pstatic.net/MjAyNDAxMzFfMTE5/MDAxNzA2NjkwOTQ1NjY1.DE4CKXk67V-GF8veQ4uGeWY_oEbwBLgf2pCXCWDRDwkg.32FUNPUbJAfEuHGVlL0JAcfgoIdM75KBlOuv6EFg5HEg.PNG.bee4sunset/%EB%A7%88%EB%A3%A8_%EC%98%88%EC%8B%9C-01.png?type=w800",
   "https://i.ytimg.com/vi/NhRUZyZGU_E/maxresdefault.jpg",
-  "https://i.ytimg.com/vi/uYP8tzntElI/mqdefault.jpg"
+  "https://i.ytimg.com/vi/uYP8tzntElI/mqdefault.jpg",
 ];
 
 const generateSlides = (urls: string[]) => {
@@ -59,20 +59,19 @@ const HomePageCarousel: React.FC = () => {
 
 const styles = {
   image: {
-    display: 'block',
-    width: 'auto',
-    height: '100%',
-    maxWidth: '100%',
-    margin: '0 auto',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
-  }
+    display: "block",
+    width: "auto",
+    height: "100%",
+    maxWidth: "100%",
+    margin: "0 auto",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
 };
 
 export default HomePageCarousel;
-
 
 // import { Swiper, SwiperSlide } from "swiper/react";
 // import { Navigation, Autoplay } from "swiper/modules";

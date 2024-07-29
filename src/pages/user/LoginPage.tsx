@@ -32,17 +32,17 @@ const Login: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const loginFormData: FormData = {
       username: formData.username,
       password: formData.password,
     };
 
-    const loginResult = dispatch(loginSteach(loginFormData));
+    await dispatch(loginSteach(loginFormData));
 
-    console.log(loginResult);
     navigate("/");
+    window.location.reload();
   };
 
   return (

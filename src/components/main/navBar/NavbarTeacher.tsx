@@ -7,12 +7,11 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-
 import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../../store/userInfo/AuthSlice";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { logout } from "../../../store/userInfo/AuthSlice"
+import { AppDispatch } from "../../../store";
+import { logout } from "../../../store/userInfo/AuthSlice";
 
 // Props 타입 정의
 interface Props {
@@ -21,23 +20,19 @@ interface Props {
 
 const NavbarTeacher: React.FC<Props> = ({ username }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-    const logoutbtn = () => {
-      dispatch(logout())
-      navigate("/");
-    }
-
   // 로그아웃 요청 함수
-  // const logout = () => {
-  //   dispatch(authActions.logout());
-  //   navigate("/");
-  // };
+  const logoutbtn = () => {
+    dispatch(logout());
+    navigate("/");
+    window.location.reload();
+  };
 
   return (
     <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
@@ -126,7 +121,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
             </button>
             <button
               className="text-white bg-red-400 border-2 p-2 rounded-md hover:bg-red-500 w-full"
-              onClick={logout}
+              onClick={logoutbtn}
             >
               로그아웃
             </button>
