@@ -8,8 +8,6 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { authActions } from "../../../store/userInfo/AuthSlice";
-import { useSelector } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { logout } from "../../../store/userInfo/AuthSlice";
 

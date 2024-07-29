@@ -1,37 +1,31 @@
 import { AppDispatch, RootState } from "../../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { teacherInfo } from "../../../store/userInfo/profileSlice";
+import { studentInfo } from "../../../store/userInfo/profileSlice";
 import { useNavigate } from "react-router-dom";
-import { teacherInfoPatch } from "../../../store/userInfo/profileSlice";
+import { studentInfoPatch } from "../../../store/userInfo/profileSlice";
 
-export interface TeacherInfoUpdateForm {
+export interface StudentInfoUpdateForm {
   nickname: string;
   email: string;
   password: string;
-  brief_introduction: string;
-  academic_background: string;
-  specialization: string;
   password_auth_token: string | null;
 }
 
-const TeacherMyInfoUpdateForm: React.FC = () => {
+const StudentMyInfoUpdateForm: React.FC = () => {
   const temporaryToken = localStorage.getItem("passwordAuthToken");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const teacherData = useSelector((state: RootState) => state.profile.info);
   useEffect(() => {
-    dispatch(teacherInfo());
+    dispatch(studentInfo());
   }, [dispatch]);
 
   // 폼 값 바인딩
-  const [formData, setFormData] = useState<TeacherInfoUpdateForm>({
+  const [formData, setFormData] = useState<StudentInfoUpdateForm>({
     nickname: teacherData?.nickname || "",
     password: "",
     email: teacherData?.email || "",
-    brief_introduction: teacherData?.brief_introduction,
-    academic_background: teacherData?.academic_background,
-    specialization: teacherData?.specialization,
     password_auth_token: temporaryToken,
   });
 
@@ -48,9 +42,9 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
 
   // 내 정보 수정 요청
   const handleUpdateSubmit = async () => {
-    await dispatch(teacherInfoPatch(formData));
+    await dispatch(studentInfoPatch(formData));
     localStorage.removeItem("passwordAuthToken");
-    navigate("/teacher/profile");
+    navigate("/student/profile");
   };
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
@@ -90,38 +84,6 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             required
           />
         </div>
-        <div className="grid grid-cols-1 my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">
-            간단한 소개 문구
-          </label>
-          <textarea
-            name="brief_introduction"
-            className="p-2 w-72 border-2 rounded-md"
-            value={formData.brief_introduction}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="grid grid-cols-1 my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">학력</label>
-
-          <input
-            name="academic_background"
-            className="p-2 w-72 border-2 rounded-md"
-            value={formData.academic_background}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="grid grid-cols-1 my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">전공분야</label>
-          <input
-            name="specialization"
-            className="p-2 w-72 border-2 rounded-md"
-            value={formData.specialization}
-            onChange={handleChange}
-            required
-          />
-        </div>
         <button
           onClick={handleUpdateSubmit}
           className="p-3 bg-red-200 text-white rounded-md shadow-md hover:bg-red-300"
@@ -133,4 +95,4 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
   );
 };
 
-export default TeacherMyInfoUpdateForm;
+export default StudentMyInfoUpdateForm;

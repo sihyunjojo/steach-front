@@ -8,7 +8,8 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { authActions } from "../../../store/userInfo/AuthSlice";
+import { logout } from "../../../store/userInfo/AuthSlice";
+import { AppDispatch } from "../../../store";
 
 // Props 타입 정의
 interface Props {
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const NavbarStudent: React.FC<Props> = ({ username }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -28,7 +29,8 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
   const logoutbtn = () => {
     dispatch(logout());
     navigate("/");
-  }
+    window.location.reload();
+  };
 
   return (
     <nav className="flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige">
@@ -117,7 +119,7 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
             </button>
             <button
               className="text-white bg-red-400 border-2 p-2 rounded-md hover:bg-red-500 w-full"
-              onClick={logoutStudent}
+              onClick={logoutbtn}
             >
               로그아웃
             </button>
