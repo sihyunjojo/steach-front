@@ -9,9 +9,14 @@ const TeacherMyInfo: React.FC = () => {
 
   // 비밀번호 확인이 된 후 내 정보 수정 폼을 띄우기 위한 핸들러 함수
   const handleIsUpdateInfo = async (password: string) => {
-    const trueOrFalse = await passwordCheck(password);
+    const passwordAuthToken = await passwordCheck(password);
 
-    if (trueOrFalse) {
+    localStorage.setItem(
+      "passwordAuthToken",
+      passwordAuthToken.password_auth_token
+    );
+
+    if (passwordAuthToken) {
       setIsUpdateInfo(true);
     } else {
       console.log("에러가 발생했습니다.");

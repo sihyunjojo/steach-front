@@ -22,8 +22,8 @@ const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({
       <form>
         <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">내정보</h1>
         <div className="my-4 p-2">
-          <label className="my-2 text-2xl text-lightNavy">이름</label>
-          <p>{teacherData?.name}</p>
+          <label className="my-2 text-2xl text-lightNavy">닉네임</label>
+          <p>{teacherData?.nickname}</p>
         </div>
         <div className="my-4 p-2">
           <label className="my-2 text-2xl text-lightNavy">이메일</label>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { teacherInfo } from "../../store/userInfo/profileSlice";
+import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/TeacherMyInfoUpdateForm";
 
 const BASE_URL = "http://43.202.1.52:8080";
 
@@ -37,7 +38,7 @@ export const teacherInfoGet = async () => {
 
     const data: teacherInfo = {
       username: response.data.username,
-      name: response.data.name,
+      nickname: response.data.nickname,
       email: response.data.email,
       volunteer_time: response.data.volunteer_time,
       brief_introduction: response.data.brief_introduction,
@@ -46,6 +47,25 @@ export const teacherInfoGet = async () => {
     };
 
     return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 선생님 정보 수정
+export const teacherInfoUpdate = async (formData: TeacherInfoUpdateForm) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/teachers`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
