@@ -13,7 +13,9 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
       <form>
-        <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">내정보</h1>
+        <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">
+          내정보 수정
+        </h1>
         <div className="my-4 p-2">
           <label className="my-2 text-2xl text-lightNavy">이름</label>
           <input value={teacherData?.name} />

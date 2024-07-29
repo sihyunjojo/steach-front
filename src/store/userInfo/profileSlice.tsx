@@ -40,6 +40,7 @@ export const teacherInfo = createAsyncThunk<teacherInfo>(
   async (_, thunkAPI) => {
     try {
       const response = await teacherInfoGet();
+
       return response;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -53,7 +54,13 @@ export const teacherInfo = createAsyncThunk<teacherInfo>(
 const profileSlice = createSlice({
   name: "profile",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.status = "";
+      state.info = null;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // 선생님 프로필 정보 get
@@ -80,6 +87,6 @@ const profileSlice = createSlice({
   },
 });
 
-export const profileActions = profileSlice.actions;
+export const { reset } = profileSlice.actions;
 
 export default profileSlice.reducer;

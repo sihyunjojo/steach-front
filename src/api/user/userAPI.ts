@@ -3,7 +3,9 @@ import { teacherInfo } from "../../store/userInfo/profileSlice";
 
 const BASE_URL = "http://43.202.1.52:8080";
 
-const token = localStorage.getItem("token");
+const tokenData = localStorage.getItem("auth");
+const jsontokenData = tokenData ? JSON.parse(tokenData) : null;
+const token = jsontokenData ? jsontokenData.token : "";
 
 // 비밀번호 체크
 export const passwordCheck = async (password: string) => {
