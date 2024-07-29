@@ -4,10 +4,11 @@ import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store'
 import { Lecture } from '../../store/lecturesSlice';
-import { getLectureDetails } from '../../store/lecturesSlice'
+import { getLectureDetails, getLecturelist } from '../../store/lecturesSlice'
 import { useDispatch } from 'react-redux';
 import img1 from '../../../src/assets/checked.jpg'
 import img2 from '../../../src/assets/unchecked.jpg'
+import img3 from '../../../src/assets/human.png'
 
 
 const LectureDetail: React.FC = () => {
@@ -18,6 +19,7 @@ const LectureDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const lectures = useSelector((state: RootState) => state.lectures.selectlectures)
+  const lectureslist = useSelector((state: RootState) => state.lectures.lectureslist)
   const status = useSelector((state: RootState) => state.lectures.status);
   const error = useSelector((state: RootState) => state.lectures.error);
   const bitday = lectures?.weekdays_bitmask.split('');
@@ -26,6 +28,7 @@ const LectureDetail: React.FC = () => {
   useEffect(() => {
     if (id) {
       dispatch(getLectureDetails(id))
+      dispatch(getLecturelist(id))
     }
   },[id, dispatch])
   console.log(lectures, 1)
@@ -49,7 +52,7 @@ const LectureDetail: React.FC = () => {
             <p className='p-1'>{lectures?.intro}</p>
             <Link to={'/teacher/profiledetail'}>
               <div className="flex items-center">
-                <img src={url} className='w-10 h-10 m-5' />
+                <img src={img3} className='w-10 h-10 m-5' />
                 <span>{lectures?.teacher_name} 강사님 - 강사상세페이지, 만들어야함</span>
               </div>
             </Link>
@@ -64,8 +67,8 @@ const LectureDetail: React.FC = () => {
 
       </header>
       <div className='bg-ivory grid grid-cols-12'>
-      <div className='col-span-2'></div>
-      <div className='col-span-8 bg-ivory border-x-2 border-x-hardBeige p-4'>
+      <div className='hidden lg:col-span-1 lg:block'></div>
+      <div className='lg:col-span-9 col-span-10 bg-ivory border-x-2 border-x-hardBeige p-4'>
           <br className='text-black'></br>
 
           <ul className="hidden lg:flex lg:flex-row text-lg font-bold ml-4 lg:ml-0">
@@ -115,7 +118,7 @@ const LectureDetail: React.FC = () => {
           </div>
       </div>
           <Sidebar />
-      <div className='col-span-2'></div>
+      <div className='lg:col-span-2 col-span-2'></div>
       </div>
       <div>
       </div>
@@ -126,7 +129,7 @@ const LectureDetail: React.FC = () => {
 
 const Sidebar = () => {
   return (
-    <div className="sticky top-20 right-44 h-64 w-64 bg-gray-800 text-white p-4">
+    <div className="sticky top-24 lg:right-24 xl:right-44 right-0 h-64 w-64 bg-gray-800 text-white p-4">
       <h2 className="text-2xl font-bold mb-4">Sidebar</h2>
       <ul>
         <li className="mb-2"><a href="#home" className="text-white">Home</a></li>
