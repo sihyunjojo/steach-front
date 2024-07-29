@@ -15,6 +15,7 @@ import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { fetchPopularCurricula } from "../../api/main/mainAPI";
+import { useNavigate } from "react-router-dom";
 
 // 김헌규 제작
 // 이진송 수정 - 타입스크립트에 맞춰서 변경함
@@ -34,6 +35,7 @@ interface Curriculum {
 }
 
 export default function HotLectures() {
+  const navigate = useNavigate();
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -107,6 +109,8 @@ export default function HotLectures() {
                       variant="solid"
                       colorScheme="blue"
                       className="p-2 text-lightNavy hover:text-hoverNavy"
+                      data-curriculum={curriculum}
+                      onClick={() => { navigate(`/lecture/detail/${curriculum.curriculum_id}`) }}
                     >
                       자세히 보기
                     </Button>

@@ -30,6 +30,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
 
     const logoutbtn = () => {
       dispatch(logout())
+      navigate("/");
     }
 
   // 로그아웃 요청 함수
