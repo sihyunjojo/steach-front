@@ -77,6 +77,20 @@ const lecturesList = createSlice({
       .addCase(getLectures.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || null;
+      })
+      // 디테일
+      .addCase(getLectures.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getLectures.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log(state.status)
+        console.log(action)
+        // state.lectures = action.payload;
+      })
+      .addCase(getLectures.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message || null;
       });
   }
 });

@@ -3,49 +3,55 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import axios from "axios";
 import { useState } from "react";
+import { fetchCurriculumDetails } from "../api/lecture/curriculumAPI"
 
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
 const zz = localStorage.getItem("auth")
 const Jzz = JSON.parse(zz)
-console.log(Jzz)
 export interface Lecture {
-    // 제목
-    title: string;
-    // 부제목
-    sub_title : string;
-    // 강의 소개
-    intro : string;
-    // 강의 상세 설명
-    information: string;
-    // 강의 대분류
-    category: string;
-    // 강의 중분류
-    sub_category : string;
-    // 배너 이미지
-    banner_img_url : File;
-    // 강의 시작일
-    start_date : string;
-    // 강의 종료일
-    end_date : string;
-    // 강의 시작 시간
-    lecture_start_time : string;
-    // 강의 종료 시간
-    lecture_end_time: string;
-    // 수업 요일
-    weekdays_bitmask: string;
-    // 최대 수강 정원
-    max_attendees: number;
+  // 제목
+  title: string;
+  // 부제목
+  sub_title : string;
+  // 강의 소개
+  intro : string;
+  // 강의 상세 설명
+  information: string;
+  // 강의 대분류
+  category: string;
+  // 강의 중분류
+  sub_category : string;
+  // 배너 이미지
+  banner_img_url : string | File;
+  // 강의 시작일
+  start_date : string;
+  // 강의 종료일
+  end_date : string;
+  // 강의 시작 시간
+  lecture_start_time : string;
+  // 강의 종료 시간
+  lecture_end_time: string;
+  // 수업 요일
+  weekdays_bitmask: string;
+  // 최대 수강 정원
+  max_attendees: number;
+  
+  teacher_name: string;
+
+  current_attendees: string;
 }
 
 export interface LecturesState {
   lectures: Lecture[];
+  selectlectures: Lecture | null
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState: LecturesState = {
   lectures: [],
+  selectlectures: null,
   status: "idle",
   error: null,
 };
@@ -89,10 +95,18 @@ export const SignUpLecture = createAsyncThunk<Lecture, Lecture>(
   } 
 );
 
+export const getLectureDetails = createAsyncThunk<Lecture, string>(
+  "lectures/detail",
+  async (id) => {
+    const data = await fetchCurriculumDetails(id);
+    return data
+  }
+)
+
 
 
 const lecturesSlice = createSlice({
-  name: "lectures",
+  name: "lecturesdetail",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -108,6 +122,21 @@ const lecturesSlice = createSlice({
         }
       )
       .addCase(SignUpLecture.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+    // 디테일 강의 가져오기
+      .addCase(getLectureDetails.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        getLectureDetails.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          state.selectlectures = action.payload;
+          console.log(action.payload)
+        }
+      )
+      .addCase(getLectureDetails.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       });

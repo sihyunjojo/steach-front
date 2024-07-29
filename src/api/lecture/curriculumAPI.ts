@@ -63,7 +63,7 @@ export const applyToCurriculum = async (curricula_id: number) => {
 };
 
 // Fetch curriculum details
-export const fetchCurriculumDetails = async (id: number) => {
+export const fetchCurriculumDetails = async (id: string) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/curricula/${id}`);
         return response.data;

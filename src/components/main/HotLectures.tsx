@@ -109,8 +109,7 @@ export default function HotLectures() {
                       variant="solid"
                       colorScheme="blue"
                       className="p-2 text-lightNavy hover:text-hoverNavy"
-                      data-curriculum={curriculum}
-                      onClick={() => { navigate(`/lecture/detail/${curriculum.curriculum_id}`) }}
+                      onClick={() => { navigate(`/lecture/detail/${curriculum.curriculum_id}`)}}
                     >
                       자세히 보기
                     </Button>
