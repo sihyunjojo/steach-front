@@ -81,11 +81,19 @@ const LectureSignUp: React.FC = () => {
     
   
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = event.target;
-      setFormData({
-      ...formData,
-      [name]: value,
-      });
+      const { name, value, type, files } = event.target as HTMLInputElement;
+      if (type === 'file') {
+        const file = files ? files[0] : null;
+        setFormData({
+        ...formData,
+        [name]: file,
+        });
+      } else {
+        setFormData({
+        ...formData,
+        [name]: value,
+        });
+      }
     };
   
     const handleEditorChange = (data: string) => {
@@ -143,7 +151,6 @@ const LectureSignUp: React.FC = () => {
         information: stripHtmlTags(formData.information),
         weekdays_bitmask: formatBitmask(formData.weekdays_bitmask)
       };
-      console.log(formData)
       console.log(formDataToSend)
       dispatch(SignUpLecture(formDataToSend))
     }
@@ -210,7 +217,6 @@ const LectureSignUp: React.FC = () => {
               />
             </div>
             <hr></hr>
-            {/* url 이니까 assets에 이미지가 등록되고, url을 받는것인지? 토론 필요 */}
             <FormLabel htmlFor="banner_img_url" className="mt-3 mx-3 text-2xl">강의 배너 이미지</FormLabel>
             <Input 
               type='file'
@@ -219,7 +225,7 @@ const LectureSignUp: React.FC = () => {
               // value={formData.banner_img_url}
               onChange={handleChange}
               className="border-2 rounded-lg w-4/5 p-2 mb-3"
-              // required
+              required
               />
             <hr></hr>
             <FormLabel htmlFor="intro" className="my-3 mx-3 text-2xl">강의 소개</FormLabel>
