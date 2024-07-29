@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../../store/userInfo/AuthSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
-import { logout } from "../../../store/userInfo/AuthSlice"
+import { logout } from "../../../store/userInfo/AuthSlice";
 
 // Props 타입 정의
 interface Props {
@@ -23,14 +23,14 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-    const logoutbtn = () => {
-      dispatch(logout())
-    }
+  const logoutbtn = () => {
+    dispatch(logout());
+  };
 
   // 로그아웃 요청 함수
   // const logout = () => {
