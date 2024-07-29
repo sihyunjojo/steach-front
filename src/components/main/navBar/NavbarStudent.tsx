@@ -26,7 +26,7 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
 
   // 로그아웃 요청 함수
   const logoutbtn = () => {
-    dispatch(logout())
+    dispatch(logout());
     navigate("/");
   }
 
