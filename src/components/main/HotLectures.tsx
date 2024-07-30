@@ -9,7 +9,6 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
-import { Swiper as SwiperClass } from "swiper/types";
 import "swiper/swiper-bundle.css";
 import SwiperCore from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
@@ -36,9 +35,6 @@ interface Curriculum {
 
 export default function HotLectures() {
   const navigate = useNavigate();
-  const [swiper, setSwiper] = useState<SwiperClass>();
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
   const [curricula, setCurricula] = useState<Curriculum[]>([]);
 
   useEffect(() => {
@@ -61,13 +57,6 @@ export default function HotLectures() {
         </header>
         <Box className="flex justify-center">
           <Swiper
-            onSlideChange={(e) => {
-              setIsBeginning(e.isBeginning);
-              setIsEnd(e.isEnd);
-            }}
-            onSwiper={(e) => {
-              setSwiper(e);
-            }}
             slidesPerView={1}
             navigation
             breakpoints={{

@@ -82,7 +82,7 @@ const CreateQuiz: React.FC = () => {
       <div className="col-span-3"></div>
       <div className=" flex col-span-6 p-4">
         <div className="hidden lg:flex lg:flex-row lg:justify-between lg:ml-0 my-auto">
-          {Array.from({ length: qui.length }, (a, i) => (
+          {Array.from({ length: qui.length }, (_, i) => (
             <div key={i}>
               <button
                 onClick={() => setTab(i + 1)}
@@ -107,7 +107,7 @@ const CreateQuiz: React.FC = () => {
         {isMenuOpen && (
           <div className="flex flex-grow p-4 lg:hidden">
             <ul className="flex flex-col mx-auto text-lg font-bold mt-4">
-              {Array.from({ length: qui.length }, (a, i) => (
+              {Array.from({ length: qui.length }, (_, i) => (
                 <div key={i} className="w-full flex flex-col">
                   <li className="p-2">
                     <button
