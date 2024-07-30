@@ -16,7 +16,9 @@ const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({
   useEffect(() => {
     dispatch(teacherInfo());
   }, [dispatch]);
-  const teacherData = useSelector((state: RootState) => state.profile.info);
+  const teacherData = useSelector(
+    (state: RootState) => state.profile.info
+  ) as teacherInfo | null;
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
       <form>
@@ -33,27 +35,15 @@ const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({
           <label className="my-2 text-2xl text-lightNavy">
             간단한 소개 문구
           </label>
-          <p>
-            {teacherData?.brief_introduction === null
-              ? "nothing"
-              : teacherData?.brief_introduction}
-          </p>
+          <p>{teacherData?.brief_introduction || "nothing"}</p>
         </div>
         <div className="my-4 p-2">
           <label className="my-2 text-2xl text-lightNavy">학력</label>
-          <p>
-            {teacherData?.academic_background === null
-              ? "nothing"
-              : teacherData?.academic_background}
-          </p>
+          <p>{teacherData?.academic_background || "nothing"}</p>
         </div>
         <div className="my-4 p-2">
           <label className="my-2 text-2xl text-lightNavy">전공분야</label>
-          <p>
-            {teacherData?.specialization === null
-              ? "nothing"
-              : teacherData?.specialization}
-          </p>
+          <p>{teacherData?.specialization || "nothing"}</p>
         </div>
         <div className="my-4 p-2">
           <label className="my-2 text-2xl text-lightNavy">봉사 시간</label>
