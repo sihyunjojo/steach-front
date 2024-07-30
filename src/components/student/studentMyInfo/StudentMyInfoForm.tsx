@@ -16,7 +16,7 @@ const StudentMyInfoForm: React.FC<StudentMyInfoProps> = ({
   useEffect(() => {
     dispatch(studentInfo());
   }, [dispatch]);
-  const teacherData = useSelector((state: RootState) => state.profile.info);
+  const teacherData = useSelector((state: RootState) => state.profile.student);
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
       <form>

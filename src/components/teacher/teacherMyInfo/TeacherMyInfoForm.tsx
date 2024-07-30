@@ -17,7 +17,7 @@ const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({
     dispatch(teacherInfo());
   }, [dispatch]);
   const teacherData = useSelector(
-    (state: RootState) => state.profile.info
+    (state: RootState) => state.profile.teacher
   ) as teacherInfo | null;
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">

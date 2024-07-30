@@ -34,7 +34,8 @@ export interface teacherInfo {
 export interface UserInfo {
   status: string;
   error: string | null;
-  info: null | teacherInfo | studentInfo;
+  student: studentInfo | null;
+  teacher: teacherInfo | null;
   curricula: Curricula[];
 }
 
@@ -42,7 +43,8 @@ export interface UserInfo {
 const initialState: UserInfo = {
   status: "",
   error: null,
-  info: null,
+  student: null,
+  teacher: null,
   curricula: [],
 };
 
@@ -139,7 +141,8 @@ const profileSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.status = "";
-      state.info = null;
+      state.teacher = null;
+      state.student = null;
       state.error = null;
     },
   },
@@ -160,7 +163,7 @@ const profileSlice = createSlice({
           academic_background: action.payload.academic_background,
           specialization: action.payload.specialization,
         };
-        state.info = teacherData;
+        state.teacher = teacherData;
       })
       .addCase(teacherInfo.rejected, (state, action) => {
         state.status = "failed";
@@ -177,7 +180,7 @@ const profileSlice = createSlice({
           nickname: action.payload.nickname,
           email: action.payload.email,
         };
-        state.info = studentData;
+        state.student = studentData;
       })
       .addCase(studentInfo.rejected, (state, action) => {
         state.status = "failed";

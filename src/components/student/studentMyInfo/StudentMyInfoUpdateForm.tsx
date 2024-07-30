@@ -17,7 +17,7 @@ const StudentMyInfoUpdateForm: React.FC = () => {
   const temporaryToken = localStorage.getItem("passwordAuthToken");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const teacherData = useSelector((state: RootState) => state.profile.info);
+  const teacherData = useSelector((state: RootState) => state.profile.student);
   useEffect(() => {
     dispatch(studentInfo());
   }, [dispatch]);
