@@ -5,40 +5,13 @@ import { TbArrowsRight } from "react-icons/tb";
 import checkimg from '../../assets/checked.jpg'
 import uncheckimg from '../../assets/unchecked.jpg'
 import banner from '../../assets/banner2.jpg'
-import { SignUpLecture } from '../../store/lecturesSlice'
+// import { SignUpLecture } from '../../store/curriculaSlice.tsx'
+import { SignUpLecture } from '../../api/lecture/curriculumAPI.ts'
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../store.tsx'
+import { CurriculaFormData } from '../../interface/Curriculainterface.tsx'
 
 const LectureSignUp: React.FC = () => {
-    
-  interface FormData {
-    // 제목
-    title: string;
-    // 부제목
-    sub_title : string;
-    // 강의 소개
-    intro : string;
-    // 강의 상세 설명
-    information: string;
-    // 강의 대분류
-    category: string;
-    // 강의 중분류
-    sub_category : string;
-    // 배너 이미지
-    banner_img_url : File | null;
-    // 강의 시작일
-    start_date : string;
-    // 강의 종료일
-    end_date : string;
-    // 강의 시작 시간
-    lecture_start_time : string;
-    // 강의 종료 시간
-    lecture_end_time: string;
-    // 수업 요일
-    weekdays_bitmask: number;
-    // 최대 수강 정원
-    max_attendees: number;
-    }
     const dispatch: AppDispatch = useDispatch();
   
     type Weekday = '월' | '화' | '수' | '목' | '금' | '토' | '일';
@@ -53,12 +26,12 @@ const LectureSignUp: React.FC = () => {
     });
   
     // 데이터를 담기 위한 박스 개념, 함수를 위의 interface에 맞춰서 작성
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<CurriculaFormData>({
       title: '',
       sub_title: '',
       category: 'KOREAN',
       sub_category: '',
-      banner_img_url: null,
+      banner_img_url: '',
       intro: '',
       start_date: new Date().toISOString().substr(0, 10),
       end_date: new Date().toISOString().substr(0, 10),
@@ -78,7 +51,6 @@ const LectureSignUp: React.FC = () => {
       토: 2,
       일: 1,
     }
-    
   
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value, type, files } = event.target as HTMLInputElement;
@@ -235,7 +207,7 @@ const LectureSignUp: React.FC = () => {
               name='intro'
               value={formData.intro}
               onChange={handleChange}
-              className="border-2 rounded-lg w-1/3 p-2 mt-3"
+              className="border-2 rounded-lg w-full p-2 mt-3"
               required
               />
               <hr className='my-3'></hr>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Lecture } from './store/lecturesSlice';
+import { Lecture } from './store/curriculaSlice';
 
 export const fetchTeachers = async (): Promise<Lecture[]> => {
     const response = await axios.get('http://localhost:5000/teachers');
