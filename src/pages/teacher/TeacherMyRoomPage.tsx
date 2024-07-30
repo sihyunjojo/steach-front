@@ -15,6 +15,8 @@ import ProfileLectureHistory from "../../components/student/ProfileLectureHistor
 import MyLecture from "../../components/teacher/MyLecture";
 // import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
 import { useNavigate } from "react-router-dom";
+import TeacherMyInfo from "../../components/teacher/teacherMyInfo/TeacherMyInfo";
+import TeacherMyLecture from "../../components/teacher/teacherMyLecture/TeacherMyCurricula";
 
 // 선생님 페이지
 const TeacherProfilePage: React.FC = () => {
@@ -41,7 +43,7 @@ const TeacherProfilePage: React.FC = () => {
               onClick={() => handleTabClick(0)}
             >
               <FaPencilAlt className="size-8 my-2" />
-              <h2>내 강의</h2>
+              <h2>내 커리큘럼</h2>
             </Tab>
             <Tab
               className={`my-2 text-lg p-3 sticky top-[11rem] ${
@@ -79,7 +81,7 @@ const TeacherProfilePage: React.FC = () => {
 
           <TabPanels className="p-3">
             <TabPanel>
-              <MyLecture />
+              <TeacherMyLecture />
             </TabPanel>
             <TabPanel>
               <ProfileLectureHistory />

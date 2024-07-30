@@ -4,11 +4,11 @@ export interface Curricula {
   intro: string;
   information: string;
   category: string;
-  sub_category : string;
-  banner_img_url : string;
-  start_date : string;
-  end_date : string;
-  lecture_start_time : string;
+  sub_category: string;
+  banner_img_url: string;
+  start_date: string;
+  end_date: string;
+  lecture_start_time: string;
   lecture_end_time: string;
   weekdays_bitmask: any;
   max_attendees: number;
@@ -46,3 +46,5 @@ export interface returnStudentCurriculaList {
   page_size: number;
   curricula: Curricula[];
 }
+
+// 선생님이 강의하는 커리큘럼 조회 폼
