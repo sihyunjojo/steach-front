@@ -6,6 +6,11 @@ import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/Te
 import { StudentInfoUpdateForm } from "../../components/student/studentMyInfo/StudentMyInfoUpdateForm";
 import { studentInfoGet } from "../../api/user/userAPI";
 import { studentInfoUpdate } from "../../api/user/userAPI";
+import {
+  returnStudentCurriculaList,
+  Curricula,
+} from "../../interface/Curriculainterface";
+import { getStudentCurriculaList } from "../../api/lecture/curriculumAPI";
 
 // 학생 정보 형식
 export interface studentInfo {
@@ -30,6 +35,7 @@ export interface UserInfo {
   status: string;
   error: string | null;
   info: null | teacherInfo | studentInfo;
+  curricula: Curricula[];
 }
 
 // 초기 상태
@@ -37,6 +43,7 @@ const initialState: UserInfo = {
   status: "",
   error: null,
   info: null,
+  curricula: [],
 };
 
 // 선생님 내정보 조회
@@ -107,6 +114,25 @@ export const studentInfoPatch = createAsyncThunk<
   }
 });
 
+// 학생이 수강신청한 강의 목록 가져오기
+export const getStudentCurriculas =
+  createAsyncThunk<returnStudentCurriculaList>(
+    "student/curricula/get",
+    async (_, thunkAPI) => {
+      try {
+        const response = await getStudentCurriculaList();
+
+        return response;
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          return thunkAPI.rejectWithValue(error.response.data);
+        }
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  );
+
+// 프로필 슬라이스
 const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -154,6 +180,18 @@ const profileSlice = createSlice({
         state.info = studentData;
       })
       .addCase(studentInfo.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || null;
+      })
+      // 학생 수강신청 커리큘럼 addCase
+      .addCase(getStudentCurriculas.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getStudentCurriculas.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.curricula = action.payload.curricula;
+      })
+      .addCase(getStudentCurriculas.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
       });
