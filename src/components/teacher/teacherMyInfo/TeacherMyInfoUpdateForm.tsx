@@ -20,7 +20,7 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
   const temporaryToken = localStorage.getItem("passwordAuthToken");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const teacherData = useSelector((state: RootState) => state.profile.info);
+  const teacherData = useSelector((state: RootState) => state.profile.teacher);
   useEffect(() => {
     dispatch(teacherInfo());
   }, [dispatch]);
@@ -30,9 +30,9 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
     nickname: teacherData?.nickname || "",
     password: "",
     email: teacherData?.email || "",
-    brief_introduction: teacherData?.brief_introduction,
-    academic_background: teacherData?.academic_background,
-    specialization: teacherData?.specialization,
+    brief_introduction: teacherData?.brief_introduction || "",
+    academic_background: teacherData?.academic_background || "",
+    specialization: teacherData?.specialization || "",
     password_auth_token: temporaryToken,
   });
 
