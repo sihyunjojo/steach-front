@@ -1,9 +1,9 @@
 import React, { useState, Component, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom'
-import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store'
-import { getLectureDetails, getLecturelist } from '../../store/curriculaSlice'
+import { getLectureDetails } from '../../store/curriculaSlice'
+import { getLecturelist } from '../../store/lectureSlice'
 import { useDispatch } from 'react-redux';
 import img1 from '../../../src/assets/checked.jpg'
 import img2 from '../../../src/assets/unchecked.jpg'
@@ -17,30 +17,32 @@ const LectureDetail: React.FC = () => {
 
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const lectures = useSelector((state: RootState) => state.lectures.selectlectures)
-  const lectureslist = useSelector((state: RootState) => state.lectures.lectureslist)
-  const status = useSelector((state: RootState) => state.lectures.status);
-  const error = useSelector((state: RootState) => state.lectures.error);
+  const lectures = useSelector((state: RootState) => state.curriculum.selectlectures)
+  const lectureslist = useSelector((state: RootState) => state.curriculum.lectureslist)
+  const status = useSelector((state: RootState) => state.curriculum.status);
+  const error = useSelector((state: RootState) => state.curriculum.error);
+
   const bitday = lectures?.weekdays_bitmask.split('');
-  const url: string = lectures?.banner_img_url
-  console.log(lectureslist)
-  {lectureslist}
+  const url = lectures?.banner_img_url
+
   useEffect(() => {
     if (id) {
       dispatch(getLectureDetails(id))
       dispatch(getLecturelist(id))
     }
-  },[id, dispatch])
+  }, [id, dispatch])
+
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
-
+  
   if (status === 'failed') {
     return <div>Error: {error}</div>;
   }
+  
   return (
     <>
-
       <header className="flex bg-hoverNavy text-white text-left py-2.5 justify-center">
         <div className='w-3/5'>
           <div>
@@ -49,17 +51,6 @@ const LectureDetail: React.FC = () => {
             <h1 className='text-7xl p-3'>{lectures?.title}</h1>
             <p className='p-1'>{lectures?.sub_title}</p>
             <p className='p-1'>{lectures?.intro}</p>
-            {/* {
-              lectureslist.map((a, i) => {
-                return (
-                  {a}
-                )
-              })
-            } */}
-            
-            {/* <p>{lectureslist?.lecture_start_time}</p>
-            {lectureslist?.lecture_title}
-            {lectureslist?.lecture_id} */}
             <Link to={'/teacher/profiledetail'}>
               <div className="flex items-center">
                 <img src={img3} className='w-10 h-10 m-5' />
@@ -100,14 +91,30 @@ const LectureDetail: React.FC = () => {
           </ul>
           
           <h1 className='text-6xl'>커리큘럼</h1>
+
+          {
+            lectureslist && Array.isArray(lectureslist.lectures) && lectureslist.lectures.length > 0 ? (
+        <ul>
+          {lectureslist.lectures.map((lecture) => (
+            <li key={lecture.lecture_id} className="p-4 border rounded mb-2">
+              <h3 className="text-lg font-bold">{lecture.lecture_title}</h3>
+              <p>Order: {lecture.lecture_order}</p>
+              <p>Start Time: {new Date(lecture.lecture_start_time).toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
+            ) : (<></>
+                
+        )}
+          
           <p className='flex'> {
-            bitday?.map((a) => {
+            bitday?.map((a:string) => {
               return (
                 <>
                   {
                     a === '1'
-                      ? <img src={img1} className='w-20 h-20'/>
-                      : <img src={img2} className='w-20 h-20'/>
+                    ? <img src={img1} className='w-20 h-20'/>
+                    : <img src={img2} className='w-20 h-20'/>
                   }
                 {a}
                 </>
