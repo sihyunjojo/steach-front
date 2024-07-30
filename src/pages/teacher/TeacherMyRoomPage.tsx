@@ -13,7 +13,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaPencilAlt, FaHistory } from "react-icons/fa";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
 import MyLecture from "../../components/teacher/MyLecture";
-import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
+// import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
 import { useNavigate } from "react-router-dom";
 
 // 선생님 페이지
@@ -85,7 +85,7 @@ const TeacherProfilePage: React.FC = () => {
               <ProfileLectureHistory />
             </TabPanel>
             <TabPanel>
-              <TeacherUpdateMyInfo />
+              {/* <TeacherUpdateMyInfo /> */}
             </TabPanel>
           </TabPanels>
         </Flex>

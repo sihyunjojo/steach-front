@@ -1,7 +1,5 @@
-import React, { useState, Component } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios';
-import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store'
 

@@ -9,7 +9,7 @@ import banner from '../../assets/banner2.jpg'
 import { SignUpLecture } from '../../api/lecture/curriculumAPI.ts'
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../store.tsx'
-import { CurriculaFormData, Curricula } from '../../interface/Curriculainterface.tsx'
+import { CurriculaFormData } from '../../interface/Curriculainterface.tsx'
 
 const LectureSignUp: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();

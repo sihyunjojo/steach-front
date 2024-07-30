@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Heading,
@@ -30,9 +30,9 @@ interface Curriculum {
 }
 
 export default function LatestLectures() {
-  const [swiper, setSwiper] = useState<SwiperClass>();
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
+  const [, setSwiper] = useState<SwiperClass>();
+  const [, setIsBeginning] = useState(true);
+  const [, setIsEnd] = useState(false);
   const [curricula, setCurricula] = useState<Curriculum[]>([]);
 
   useEffect(() => {
