@@ -1,6 +1,17 @@
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { Curricula } from '../../interface/Curriculainterface';
 import axios from 'axios';
 
 const BASE_URL = 'http://steach.ssafy.io:8080';
+const IMG_SERVER_URL = 'http://steach.ssafy.io:8082';
+
+const Auth = localStorage.getItem("auth")
+const AuthData = JSON.parse(Auth)
+
+
+// img server API
+
+
 
 // Fetch curricula list
 export const fetchCurricula = async (params: {
@@ -24,33 +35,43 @@ export const fetchCurricula = async (params: {
     }
 };
 
-// Create new curriculum
-export const createCurriculum = async (curriculumData: {
-    title: string;
-    sub_title: string;
-    intro: string;
-    information: string;
-    category: string;
-    sub_category: string;
-    banner_img_url: string;
-    start_date: string;
-    end_date: string;
-    weekdays_bitmask: string;
-    lecture_start_time: string;
-    lecture_end_time: string;
-    max_attendees: number;
-}) => {
-    try {
-        const response = await axios.post(`${BASE_URL}/api/v1/curricula`, curriculumData, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
+// 커리큘럼 만들기
+export const SignUpLecture = createAsyncThunk<Curricula, Curricula>(
+    "Curricula/signup",
+    async (newLectureData) => {
+      const formData = new FormData();
+      formData.append('userName', AuthData.username);
+      formData.append('file', newLectureData.banner_img_url);
+      const imgPost = await axios.post(`${IMG_SERVER_URL}/img-upload/upload`, formData ,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      const response = await axios.post(`${BASE_URL}/api/v1/curricula`, {
+        title: newLectureData.title,
+        sub_title : newLectureData.sub_title,
+        intro : newLectureData.intro,
+        information: newLectureData.information,
+        category: newLectureData.category,
+        sub_category : newLectureData.sub_category,
+        banner_img_url : imgPost.data.url,
+        start_date : newLectureData.start_date,
+        end_date : newLectureData.end_date,
+        lecture_start_time : newLectureData.lecture_start_time,
+        lecture_end_time: newLectureData.lecture_end_time,
+        weekdays_bitmask: newLectureData.weekdays_bitmask,
+        max_attendees: newLectureData.max_attendees,
+  
+      }, {
+        headers : {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${AuthData.token}`
+        }
+      })
+      return response.data
+    } 
+  );
 
 // Apply to a curriculum
 export const applyToCurriculum = async (curricula_id: number) => {
@@ -73,7 +94,7 @@ export const fetchCurriculumDetails = async (id: string) => {
 };
 
 // Fetch lectures under a curriculum
-export const fetchCurriculumLectures = async (curriculum_id: number) => {
+export const fetchCurriculumLectures = async (curriculum_id: string) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/curricula/${curriculum_id}/lectures`);
         return response.data;

@@ -3,8 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import ax from '../../assets/teacher.png'
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store'
-import { Lecture } from '../../store/lecturesSlice';
-import { getLectureDetails, getLecturelist } from '../../store/lecturesSlice'
+import { getLectureDetails, getLecturelist } from '../../store/curriculaSlice'
 import { useDispatch } from 'react-redux';
 import img1 from '../../../src/assets/checked.jpg'
 import img2 from '../../../src/assets/unchecked.jpg'
@@ -23,15 +22,15 @@ const LectureDetail: React.FC = () => {
   const status = useSelector((state: RootState) => state.lectures.status);
   const error = useSelector((state: RootState) => state.lectures.error);
   const bitday = lectures?.weekdays_bitmask.split('');
-  console.log(id)
-  const url:string = lectures?.banner_img_url
+  const url: string = lectures?.banner_img_url
+  console.log(lectureslist)
+  {lectureslist}
   useEffect(() => {
     if (id) {
       dispatch(getLectureDetails(id))
       dispatch(getLecturelist(id))
     }
   },[id, dispatch])
-  console.log(lectures, 1)
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
@@ -50,6 +49,17 @@ const LectureDetail: React.FC = () => {
             <h1 className='text-7xl p-3'>{lectures?.title}</h1>
             <p className='p-1'>{lectures?.sub_title}</p>
             <p className='p-1'>{lectures?.intro}</p>
+            {/* {
+              lectureslist.map((a, i) => {
+                return (
+                  {a}
+                )
+              })
+            } */}
+            
+            {/* <p>{lectureslist?.lecture_start_time}</p>
+            {lectureslist?.lecture_title}
+            {lectureslist?.lecture_id} */}
             <Link to={'/teacher/profiledetail'}>
               <div className="flex items-center">
                 <img src={img3} className='w-10 h-10 m-5' />
