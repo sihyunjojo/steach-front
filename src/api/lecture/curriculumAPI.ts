@@ -6,15 +6,13 @@ const BASE_URL = 'http://steach.ssafy.io:8080';
 const IMG_SERVER_URL = 'http://steach.ssafy.io:8082';
 
 const Auth = localStorage.getItem("auth")
-let AuthData:any;
+let AuthData: any;
 if (Auth) {
     AuthData = JSON.parse(Auth)
 } else {
     AuthData = null
 }
 
-const Auth = localStorage.getItem("auth");
-const AuthData = Auth ? JSON.parse(Auth) : "";
 
 // img server API
 
