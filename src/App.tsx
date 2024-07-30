@@ -12,7 +12,7 @@ import TeacherProfilePage from "./pages/teacher/TeacherMyRoomPage.tsx";
 import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
 import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
 import CurriculumList from "./components/teacher/CurriculumList.tsx";
-import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
+// import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
 

@@ -11,7 +11,7 @@ import { RootState } from '../../store'
 const TeacherInfoDetail: React.FC = () => {
   const navigate = useNavigate();
 
-  const lectures = useSelector((state: RootState) => state.lectures.lectures)
+  const lectures = useSelector((state: RootState) => state.lectures.lectureslist)
   const status = useSelector((state: RootState) => state.lectures.status);
   const error = useSelector((state: RootState) => state.lectures.error);
   console.log(lectures)

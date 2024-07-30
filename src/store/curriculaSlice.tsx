@@ -7,7 +7,7 @@ import { SignUpLecture } from '../api/lecture/curriculumAPI'
 
 export interface LecturesState {
   curricula: Curricula[];
-  lectureslist: Lectures[];
+  lectureslist: { lectures: Lectures[] } | null;
   selectlectures: Curricula | null
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -15,7 +15,7 @@ export interface LecturesState {
 
 const initialState: LecturesState = {
   curricula: [],
-  lectureslist: [],
+  lectureslist: null,
   selectlectures: null,
   status: "idle",
   error: null,
@@ -30,12 +30,11 @@ export const getLectureDetails = createAsyncThunk<Curricula, string>(
   }
 )
 
-export const getLecturelist = createAsyncThunk<Lectures[], string>(
+export const getLecturelist = createAsyncThunk<{lectures: Lectures[]}, string>(
   "lectures/list",
   async (id) => {
     const data = await fetchCurriculumLectures(id);
-    console.log(id)
-    return data
+    return { lectures: data };
   }
 )
 
@@ -79,7 +78,7 @@ const lecturesSlice = createSlice({
         state.status = "loading";
       })
       .addCase(
-        getLecturelist.fulfilled, (state, action: PayloadAction<Lectures[]>) => {
+        getLecturelist.fulfilled, (state, action: PayloadAction<{ lectures: Lectures[] }>) => {
           state.status = "succeeded";
           state.lectureslist = action.payload
         }

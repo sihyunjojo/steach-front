@@ -5,12 +5,12 @@ export interface Curricula {
   information: string;
   category: string;
   sub_category : string;
-  banner_img_url : string | File;
+  banner_img_url : string;
   start_date : string;
   end_date : string;
   lecture_start_time : string;
   lecture_end_time: string;
-  weekdays_bitmask: string;
+  weekdays_bitmask: any;
   max_attendees: number;
   teacher_name: string;
   current_attendees: string;
@@ -28,7 +28,7 @@ export interface CurriculaFormData {
   end_date : string;
   lecture_start_time : string;
   lecture_end_time: string;
-  weekdays_bitmask: number;
+  weekdays_bitmask: any;
   max_attendees: number;
 }
 

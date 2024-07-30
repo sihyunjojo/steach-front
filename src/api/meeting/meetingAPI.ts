@@ -30,7 +30,7 @@ export const getUpcomingLectures = async () => {
 };
 
 
-export const checkClassroom = async (sessionId) => {
+export const checkClassroom = async (sessionId:string) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/classrooms/check/${sessionId}`, {
             headers: {

@@ -1,12 +1,17 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Curricula } from '../../interface/Curriculainterface';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Curricula, CurriculaFormData } from '../../interface/Curriculainterface';
 import axios from 'axios';
 
 const BASE_URL = 'http://steach.ssafy.io:8080';
 const IMG_SERVER_URL = 'http://steach.ssafy.io:8082';
 
 const Auth = localStorage.getItem("auth")
-const AuthData = JSON.parse(Auth)
+let AuthData:any;
+if (Auth) {
+    AuthData = JSON.parse(Auth)
+} else {
+    AuthData = null
+}
 
 
 // img server API
@@ -36,7 +41,7 @@ export const fetchCurricula = async (params: {
 };
 
 // 커리큘럼 만들기
-export const SignUpLecture = createAsyncThunk<Curricula, Curricula>(
+export const SignUpLecture = createAsyncThunk<Curricula, CurriculaFormData>(
     "Curricula/signup",
     async (newLectureData) => {
       const formData = new FormData();

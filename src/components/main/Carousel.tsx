@@ -14,7 +14,7 @@ const imageUrls = [
 const generateSlides = (urls: string[]) => {
   return urls.map((url, index) => (
     <SwiperSlide key={index}>
-      <img src={url} alt={`slide-${index}`} style={styles.image} />
+      <img src={url} alt={`slide-${index}`} style={imageStyle} />
     </SwiperSlide>
   ));
 };
@@ -22,7 +22,7 @@ const generateSlides = (urls: string[]) => {
 const HomePageCarousel: React.FC = () => {
   return (
     <>
-      <style jsx>{`
+      <style>{`
         .mySwiper {
           width: 100%;
           height: 30rem;
@@ -57,18 +57,16 @@ const HomePageCarousel: React.FC = () => {
   );
 };
 
-const styles = {
-  image: {
-    display: "block",
-    width: "auto",
-    height: "100%",
-    maxWidth: "100%",
-    margin: "0 auto",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  },
+const imageStyle: React.CSSProperties = {
+  display: "block",
+  width: "auto",
+  height: "100%",
+  maxWidth: "100%",
+  margin: "0 auto",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 };
 
 export default HomePageCarousel;

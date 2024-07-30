@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const BASE_URL = 'http://steach.ssafy.io:8080';
+
 
 export const getRadarChartResponse = async () => {
     try {
@@ -29,7 +31,7 @@ export const getGptResponse = async () => {
 };
 
 
-export const getLectureStatistics = async (lectureId) => {
+export const getLectureStatistics = async (lectureId:string) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/v1/statistics/lecture/${lectureId}`, {
             headers: {
