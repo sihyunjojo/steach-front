@@ -30,7 +30,7 @@ const TeacherSignUp: React.FC = () => {
   interface FormData {
     username: string;
     password: string;
-    name: string;
+    nickname: string;
     email: string;
     file?: File;
   }
@@ -44,7 +44,7 @@ const TeacherSignUp: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
-    name: "",
+    nickname: "",
     email: "",
     file: undefined,
   });
@@ -72,7 +72,7 @@ const TeacherSignUp: React.FC = () => {
     // 만약 8자이상 16자이하라면 axios요청 보내기
     if (formData.password.length >= 8 && formData.password.length <= 16) {
       requestSignUp();
-      // axiosSignUp();
+
       // 아니면 경고 alert
     } else {
       toast.warn("비밀번호를 다시 입력해주세요.", {
@@ -101,6 +101,7 @@ const TeacherSignUp: React.FC = () => {
       }
 
       navigate("/");
+      window.location.reload();
     } else {
       if (resultSignUpAction.payload) {
         toast.error(
@@ -195,9 +196,9 @@ const TeacherSignUp: React.FC = () => {
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="nickname"
+            name="nickname"
+            value={formData.nickname}
             onChange={handleChange}
             className="border-2 rounded-lg w-full p-2 mb-5"
             required

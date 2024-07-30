@@ -21,6 +21,10 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  // 아이디 값 추출
+  const Data = localStorage.getItem("auth");
+  const studentData = Data ? JSON.parse(Data) : "";
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -61,7 +65,10 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
             </a>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            <Link to="/student/profile" className="hover:text-orange-300">
+            <Link
+              to={`/student/profile/${studentData.username}`}
+              className="hover:text-orange-300"
+            >
               내 강의실
             </Link>
           </li>
@@ -102,7 +109,10 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
               </a>
             </li>
             <li className="p-2">
-              <Link to="/student/profile" className="hover:text-orange-300">
+              <Link
+                to={`/student/profile/${studentData.username}`}
+                className="hover:text-orange-300"
+              >
                 내 강의실
               </Link>
             </li>

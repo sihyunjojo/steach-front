@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { teacherInfo } from "../../../store/userInfo/profileSlice";
 import { useNavigate } from "react-router-dom";
 import { teacherInfoPatch } from "../../../store/userInfo/profileSlice";
+import { deleteUserSteach, logout } from "../../../store/userInfo/AuthSlice";
 
 export interface TeacherInfoUpdateForm {
   nickname: string;
@@ -47,14 +48,26 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
   };
 
   // 내 정보 수정 요청
-  const handleUpdateSubmit = async () => {
+  const handleUpdateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     await dispatch(teacherInfoPatch(formData));
     localStorage.removeItem("passwordAuthToken");
     navigate("/teacher/profile");
   };
+
+  // 회원 탈퇴 요청
+  const handleDelete = async () => {
+    // 회원 탈퇴
+    await dispatch(deleteUserSteach());
+    // 탈퇴 후 로그아웃
+    await dispatch(logout());
+    // 메인페이지로 이동
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
-      <form onSubmit={handleUpdateSubmit}>
+      <form onSubmit={(e) => handleUpdateSubmit(e)}>
         <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">
           내정보 수정
         </h1>
@@ -64,7 +77,7 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             name="nickname"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.nickname}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
@@ -75,7 +88,7 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             type="password"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
@@ -86,7 +99,7 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             type="email"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.email}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
@@ -98,7 +111,7 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             name="brief_introduction"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.brief_introduction}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="grid grid-cols-1 my-4 p-2">
@@ -108,7 +121,7 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             name="academic_background"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.academic_background}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
@@ -118,15 +131,21 @@ const TeacherMyInfoUpdateForm: React.FC = () => {
             name="specialization"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.specialization}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
         <button
-          onClick={handleUpdateSubmit}
+          onClick={(e) => handleUpdateSubmit(e)}
           className="p-3 bg-red-200 text-white rounded-md shadow-md hover:bg-red-300"
         >
           수정하기
+        </button>
+        <button
+          onClick={handleDelete}
+          className="p-3 bg-red-200 text-white rounded-md shadow-md hover:bg-red-300"
+        >
+          회원탈퇴
         </button>
       </form>
     </div>

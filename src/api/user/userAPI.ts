@@ -2,6 +2,7 @@ import axios from "axios";
 import { teacherInfo, studentInfo } from "../../store/userInfo/profileSlice";
 import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/TeacherMyInfoUpdateForm";
 import { StudentInfoUpdateForm } from "../../components/student/studentMyInfo/StudentMyInfoUpdateForm";
+import { LoginReturnForm, LoginForm } from "../../store/userInfo/AuthSlice";
 
 const BASE_URL = "http://43.202.1.52:8080";
 
@@ -25,6 +26,35 @@ export const passwordCheck = async (password: string) => {
     return response.data;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+// 로그인
+export const login = async (formDataToSend: LoginForm) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/login`,
+      formDataToSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data: LoginReturnForm = {
+      username: response.data.username,
+      nickname: response.data.nickname,
+      email: response.data.email,
+      token: response.data.token,
+      role: response.data.role,
+    };
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 
@@ -110,6 +140,22 @@ export const studentInfoUpdate = async (formData: StudentInfoUpdateForm) => {
     return response.data;
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+};
+
+// 회원 탈퇴
+export const deleteMember = async () => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/api/v1/member`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

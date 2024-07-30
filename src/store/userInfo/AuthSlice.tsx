@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { reset } from "./profileSlice";
+import { deleteMember, login } from "../../api/user/userAPI";
 
 // 학생 회원가입 폼 형식
 interface studentFormData {
   username: string;
   password: string;
-  name: string;
+  nickname: string;
   email: string;
   auth_code: string;
 }
@@ -15,21 +16,21 @@ interface studentFormData {
 interface TeacherFormData {
   username: string;
   password: string;
-  name: string;
+  nickname: string;
   email: string;
   file?: File;
 }
 
 // 통합 로그인 폼
-interface LoginForm {
+export interface LoginForm {
   username: string;
   password: string;
 }
 
 // 통합 로그인 반환 폼
-interface LoginReturnForm {
+export interface LoginReturnForm {
   username: string;
-  name: string;
+  nickname: string;
   email: string;
   token: string;
   role: string;
@@ -63,7 +64,7 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
       const formDataToSend = {
         username: userFormData.username,
         password: userFormData.password,
-        name: userFormData.name,
+        nickname: userFormData.nickname,
         email: userFormData.email,
         auth_code: userFormData.auth_code,
       };
@@ -96,7 +97,7 @@ export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
       JSON.stringify({
         username: newUserData.username,
         password: newUserData.password,
-        name: newUserData.name,
+        nickname: newUserData.nickname,
         email: newUserData.email,
       })
     );
@@ -127,25 +128,13 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
         password: loginFormData.password,
       };
 
-      const response = await axios.post(
-        "http://43.202.1.52:8080/api/v1/login",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // 로그인 API 요청
+      const response = await login(formDataToSend);
 
-      const data: LoginReturnForm = {
-        username: response.data.username,
-        name: response.data.name,
-        email: response.data.email,
-        token: response.data.token,
-        role: response.data.role,
-      };
-      localStorage.setItem("auth", JSON.stringify(data));
-      return data;
+      // 로컬 스토리지에 정보 저장
+      localStorage.setItem("auth", JSON.stringify(response));
+
+      return response;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         return thunkAPI.rejectWithValue(error.response.data);
@@ -155,11 +144,29 @@ export const loginSteach = createAsyncThunk<LoginReturnForm, LoginForm>(
   }
 );
 
+// 회원 탈퇴
+export const deleteUserSteach = createAsyncThunk(
+  "user/delete",
+  async (_, thunkAPI) => {
+    try {
+      const response = await deleteMember();
+
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 로그아웃
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   // 로컬 스토리지에서 사용자 정보 삭제
   localStorage.removeItem("auth");
   // 프로필 상태 초기화
-  await thunkAPI.dispatch(reset());
+  thunkAPI.dispatch(reset());
 });
 
 const authSlice = createSlice({
@@ -210,6 +217,17 @@ const authSlice = createSlice({
         state.role = "";
         state.token = "";
         state.username = "";
+      })
+      // 회원탈퇴 관련 addCase
+      .addCase(deleteUserSteach.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteUserSteach.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(deleteUserSteach.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || null;
       });
   },
 });

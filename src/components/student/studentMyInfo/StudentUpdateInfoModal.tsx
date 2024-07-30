@@ -15,13 +15,13 @@ const StudentUpdateInfoModal: React.FC<StudentUpdateInfoModalProps> = ({
   // 비밀번호 입력 바인딩
   const [passwordInput, setPassordInput] = useState("");
 
-  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassordInput(event.target.value);
+  const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassordInput(e.target.value);
   };
 
   // 비밀번호 확인 요청 메서드
-  const handlePasswordCheck = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handlePasswordCheck = (e: React.FormEvent) => {
+    e.preventDefault();
     handleIsUpdateInfoSubmit(passwordInput);
     closeModal();
   };
@@ -36,7 +36,7 @@ const StudentUpdateInfoModal: React.FC<StudentUpdateInfoModalProps> = ({
       </button>
 
       {isOpen && (
-        <form onSubmit={handlePasswordCheck}>
+        <form onSubmit={(e) => handlePasswordCheck(e)}>
           <div
             className="relative z-10"
             aria-labelledby="modal-title"
@@ -66,7 +66,7 @@ const StudentUpdateInfoModal: React.FC<StudentUpdateInfoModalProps> = ({
                             className="p-2 border-2 rounded-md"
                             placeholder="비밀번호를 입력해주세요."
                             value={passwordInput}
-                            onChange={handlePasswordInput}
+                            onChange={(e) => handlePasswordInput(e)}
                           />
                         </div>
                       </div>
@@ -83,7 +83,7 @@ const StudentUpdateInfoModal: React.FC<StudentUpdateInfoModalProps> = ({
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                      onClick={handlePasswordCheck}
+                      onClick={(e) => handlePasswordCheck(e)}
                     >
                       확인
                     </button>

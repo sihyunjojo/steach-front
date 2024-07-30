@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { studentInfo } from "../../../store/userInfo/profileSlice";
 import { useNavigate } from "react-router-dom";
 import { studentInfoPatch } from "../../../store/userInfo/profileSlice";
+import { deleteUserSteach } from "../../../store/userInfo/AuthSlice";
 
 export interface StudentInfoUpdateForm {
   nickname: string;
@@ -41,14 +42,24 @@ const StudentMyInfoUpdateForm: React.FC = () => {
   };
 
   // 내 정보 수정 요청
-  const handleUpdateSubmit = async () => {
+  const handleUpdateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     await dispatch(studentInfoPatch(formData));
     localStorage.removeItem("passwordAuthToken");
     navigate("/student/profile");
   };
+
+  // 회원 탈퇴 요청
+  const handleDelete = async () => {
+    // 회원 탈퇴
+    await dispatch(deleteUserSteach());
+    // 메인페이지로 이동
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
-      <form onSubmit={handleUpdateSubmit}>
+      <form onSubmit={(e) => handleUpdateSubmit(e)}>
         <h1 className="my-2 p-2 text-center text-4xl text-lightNavy">
           내정보 수정
         </h1>
@@ -58,7 +69,7 @@ const StudentMyInfoUpdateForm: React.FC = () => {
             name="nickname"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.nickname}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
@@ -69,7 +80,7 @@ const StudentMyInfoUpdateForm: React.FC = () => {
             type="password"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
@@ -80,15 +91,21 @@ const StudentMyInfoUpdateForm: React.FC = () => {
             type="email"
             className="p-2 w-72 border-2 rounded-md"
             value={formData.email}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             required
           />
         </div>
         <button
-          onClick={handleUpdateSubmit}
+          onClick={(e) => handleUpdateSubmit(e)}
           className="p-3 bg-red-200 text-white rounded-md shadow-md hover:bg-red-300"
         >
           수정하기
+        </button>
+        <button
+          onClick={handleDelete}
+          className="p-3 bg-red-200 text-white rounded-md shadow-md hover:bg-red-300"
+        >
+          회원탈퇴
         </button>
       </form>
     </div>

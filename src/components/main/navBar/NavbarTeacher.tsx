@@ -21,6 +21,10 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  // 선생님 아이디 추출
+  const Data = localStorage.getItem("auth");
+  const teacherData = Data ? JSON.parse(Data) : "";
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -61,7 +65,10 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
             </a>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            <Link to="/teacher/profile" className="hover:text-orange-300">
+            <Link
+              to={`/teacher/profile/${teacherData.username}`}
+              className="hover:text-orange-300"
+            >
               내 강의실
             </Link>
           </li>
@@ -81,7 +88,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
         <button
           className="w-auto ml-2 p-2 text-white bg-red-400 border-2 border-hardBeige rounded-md hover:bg-red-500"
           onClick={logoutbtn}
-          >
+        >
           로그아웃
         </button>
       </div>
@@ -102,7 +109,10 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
               </a>
             </li>
             <li className="p-2">
-              <Link to="/teacher/profile" className="hover:text-orange-300">
+              <Link
+                to={`/teacher/profile/${teacherData.username}`}
+                className="hover:text-orange-300"
+              >
                 내 강의실
               </Link>
             </li>
@@ -120,7 +130,7 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
             <button
               className="text-white bg-red-400 border-2 p-2 rounded-md hover:bg-red-500 w-full"
               onClick={logoutbtn}
-              >
+            >
               로그아웃
             </button>
           </div>
