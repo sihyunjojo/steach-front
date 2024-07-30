@@ -1,18 +1,17 @@
 import { useState } from "react";
-import LoginBannerBgImg from "../../assets/banner.jpg";
 import { useNavigate } from "react-router-dom";
 import { loginSteach } from "../../store/userInfo/AuthSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
+import LoginBannerBgImg from "../../assets/banner.jpg";
 
 // 이진송
 // 디자인 변경 필요함
 const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  // 학생 상태
-  // 선생님 상태
 
+  // 로그인 폼 형식
   interface FormData {
     username: string;
     password: string;
@@ -40,7 +39,6 @@ const Login: React.FC = () => {
     };
 
     await dispatch(loginSteach(loginFormData));
-
     navigate("/");
     window.location.reload();
   };

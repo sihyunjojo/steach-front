@@ -22,7 +22,7 @@ const StudentSignUp: React.FC = () => {
   interface FormData {
     username: string;
     password: string;
-    name: string;
+    nickname: string;
     email: string;
     auth_code: string;
   }
@@ -36,7 +36,7 @@ const StudentSignUp: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
-    name: "",
+    nickname: "",
     email: "",
     auth_code: "",
   });
@@ -80,7 +80,7 @@ const StudentSignUp: React.FC = () => {
     const formDataToSend: FormData = {
       username: formData.username,
       password: formData.password,
-      name: formData.name,
+      nickname: formData.nickname,
       email: formData.email,
       auth_code: formData.auth_code,
     };
@@ -106,6 +106,7 @@ const StudentSignUp: React.FC = () => {
       }
 
       navigate("/");
+      window.location.reload();
     } else {
       if (resultSignUpAction.payload) {
         toast.error(
@@ -198,13 +199,13 @@ const StudentSignUp: React.FC = () => {
           </section>
           <section>
             <label htmlFor="email" className="text-2xl">
-              이름
+              닉네임
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="nickname"
+              name="nickname"
+              value={formData.nickname}
               onChange={handleChange}
               className="border-2 rounded-lg w-full p-2 mb-5"
               required
