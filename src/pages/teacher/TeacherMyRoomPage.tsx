@@ -12,6 +12,8 @@ import {
 import { CgProfile } from "react-icons/cg";
 import { FaPencilAlt, FaHistory } from "react-icons/fa";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
+import MyLecture from "../../components/teacher/MyLecture";
+// import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
 import { useNavigate } from "react-router-dom";
 import TeacherMyInfo from "../../components/teacher/teacherMyInfo/TeacherMyInfo";
 import TeacherMyLecture from "../../components/teacher/teacherMyLecture/TeacherMyCurricula";
@@ -85,7 +87,7 @@ const TeacherProfilePage: React.FC = () => {
               <ProfileLectureHistory />
             </TabPanel>
             <TabPanel>
-              <TeacherMyInfo />
+              {/* <TeacherUpdateMyInfo /> */}
             </TabPanel>
           </TabPanels>
         </Flex>

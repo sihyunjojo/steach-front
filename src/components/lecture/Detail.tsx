@@ -1,4 +1,4 @@
-import React, { useState, Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store'
