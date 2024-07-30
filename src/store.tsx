@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import lecturesReducer from "./store/lecturesSlice";
+import lecturesReducer from "./store/curriculaSlice.tsx";
 import studentReducer from "./store/userInfo/AuthSlice.tsx";
 import lecturesListReducer from "./store/lectureslist.tsx";
 import profileReducer from "./store/userInfo/profileSlice.tsx";

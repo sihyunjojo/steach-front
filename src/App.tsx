@@ -5,7 +5,7 @@ import LoginPage from "./pages/user/LoginPage.tsx";
 import SignUpPage from "./pages/user/SignUpPage.tsx";
 import ProfilePage from "./pages/student/ProfilePage.tsx";
 import HomePage from "./pages/main/HomePage.tsx";
-import LectureDetailPage from "./pages/lecture/DetailPage.tsx";
+import CurriculaDetailPage from "./pages/lecture/DetailPage.tsx";
 import LectureUpdatePage from "./pages/lecture/UpdatePage.tsx";
 import LectureSignUpPage from "./pages/lecture/SignUpPage.tsx";
 import TeacherProfilePage from "./pages/teacher/MyRoomPage.tsx";
@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Route path="/student/profile" element={<ProfilePage />}></Route>
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
-        <Route path="/lecture/detail/:id" element={<LectureDetailPage />}></Route>
+        <Route path="/curricula/detail/:id" element={<CurriculaDetailPage />}></Route>
         <Route path="/lecture/signup" element={<LectureSignUpPage />}></Route>
         <Route path="/lecture/update" element={<LectureUpdatePage />}></Route>
         <Route path="/teacher/profile" element={<TeacherProfilePage />}></Route>
