@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Curricula, Lectures } from "../interface/Curriculainterface";
+import { Curricula, LectureSeries } from "../interface/Curriculainterface";
 import {
   fetchCurriculumDetails,
   fetchCurriculumLectures,
@@ -10,7 +10,7 @@ import { SignUpLecture } from "../api/lecture/curriculumAPI";
 
 export interface LecturesState {
   curricula: Curricula[];
-  lectureslist: { lectures: Lectures[] } | null;
+  lectureslist: LectureSeries | null;
   selectlectures: Curricula | null
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
@@ -32,11 +32,11 @@ export const getLectureDetails = createAsyncThunk<Curricula, string>(
   }
 );
 
-export const getLecturelist = createAsyncThunk<{lectures: Lectures[]}, string>(
+export const getLecturelist = createAsyncThunk<LectureSeries, string>(
   "lectures/list",
   async (id) => {
     const data = await fetchCurriculumLectures(id);
-    return { lectures: data };
+    return data ;
   }
 );
 
@@ -77,7 +77,7 @@ const lecturesSlice = createSlice({
         state.status = "loading";
       })
       .addCase(
-        getLecturelist.fulfilled, (state, action: PayloadAction<{ lectures: Lectures[] }>) => {
+        getLecturelist.fulfilled, (state, action: PayloadAction<LectureSeries>) => {
           state.status = "succeeded";
           state.lectureslist = action.payload;
         }

@@ -103,7 +103,7 @@ export const fetchCurriculumDetails = async (id: string) => {
   }
 };
 
-// Fetch lectures under a curriculum
+// 커리큘럼에 해당하는 강의 가져오기
 export const fetchCurriculumLectures = async (curriculum_id: string) => {
   try {
     const response = await axios.get(
