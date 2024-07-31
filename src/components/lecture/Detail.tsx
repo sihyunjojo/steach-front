@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
@@ -19,16 +20,20 @@ import {
 } from "@chakra-ui/react";
 
 const LectureDetail: React.FC = () => {
-
   // 이진송
   // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
+
   
   const [_, setToday] = useState('');
   const [arr, setArr] = useState([]);
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const lectures = useSelector((state: RootState) => state.curriculum.selectlectures)
-  const lectureslist = useSelector((state: RootState) => state.curriculum.lectureslist)
+  const lectures = useSelector(
+    (state: RootState) => state.curriculum.selectlectures
+  );
+  const lectureslist = useSelector(
+    (state: RootState) => state.curriculum.lectureslist
+  );
   const status = useSelector((state: RootState) => state.curriculum.status);
   const error = useSelector((state: RootState) => state.curriculum.error);
 
@@ -40,16 +45,19 @@ const LectureDetail: React.FC = () => {
   
   useEffect(() => {
     if (id) {
-      dispatch(getLectureDetails(id))
-      dispatch(getLecturelist(id))
+      dispatch(getLectureDetails(id));
+      dispatch(getLecturelist(id));
     }
-  }, [id, dispatch])
+  }, [id, dispatch]);
 
   useEffect(() => {
     const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+    const formattedDate = `${currentDate.getFullYear()}-${
+      currentDate.getMonth() + 1
+    }-${currentDate.getDate()}`;
     setToday(formattedDate);
   }, []);
+
   
   let startLecture:any;
   let daysAgo:any;
@@ -62,10 +70,11 @@ const LectureDetail: React.FC = () => {
       return daysAgo;
     }
 
+
   return (
     <>
       <header className="flex bg-hoverNavy text-white text-left py-2.5 justify-center">
-        <div className='w-3/5'>
+        <div className="w-3/5">
           <div>
             <p>{lectures?.category} &gt; {lectures?.sub_category}</p>
             <h1 className='text-7xl p-3'>{lectures?.title}</h1>
@@ -73,8 +82,10 @@ const LectureDetail: React.FC = () => {
             <p className='p-1'>{lectures?.intro}</p>
             <Link to={'/teacher/profiledetail'}>
               <div className="flex items-center">
-                <img src={img3} className='w-10 h-10 m-5' />
-                <span>{lectures?.teacher_name} 강사님 - 강사상세페이지, 만들어야함</span>
+                <img src={img3} className="w-10 h-10 m-5" />
+                <span>
+                  {lectures?.teacher_name} 강사님 - 강사상세페이지, 만들어야함
+                </span>
               </div>
             </Link>
             </div>
@@ -175,6 +186,7 @@ const LectureDetail: React.FC = () => {
           <h3 className="text-2xl font-bold mb-4">{lectures?.title}</h3>
           <button className="w-full mb-5 py-2 px-4 bg-pink-500 hover:bg-pink-700 text-white font-bold rounded self-center">수강 신청</button>
           <div className='grid grid-cols-2'>
+
             <div>
               <ul>
                 <li>지식공유자</li>
@@ -199,9 +211,9 @@ const LectureDetail: React.FC = () => {
         </div>
         <div className='lg:col-span-3 col-span-1'></div>
       </div>
+      <div></div>
     </>
   );
-}
-
+};
 
 export default LectureDetail;
