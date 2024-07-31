@@ -1,9 +1,9 @@
 import { AppDispatch, RootState } from "../../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { studentInfo } from "../../../store/userInfo/profileSlice";
 import { useNavigate } from "react-router-dom";
-import { studentInfoPatch } from "../../../store/userInfo/profileSlice";
+import { updateStudentInfo } from "../../../store/userInfo/StudentProfileSlice";
+import { fetchStudentInfo } from "../../../store/userInfo/StudentProfileSlice";
 import { deleteUserSteach } from "../../../store/userInfo/AuthSlice";
 
 export interface StudentInfoUpdateForm {
@@ -17,9 +17,11 @@ const StudentMyInfoUpdateForm: React.FC = () => {
   const temporaryToken = localStorage.getItem("passwordAuthToken");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const teacherData = useSelector((state: RootState) => state.profile.student);
+  const teacherData = useSelector(
+    (state: RootState) => state.studentProfile.info
+  );
   useEffect(() => {
-    dispatch(studentInfo());
+    dispatch(fetchStudentInfo());
   }, [dispatch]);
 
   // 폼 값 바인딩
@@ -44,7 +46,7 @@ const StudentMyInfoUpdateForm: React.FC = () => {
   // 내 정보 수정 요청
   const handleUpdateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(studentInfoPatch(formData));
+    await dispatch(updateStudentInfo(formData));
     localStorage.removeItem("passwordAuthToken");
     navigate("/student/profile");
   };

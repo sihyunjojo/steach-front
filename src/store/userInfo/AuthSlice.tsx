@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { reset } from "./profileSlice";
+import { studentReset } from "./StudentProfileSlice";
+import { teacherReset } from "./TeacherProfileSlice";
 import { deleteMember, login } from "../../api/user/userAPI";
 
 // 학생 회원가입 폼 형식
@@ -163,10 +164,20 @@ export const deleteUserSteach = createAsyncThunk(
 
 // 로그아웃
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
-  // 로컬 스토리지에서 사용자 정보 삭제
-  localStorage.removeItem("auth");
-  // 프로필 상태 초기화
-  thunkAPI.dispatch(reset());
+  const userAuth = localStorage.getItem("auth");
+  const userData = userAuth ? JSON.parse(userAuth) : "";
+
+  if (userData.role === "TEACHER") {
+    // 로컬 스토리지에서 사용자 정보 삭제
+    localStorage.removeItem("auth");
+    // 선생님 프로필 상태 초기화
+    thunkAPI.dispatch(teacherReset());
+  } else {
+    // 로컬 스토리지에서 사용자 정보 삭제
+    localStorage.removeItem("auth");
+    // 학생 프로필 상태 초기화
+    thunkAPI.dispatch(studentReset());
+  }
 });
 
 const authSlice = createSlice({

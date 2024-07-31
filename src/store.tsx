@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import curriculaReducer from "./store/curriculaSlice.tsx";
 import studentReducer from "./store/userInfo/AuthSlice.tsx";
 import lecturesListReducer from "./store/lectureSlice.tsx";
-import profileReducer from "./store/userInfo/profileSlice.tsx";
+import studentProfileReducer from "./store/userInfo/StudentProfileSlice.tsx";
+import teacherProfileReducer from "./store/userInfo/TeacherProfileSlice.tsx";
 
 // 중앙 스토어 설정
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
     curriculum: curriculaReducer,
     auth: studentReducer,
     lectures: lecturesListReducer,
-    profile: profileReducer,
+    studentProfile: studentProfileReducer,
+    teacherProfile: teacherProfileReducer,
   },
 });
 

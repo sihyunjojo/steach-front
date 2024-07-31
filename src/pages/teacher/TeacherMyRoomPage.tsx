@@ -12,11 +12,10 @@ import {
 import { CgProfile } from "react-icons/cg";
 import { FaPencilAlt, FaHistory } from "react-icons/fa";
 import ProfileLectureHistory from "../../components/student/ProfileLectureHistory";
-import MyLecture from "../../components/teacher/MyLecture";
 // import TeacherUpdateMyInfo from "../../components/teacher/TeacherUpdateMyInfo";
 import { useNavigate } from "react-router-dom";
 import TeacherMyInfo from "../../components/teacher/teacherMyInfo/TeacherMyInfo";
-import TeacherMyLecture from "../../components/teacher/teacherMyLecture/TeacherMyCurricula";
+import TeacherMyCurricula from "../../components/teacher/teacherMyLecture/TeacherMyCurricula";
 
 // 선생님 페이지
 const TeacherProfilePage: React.FC = () => {
@@ -74,20 +73,20 @@ const TeacherProfilePage: React.FC = () => {
                 }}
                 className="p-3 bg-red-200 rounded-md shadow-md text-white hover:bg-red-300"
               >
-                교실 생성
+                커리큘럼 생성
               </Button>
             </Tab>
           </TabList>
 
           <TabPanels className="p-3">
             <TabPanel>
-              <TeacherMyLecture />
+              <TeacherMyCurricula />
             </TabPanel>
             <TabPanel>
               <ProfileLectureHistory />
             </TabPanel>
             <TabPanel>
-              {/* <TeacherUpdateMyInfo /> */}
+              <TeacherMyInfo />
             </TabPanel>
           </TabPanels>
         </Flex>

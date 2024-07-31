@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../../../store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { teacherInfo } from "../../../store/userInfo/profileSlice";
+import { fetchTeacherInfo } from "../../../store/userInfo/TeacherProfileSlice";
 
 interface TeacherMyInfoProps {
   handleIsUpdateInfoSubmit: (password: string) => void;
@@ -14,11 +14,11 @@ const TeacherMyInfoForm: React.FC<TeacherMyInfoProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(teacherInfo());
+    dispatch(fetchTeacherInfo());
   }, [dispatch]);
   const teacherData = useSelector(
-    (state: RootState) => state.profile.teacher
-  ) as teacherInfo | null;
+    (state: RootState) => state.teacherProfile.info
+  );
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
       <form>

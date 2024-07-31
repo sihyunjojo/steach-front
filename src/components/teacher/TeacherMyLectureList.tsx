@@ -9,9 +9,15 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import hokyung from "../../assets/futureHokyung.jpg";
-const CurriculumList: React.FC = () => {
+import { useEffect } from "react";
+import { fetchCurriculumLectures } from "../../api/lecture/curriculumAPI";
+
+const TeacherMyLectureList: React.FC = () => {
   const navigate = useNavigate();
   const tableBorder: string = "border-b-2 rounded-md border-gray-300 p-4";
+  // useEffect(async () => {
+  //   await fetchCurriculumLectures());
+  // }, []);
 
   return (
     <div className="p-9 bg-Beige">
@@ -34,7 +40,7 @@ const CurriculumList: React.FC = () => {
       </section>
 
       <section className="mx-3 mt-12 mb-3">
-        <h1 className="my-3 text-3xl text-lightNavy">커리큘럼</h1>
+        <h1 className="my-3 text-3xl text-lightNavy">강의목록</h1>
         <table className="table-auto rounded-md bg-gray-200 shadow-md">
           <tbody>
             <tr>
@@ -199,4 +205,4 @@ const CurriculumList: React.FC = () => {
   );
 };
 
-export default CurriculumList;
+export default TeacherMyLectureList;

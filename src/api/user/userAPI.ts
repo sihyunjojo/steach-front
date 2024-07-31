@@ -1,5 +1,6 @@
 import axios from "axios";
-import { teacherInfo, studentInfo } from "../../store/userInfo/profileSlice";
+import { TeacherInfo } from "../../interface/profile/TeacherProfileInterface";
+import { StudentInfo } from "../../interface/profile/StudentProfileInterface";
 import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/TeacherMyInfoUpdateForm";
 import { StudentInfoUpdateForm } from "../../components/student/studentMyInfo/StudentMyInfoUpdateForm";
 import { LoginReturnForm, LoginForm } from "../../store/userInfo/AuthSlice";
@@ -67,7 +68,7 @@ export const teacherInfoGet = async () => {
       },
     });
 
-    const data: teacherInfo = {
+    const data: TeacherInfo = {
       username: response.data.username,
       nickname: response.data.nickname,
       email: response.data.email,
@@ -112,7 +113,7 @@ export const studentInfoGet = async () => {
       },
     });
 
-    const data: studentInfo = {
+    const data: StudentInfo = {
       username: response.data.username,
       nickname: response.data.nickname,
       email: response.data.email,

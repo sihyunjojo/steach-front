@@ -1,4 +1,5 @@
 export interface Curricula {
+  curriculum_id: number;
   title: string;
   sub_title: string;
   intro: string;
@@ -48,3 +49,9 @@ export interface returnStudentCurriculaList {
 }
 
 // 선생님이 강의하는 커리큘럼 조회 폼
+export interface returnTeacherCurriculaList {
+  current_page_number: number;
+  total_page: number;
+  page_size: number;
+  curricula: Curricula[];
+}
