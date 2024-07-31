@@ -11,7 +11,7 @@ import LectureSignUpPage from "./pages/lecture/SignUpPage.tsx";
 import TeacherProfilePage from "./pages/teacher/TeacherMyRoomPage.tsx";
 import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
 import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
-import CurriculumList from "./components/teacher/CurriculumList.tsx";
+import TeacherMyLectureList from "./components/teacher/TeacherMyLectureList.tsx";
 // import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
@@ -28,7 +28,10 @@ const App: React.FC = () => {
         ></Route>
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
-        <Route path="/curricula/detail/:id" element={<CurriculaDetailPage />}></Route>
+        <Route
+          path="/curricula/detail/:id"
+          element={<CurriculaDetailPage />}
+        ></Route>
         <Route path="/lecture/signup" element={<LectureSignUpPage />}></Route>
         <Route path="/lecture/update" element={<LectureUpdatePage />}></Route>
         <Route
@@ -36,8 +39,8 @@ const App: React.FC = () => {
           element={<TeacherProfilePage />}
         ></Route>
         <Route
-          path="/teacher/profile/lecture"
-          element={<CurriculumList />}
+          path="/teacher/profile/:username/curricula/:curricula_id"
+          element={<TeacherMyLectureList />}
         ></Route>
         <Route
           path="/teacher/profiledetail/:id"

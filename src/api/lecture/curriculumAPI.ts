@@ -1,18 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Curricula, CurriculaFormData } from '../../interface/Curriculainterface';
-import axios from 'axios';
+import {
+  Curricula,
+  CurriculaFormData,
+} from "../../interface/Curriculainterface";
+import axios from "axios";
 
-const BASE_URL = 'http://steach.ssafy.io:8080';
-const IMG_SERVER_URL = 'http://steach.ssafy.io:8082';
+const BASE_URL = "http://steach.ssafy.io:8080";
+const IMG_SERVER_URL = "http://steach.ssafy.io:8082";
 
-const Auth = localStorage.getItem("auth")
+const Auth = localStorage.getItem("auth");
 let AuthData: any;
 if (Auth) {
-    AuthData = JSON.parse(Auth)
+  AuthData = JSON.parse(Auth);
 } else {
-    AuthData = null
+  AuthData = null;
 }
-
 
 // img server API
 
@@ -39,14 +41,16 @@ export const fetchCurricula = async (params: {
 };
 
 // 커리큘럼 만들기
-
 export const SignUpLecture = createAsyncThunk<Curricula, CurriculaFormData>(
-    "Curricula/signup",
-    async (newLectureData) => {
-      const formData = new FormData();
-      formData.append('userName', AuthData.username);
-      formData.append('file', newLectureData.banner_img_url);
-      const imgPost = await axios.post(`${IMG_SERVER_URL}/img-upload/upload`, formData ,{
+  "Curricula/signup",
+  async (newLectureData) => {
+    const formData = new FormData();
+    formData.append("userName", AuthData.username);
+    formData.append("file", newLectureData.banner_img_url);
+    const imgPost = await axios.post(
+      `${IMG_SERVER_URL}/img-upload/upload`,
+      formData,
+      {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -109,6 +113,7 @@ export const fetchCurriculumLectures = async (curriculum_id: string) => {
     const response = await axios.get(
       `${BASE_URL}/api/v1/curricula/${curriculum_id}/lectures`
     );
+    console.log(response);
     return response.data;
   } catch (error) {
     throw error;
@@ -125,6 +130,26 @@ export const getStudentCurriculaList = async () => {
       params: {
         pageSize: 10,
         currentPageNumber: 1,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 선생님이 강의하는 자신의 커리큘럼 조회
+export const getTeacherCurriculaList = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/teachers/curricula`, {
+      headers: {
+        Authorization: `Bearer ${AuthData.token}`,
+      },
+      params: {
+        pageSize: null,
+        currentPageNumber: null,
       },
     });
 

@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { getStudentCurriculas } from "../../store/userInfo/profileSlice";
+import { getStudentCurriculas } from "../../store/userInfo/StudentProfileSlice";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Curricula } from "../../interface/Curriculainterface";
@@ -30,7 +30,7 @@ const LectureSwiper: React.FC<LectureSwiperProps> = ({ title }) => {
 
   // 프로필 슬라이스 상태에 저장된 수강신청한 커리큘럼 목록 가져오기
   const examples: Curricula[] = useSelector(
-    (state: RootState) => state.profile.curricula
+    (state: RootState) => state.studentProfile.curricula
   );
 
   return (

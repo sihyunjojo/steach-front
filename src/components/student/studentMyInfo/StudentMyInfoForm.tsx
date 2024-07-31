@@ -2,7 +2,7 @@ import { AppDispatch, RootState } from "../../../store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { studentInfo } from "../../../store/userInfo/profileSlice";
+import { fetchStudentInfo } from "../../../store/userInfo/StudentProfileSlice";
 import StudentUpdateInfoModal from "./StudentUpdateInfoModal";
 
 interface StudentMyInfoProps {
@@ -14,9 +14,11 @@ const StudentMyInfoForm: React.FC<StudentMyInfoProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(studentInfo());
+    dispatch(fetchStudentInfo());
   }, [dispatch]);
-  const teacherData = useSelector((state: RootState) => state.profile.student);
+  const teacherData = useSelector(
+    (state: RootState) => state.studentProfile.info
+  );
   return (
     <div className="w-9/12 bg-moreBeige rounded-xl shadow-md p-6 my-12 mx-auto relative">
       <form>
