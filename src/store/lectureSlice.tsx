@@ -1,23 +1,22 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Lectures } from '../interface/Curriculainterface'
+import { LectureSeries } from '../interface/Curriculainterface'
 import { fetchCurriculumLectures } from "../api/lecture/curriculumAPI"
 // 이진송
-// axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
 
 export interface LecturesState {
-  lectureslist: Lectures[] ;
+  lectureslist: LectureSeries | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState: LecturesState = {
-  lectureslist: [],
+  lectureslist: null,
   status: "idle",
   error: null,
 };
 
 
-export const getLecturelist = createAsyncThunk<Lectures[], string>(
+export const getLecturelist = createAsyncThunk<LectureSeries, string>(
   "lectures/list",
   async (id) => {
     const data = await fetchCurriculumLectures(id);
@@ -37,7 +36,7 @@ const lecturesSlice = createSlice({
         state.status = "loading";
       })
       .addCase(
-        getLecturelist.fulfilled, (state, action: PayloadAction<Lectures[]>) => {
+        getLecturelist.fulfilled, (state, action: PayloadAction<LectureSeries>) => {
           state.status = "succeeded";
           state.lectureslist = action.payload
         }
