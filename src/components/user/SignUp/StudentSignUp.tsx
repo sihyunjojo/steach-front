@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpStudent, loginSteach } from "../../../store/userInfo/AuthSlice";
 import { AppDispatch, RootState } from "../../../store";
-import SpinnerComponent from "../../main/Spinner";
+import SpinnerComponent from "../../main/spinner/Spinner";
 
 // 이진송
 const StudentSignUp: React.FC = () => {

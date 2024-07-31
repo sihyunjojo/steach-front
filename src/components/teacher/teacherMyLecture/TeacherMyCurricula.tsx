@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 const TeacherMyCurricula: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
+  // 페이지에 들어오면 커리큘럼 데이터를 받아오기
   useEffect(() => {
     dispatch(fetchTeacherCurriculaList());
   }, [dispatch]);
@@ -23,6 +25,7 @@ const TeacherMyCurricula: React.FC = () => {
     (state: RootState) => state.teacherProfile.curricula
   );
 
+  console.log(teacherCurriculas);
   // 한 페이지에 몇개의 커리큘럼을 나타낼지
   const ITEMS_PER_PAGE = 4;
 

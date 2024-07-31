@@ -5,13 +5,13 @@ import {
   fetchCurriculumLectures,
 } from "../api/lecture/curriculumAPI";
 import { SignUpLecture } from "../api/lecture/curriculumAPI";
+
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
-
 export interface LecturesState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
-  selectlectures: Curricula | null
+  selectlectures: Curricula | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -36,7 +36,7 @@ export const getLecturelist = createAsyncThunk<LectureSeries, string>(
   "lectures/list",
   async (id) => {
     const data = await fetchCurriculumLectures(id);
-    return data ;
+    return data;
   }
 );
 
@@ -77,7 +77,8 @@ const lecturesSlice = createSlice({
         state.status = "loading";
       })
       .addCase(
-        getLecturelist.fulfilled, (state, action: PayloadAction<LectureSeries>) => {
+        getLecturelist.fulfilled,
+        (state, action: PayloadAction<LectureSeries>) => {
           state.status = "succeeded";
           state.lectureslist = action.payload;
         }
