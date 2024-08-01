@@ -33,19 +33,34 @@ export interface CurriculaFormData {
   max_attendees: number;
 }
 
+// 강의 리스트 인터페이스
 export interface LectureSeries {
   lecture_count: number;
   week_count: number;
   lectures: Lectures[];
 }
 
+// 강의 배열 인터페이스
 export type Lectures = Array<{
   lecture_id: number;
   lecture_title: string;
   lecture_order: number;
   lecture_start_time: string;
-}>
+}>;
 
+// 단일 강의 인터페이스
+export interface Lecture {
+  lecture_id: number;
+  lecture_title: string;
+  lecture_order: number;
+  lecture_start_time: string;
+}
+
+// 강의 상세 수정 인터페이스
+export interface PatchLecture {
+  lecture_title: string;
+  lecture_start_time: string;
+}
 
 // 학생 커리큘럼 신청 리스트 조회 폼
 export interface returnStudentCurriculaList {

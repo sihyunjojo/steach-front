@@ -139,7 +139,7 @@ const TeacherMyLectureList: React.FC = () => {
                       (_, index2) => (
                         <div
                           key={index2}
-                          className="grid grid-cols-4 border-b border-b-2 border-hardBeige pt-1"
+                          className="grid grid-cols-4 border-b-2 border-hardBeige pt-1"
                         >
                           <div className="col-span-2">
                             <h2 className="text-xl">
