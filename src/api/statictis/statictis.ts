@@ -1,8 +1,8 @@
 import axios from "axios";
-import { BASE_URL } from "../BASE_URL";
+// import { BASE_URL } from "../BASE_URL";
 
 // const BASE_URL = 'http://steach.ssafy.io:8080';
-// const BASE_URL = "http://192.168.100.208:8080";
+const BASE_URL = "http://192.168.100.208:8080";
 
 export const getRadarChartResponse = async () => {
   try {

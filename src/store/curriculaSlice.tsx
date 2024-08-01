@@ -3,10 +3,12 @@ import { Curricula, LectureSeries } from "../interface/Curriculainterface";
 import {
   fetchCurriculumDetails,
   fetchCurriculumLectures,
+  SignUpLecture,
+  deleteCurricula,
   applyToCurriculum,
   getCurriculimApply,
+  postCurriculimCancel,
 } from "../api/lecture/curriculumAPI";
-import { SignUpLecture, deleteCurricula } from "../api/lecture/curriculumAPI";
 import axios from "axios";
 
 // 이진송
@@ -15,7 +17,6 @@ export interface CurriculasState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
   selectlectures: Curricula | null;
-  isApply:  boolean ;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -25,7 +26,6 @@ const initialState: CurriculasState = {
   curricula: [],
   lectureslist: null,
   selectlectures: null,
-  isApply: false ,
   status: "idle",
   error: null,
 };
@@ -78,32 +78,53 @@ export const getCurriculaLectureList = createAsyncThunk<LectureSeries, string>(
   }
 );
 
+// 수강신청하기
 export const applyCurricula = createAsyncThunk<string, string>(
   "curricula/apply",
-  async (id) => {
-    const data = await applyToCurriculum(id);
-    return data;
+  async (id, thunkAPI) => {
+    try {
+      const data = await applyToCurriculum(id);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
-
+// 수강 신청 유무 확인
 export const applyCurriculaCheck = createAsyncThunk<boolean, string>(
   "curricula/applyCheck",
-  async (id) => {
-    const data = await getCurriculimApply(id);
-    return data;
+  async (id, thunkAPI) => {
+    try {
+      const data = await getCurriculimApply(id);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
-
+// 신청한 수강 다시 취소하기
 export const CurriculaCancel = createAsyncThunk<boolean, string>(
   "curricula/cancel",
-  async (id) => {
-    const data = await getCurriculimApply(id);
-    return data;
+  async (id, thunkAPI) => {
+    try {
+      const data = await postCurriculimCancel(id);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
-
 
 // 커리큘럼 슬라이스
 const curriculaSlice = createSlice({
