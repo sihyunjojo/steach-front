@@ -4,11 +4,12 @@ import {
   fetchCurriculumDetails,
   fetchCurriculumLectures,
 } from "../api/lecture/curriculumAPI";
-import { SignUpLecture } from "../api/lecture/curriculumAPI";
+import { SignUpLecture, deleteCurricula } from "../api/lecture/curriculumAPI";
+import axios from "axios";
 
 // 이진송
 // axios 구성 기본틀인데 서버통신 가능할때 시험해보고 적용할 것 같음
-export interface LecturesState {
+export interface CurriculasState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
   selectlectures: Curricula | null;
@@ -16,7 +17,8 @@ export interface LecturesState {
   error: string | null;
 }
 
-const initialState: LecturesState = {
+// 커리큘럼 및 강의 초기 상태
+const initialState: CurriculasState = {
   curricula: [],
   lectureslist: null,
   selectlectures: null,
@@ -24,24 +26,57 @@ const initialState: LecturesState = {
   error: null,
 };
 
-export const getLectureDetails = createAsyncThunk<Curricula, string>(
-  "Curricula/detail",
-  async (id) => {
-    const data = await fetchCurriculumDetails(id);
-    return data;
+// 커리큘럼 단일 상세 조회
+export const getCurriculaDetail = createAsyncThunk<Curricula, string>(
+  "curricula/detail",
+  async (id, thunkAPI) => {
+    try {
+      const data = await fetchCurriculumDetails(id);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
-export const getLecturelist = createAsyncThunk<LectureSeries, string>(
-  "lectures/list",
-  async (id) => {
-    const data = await fetchCurriculumLectures(id);
-    return data;
+// 단일 커리큘럼 삭제
+export const deleteCurriculaDetail = createAsyncThunk<string, string>(
+  "curricula/delete",
+  async (id, thunkAPI) => {
+    try {
+      const data = await deleteCurricula(id);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
-const lecturesSlice = createSlice({
-  name: "lecturesdetail",
+// 단일 커리큘럼에 대한 강의들을 조회
+export const getCurriculaLectureList = createAsyncThunk<LectureSeries, string>(
+  "curricula/lectures",
+  async (id, thunkAPI) => {
+    try {
+      const data = await fetchCurriculumLectures(id);
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 커리큘럼 슬라이스
+const curriculaSlice = createSlice({
+  name: "curricula",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -61,36 +96,44 @@ const lecturesSlice = createSlice({
         state.error = action.error.message || "Failed to fetch lectures";
       })
       // 디테일 강의 가져오기
-      .addCase(getLectureDetails.pending, (state) => {
+      .addCase(getCurriculaDetail.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getLectureDetails.fulfilled, (state, action) => {
+      .addCase(getCurriculaDetail.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.selectlectures = action.payload;
       })
-      .addCase(getLectureDetails.rejected, (state, action) => {
+      .addCase(getCurriculaDetail.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       })
+      // 단일 커리큘럼 삭제
+      .addCase(deleteCurriculaDetail.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteCurriculaDetail.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(deleteCurriculaDetail.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to delete curricula";
+      })
       // 커리큘럼에 해당하는 강의
-      .addCase(getLecturelist.pending, (state) => {
+      .addCase(getCurriculaLectureList.pending, (state) => {
         state.status = "loading";
       })
       .addCase(
-        getLecturelist.fulfilled,
+        getCurriculaLectureList.fulfilled,
         (state, action: PayloadAction<LectureSeries>) => {
           state.status = "succeeded";
           state.lectureslist = action.payload;
         }
       )
-      .addCase(getLecturelist.rejected, (state, action) => {
+      .addCase(getCurriculaLectureList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       });
-    // peding : 로딩중
-    // fulfilled : 비동기 작업이 완료된 시점
-    // rejected : 비동기 작업이 실패한 시점
   },
 });
 
-export default lecturesSlice.reducer;
+export default curriculaSlice.reducer;

@@ -3,39 +3,13 @@ import axios from "axios";
 import { studentReset } from "./StudentProfileSlice";
 import { teacherReset } from "./TeacherProfileSlice";
 import { deleteMember, login } from "../../api/user/userAPI";
-
-// 학생 회원가입 폼 형식
-interface studentFormData {
-  username: string;
-  password: string;
-  nickname: string;
-  email: string;
-  auth_code: string;
-}
-
-// 선생님 회원가입 폼 형식
-interface TeacherFormData {
-  username: string;
-  password: string;
-  nickname: string;
-  email: string;
-  file?: File;
-}
-
-// 통합 로그인 폼
-export interface LoginForm {
-  username: string;
-  password: string;
-}
-
-// 통합 로그인 반환 폼
-export interface LoginReturnForm {
-  username: string;
-  nickname: string;
-  email: string;
-  token: string;
-  role: string;
-}
+import {
+  studentFormData,
+  TeacherFormData,
+  LoginForm,
+  LoginReturnForm,
+} from "../../interface/auth/authinterface";
+import { signUpStudentApi, signUpTeacherApi } from "../../api/user/userAPI";
 
 // 유저 상태 형식
 export interface UserState {
@@ -69,15 +43,9 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
         email: userFormData.email,
         auth_code: userFormData.auth_code,
       };
-      const response = await axios.post(
-        "http://43.202.1.52:8080/api/v1/student/join",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+
+      const response = await signUpStudentApi(formDataToSend);
+
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -91,31 +59,36 @@ export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
 // 선생님 회원가입
 export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
   "teacher/signup",
-  async (newUserData) => {
-    const formData = new FormData();
-    formData.append(
-      "teacherSignUpDto",
-      JSON.stringify({
+  async (newUserData, thunkAPI) => {
+    try {
+      const formData: TeacherFormData = {
         username: newUserData.username,
         password: newUserData.password,
         nickname: newUserData.nickname,
         email: newUserData.email,
-      })
-    );
-    if (newUserData.file) {
-      formData.append("file", newUserData.file);
-    }
-    // FormData에 잘 추가되었는지 확인
-    const response = await axios.post(
-      "http://43.202.1.52:8080/api/v1/teacher/join",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      };
+      // formData.append(
+      //   "teacherSignUpDto",
+      //   JSON.stringify({
+      //     username: newUserData.username,
+      //     password: newUserData.password,
+      //     nickname: newUserData.nickname,
+      //     email: newUserData.email,
+      //   })
+      // );
+      // if (newUserData.file) {
+      //   formData.append("file", newUserData.file);
+      // }
+      // FormData에 잘 추가되었는지 확인
+      const response = await signUpTeacherApi(formData);
+
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
       }
-    );
-    return response.data;
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
