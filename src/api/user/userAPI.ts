@@ -8,7 +8,7 @@ import {
   LoginReturnForm,
   studentFormData,
   TeacherFormData,
-} from "../../interface/auth/authinterface";
+} from "../../interface/auth/AuthInterface";
 
 // const BASE_URL = "http://43.202.1.52:8080";
 const BASE_URL = "http://192.168.100.208:8080";
