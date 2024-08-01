@@ -99,7 +99,7 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
               <PopoverArrow />
               <PopoverCloseButton className="absolute top-2 right-3" />
               <PopoverBody className="grid grid-cols-1">
-                <TeacherMyLectureListModal />
+                <TeacherMyLectureListModal lectureId={lectureId} />
                 <Button
                   className="m-3"
                   onClick={() =>
@@ -146,7 +146,7 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
               <PopoverArrow />
               <PopoverCloseButton className="absolute top-2 right-3" />
               <PopoverBody className="grid grid-cols-1">
-                <TeacherMyLectureListModal />
+                <TeacherMyLectureListModal lectureId={lectureId} />
                 <Button
                   className="m-3"
                   onClick={() =>

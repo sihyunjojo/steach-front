@@ -6,8 +6,8 @@ import {
 import axios from "axios";
 // import { BASE_URL } from "../BASE_URL";
 
-// const BASE_URL = "http://steach.ssafy.io:8080";
-const BASE_URL = "http://192.168.100.208:8080";
+const BASE_URL = "http://steach.ssafy.io:8083";
+// const BASE_URL = "http://192.168.100.208:8080";
 const IMG_SERVER_URL = "http://steach.ssafy.io:8082";
 
 const Auth = localStorage.getItem("auth");
@@ -217,11 +217,13 @@ export const getCurriculimApply = async (curriculum_id: string) => {
 
 export const postCurriculimCancel = async (curriculum_id: string) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/v1/curricula/${curriculum_id}/cancel`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${AuthData.token}`,
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/curricula/${curriculum_id}/cancel`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${AuthData.token}`,
+        },
       }
     );
     console.log(response.data);
