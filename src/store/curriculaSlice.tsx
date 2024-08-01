@@ -84,15 +84,16 @@ export const applyCurricula = createAsyncThunk<string, string>(
   async (id, thunkAPI) => {
     try {
       const data = await applyToCurriculum(id);
-      return data;
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        return thunkAPI.rejectWithValue(error.response.data);
-      }
-      return thunkAPI.rejectWithValue(error);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
+    return thunkAPI.rejectWithValue(error);
   }
+}
 );
+
 
 // 수강 신청 유무 확인
 export const applyCurriculaCheck = createAsyncThunk<boolean, string>(
@@ -100,14 +101,14 @@ export const applyCurriculaCheck = createAsyncThunk<boolean, string>(
   async (id, thunkAPI) => {
     try {
       const data = await getCurriculimApply(id);
-      return data;
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        return thunkAPI.rejectWithValue(error.response.data);
-      }
-      return thunkAPI.rejectWithValue(error);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
+    return thunkAPI.rejectWithValue(error);
   }
+}
 );
 
 // 신청한 수강 다시 취소하기
@@ -116,14 +117,14 @@ export const CurriculaCancel = createAsyncThunk<boolean, string>(
   async (id, thunkAPI) => {
     try {
       const data = await postCurriculimCancel(id);
-      return data;
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        return thunkAPI.rejectWithValue(error.response.data);
-      }
-      return thunkAPI.rejectWithValue(error);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
+    return thunkAPI.rejectWithValue(error);
   }
+}
 );
 
 // 커리큘럼 슬라이스
@@ -184,7 +185,51 @@ const curriculaSlice = createSlice({
       .addCase(getCurriculaLectureList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
-      });
+      })
+      // 커리큘럼에 해당하는 강의
+      .addCase(applyCurricula.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        applyCurricula.fulfilled,
+        (state) => {
+          state.status = "succeeded";
+        }
+      )
+      .addCase(applyCurricula.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // 커리큘럼에 해당하는 강의
+      .addCase(applyCurriculaCheck.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        applyCurriculaCheck.fulfilled,
+        (state, action) => {
+          state.status = "succeeded";
+          state.isApply = action.payload;
+        }
+      )
+      .addCase(applyCurriculaCheck.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // [학생] 커리큘럼 수강 신청 취소하기
+      .addCase(CurriculaCancel.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        CurriculaCancel.fulfilled,
+        (state) => {
+          state.status = "succeeded";
+          console.log(state.status)
+        }
+      )
+      .addCase(CurriculaCancel.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
   },
 });
 

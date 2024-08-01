@@ -217,12 +217,11 @@ export const getCurriculimApply = async (curriculum_id: string) => {
 
 export const postCurriculimCancel = async (curriculum_id: string) => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/api/v1/curricula/${curriculum_id}/cancel`,
-      {
-        headers: {
-          Authorization: `Bearer ${AuthData.token}`,
-        },
+    const response = await axios.post(`${BASE_URL}/api/v1/curricula/${curriculum_id}/cancel`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${AuthData.token}`,
       }
     );
     console.log(response.data);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store'
 import { getCurriculaDetail, applyCurricula, applyCurriculaCheck, CurriculaCancel } from '../../store/curriculaSlice'
@@ -22,9 +22,9 @@ import {
 const LectureDetail: React.FC = () => {
   // 이진송
   // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
-  
   const [_, setToday] = useState('');
   const { id } = useParams<{ id: string }>();
+  const a = id
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const lectures = useSelector(
@@ -36,7 +36,6 @@ const LectureDetail: React.FC = () => {
   const isApply = useSelector((state: RootState) => state.curriculum.isApply);
   const status = useSelector((state: RootState) => state.curriculum.status);
   const error = useSelector((state: RootState) => state.curriculum.error);
-  console.log(isApply)
 
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -55,13 +54,12 @@ const LectureDetail: React.FC = () => {
   useEffect(() => {
     if (id) {
       dispatch(getCurriculaDetail(id));
-      dispatch(getCurriculaDetail(id));
       dispatch(getLecturelist(id));
       dispatch(applyCurriculaCheck(id));
-      dispatch(CurriculaCancel(id));
     }
   }, [id, dispatch]);
   
+
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${
@@ -70,15 +68,20 @@ const LectureDetail: React.FC = () => {
     setToday(formattedDate);
   }, []);
   
-  function applyCurriculaBtn() {
+  async function applyCurriculaBtn() {
     if (id) {
-      console.log(id)
-      dispatch(applyCurricula(id));
-      navigate(`/curricula/detail/${id}`)
+      await dispatch(applyCurricula(id));
+      window.location.reload();
     }
-    console.log('ㅇㅅㅇ')
-    
   }
+  
+  async function cancelCurriculaBtn() {
+    if (id) {
+      await dispatch(CurriculaCancel(id));
+      window.location.reload();
+    }
+  }
+
 
   
   let startLecture:any;
@@ -98,6 +101,7 @@ const LectureDetail: React.FC = () => {
 
   return (
     <>
+      <button onClick={() => { navigate(`/curricula/detail/${a}#`) }}>dddd</button>
       <header className="flex bg-hoverNavy text-white text-left py-2.5 justify-center">
         <div className="w-3/5">
           <div>
@@ -245,7 +249,7 @@ const LectureDetail: React.FC = () => {
               :
               <button
                 className="w-full mb-5 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded self-center"
-                onClick={applyCurriculaBtn}>
+                onClick={cancelCurriculaBtn}>
               수강취소
             </button>
             }
