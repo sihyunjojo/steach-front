@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { getCurriculaDetail } from "../../store/curriculaSlice";
-import { getLecturelist } from "../../store/lectureSlice";
-import { useDispatch } from "react-redux";
-import img1 from "../../../src/assets/checked.jpg";
-import img2 from "../../../src/assets/unchecked.jpg";
-import img3 from "../../../src/assets/human.png";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store'
+import { getCurriculaDetail, applyCurricula, applyCurriculaCheck, CurriculaCancel } from '../../store/curriculaSlice'
+import { getLecturelist } from '../../store/lectureSlice'
+import { useDispatch } from 'react-redux';
+import img1 from '../../../src/assets/checked.jpg'
+import img2 from '../../../src/assets/unchecked.jpg'
+import img3 from '../../../src/assets/human.png'
+import { Modal, Alert } from "antd";
 import {
   Accordion,
   AccordionItem,
@@ -21,31 +22,46 @@ import {
 const LectureDetail: React.FC = () => {
   // 이진송
   // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
-  const [_, setToday] = useState("");
-  const [arr, setArr] = useState([]);
+  
+  const [_, setToday] = useState('');
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const lectures = useSelector(
     (state: RootState) => state.curriculum.selectlectures
   );
   const lectureslist = useSelector(
     (state: RootState) => state.curriculum.lectureslist
   );
+  const isApply = useSelector((state: RootState) => state.curriculum.isApply);
   const status = useSelector((state: RootState) => state.curriculum.status);
   const error = useSelector((state: RootState) => state.curriculum.error);
+  console.log(isApply)
 
-  console.log(lectures);
-  console.log(lectureslist);
-  const bitday = lectures?.weekdays_bitmask.split("");
-  const url = lectures?.banner_img_url;
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const showLoading = () => {
+    setOpen(true);
+    setLoading(true);
 
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  const bitday = lectures?.weekdays_bitmask.split('');
+  const url = lectures?.banner_img_url
+  
   useEffect(() => {
     if (id) {
       dispatch(getCurriculaDetail(id));
+      dispatch(getCurriculaDetail(id));
       dispatch(getLecturelist(id));
+      dispatch(applyCurriculaCheck(id));
+      dispatch(CurriculaCancel(id));
     }
   }, [id, dispatch]);
-
+  
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${
@@ -53,16 +69,31 @@ const LectureDetail: React.FC = () => {
     }-${currentDate.getDate()}`;
     setToday(formattedDate);
   }, []);
+  
+  function applyCurriculaBtn() {
+    if (id) {
+      console.log(id)
+      dispatch(applyCurricula(id));
+      navigate(`/curricula/detail/${id}`)
+    }
+    console.log('ㅇㅅㅇ')
+    
+  }
 
-  let startLecture: any;
-  let daysAgo: any;
+  
+  let startLecture:any;
+  let daysAgo:any;
   function calculateDaysAgo(dateString: any) {
+    if (!dateString) return null;
+  
     const targetDate: any = new Date(dateString);
+    if (isNaN(targetDate.getTime())) return null;
+  
     const today: any = new Date();
     const difference = today - targetDate;
-    const daysAgo = Math.floor(difference / (1000 * 60 * 60 * 24)); // 밀리초를 일 단위로 변환
-
-    return daysAgo;
+    const daysAgo = Math.floor(difference / (1000 * 60 * 60 * 24));
+  
+    return isNaN(daysAgo) ? null : daysAgo;
   }
 
   return (
@@ -122,30 +153,26 @@ const LectureDetail: React.FC = () => {
               <p className="text-xl">{lectures?.information}</p>
             </div>
           </div>
-          <h1 className="text-5xl pt-10" id="day">
-            강의 요일
-          </h1>
-          <p className="flex justify-center p-5">
-            {bitday?.map((a: string, i: number) => {
-              return (
-                <div key={i} className="px-2">
-                  {a === "1" ? (
-                    <img src={img1} className="w-20 h-20" />
-                  ) : (
-                    <img src={img2} className="w-20 h-20" />
-                  )}
-                </div>
-              );
-            })}
-          </p>
-          <h1 className="text-5xl py-10" id="curriculum">
-            커리큘럼
-          </h1>
+          <h1 className='text-5xl pt-10' id="day">강의 요일</h1>
+          <div className='flex justify-center p-5'>
+            {
+              bitday?.map((a:string, i:number) => {
+                return (
+                  <div key={i} className='px-2'>
+                    {
+                      a === '1'
+                      ? <img src={img1} className='w-20 h-20'/>
+                      : <img src={img2} className='w-20 h-20'/>
+                    }
+                  </div>
+                )
+              })
+            }
+          </div>
+          <h1 className='text-5xl py-10' id="curriculum">커리큘럼</h1>
           <Accordion className="shadow-lg" defaultIndex={[]} allowMultiple>
-            <h2>
-              {Array.from(
-                { length: lectureslist?.week_count ?? 0 },
-                (_, index) => (
+              {
+                Array.from({ length: lectureslist?.week_count ?? 0 }, (_, index) => (
                   <AccordionItem key={index} className="rounded-lg">
                     <AccordionButton className="bg-lightBeige hover:bg-darkerBeige">
                       <Box as="span" flex="1" textAlign="left" className="p-2">
@@ -153,75 +180,83 @@ const LectureDetail: React.FC = () => {
                           [{lectures?.title}] {index + 1}주차 강의
                         </Text>
                         <Text className="text-base text-gray-600">
-                          <p>
-                            {daysAgo > 0
-                              ? `이미 끝난 강의입니다.`
-                              : daysAgo < 0
-                              ? `${-daysAgo}일 후 강의입니다.`
-                              : "오늘 강의입니다."}
-                          </p>
+                          {daysAgo > 0 ? `이미 끝난 강의입니다.` : daysAgo < 0 ? `${-daysAgo}일 후 강의입니다.` : '오늘 강의입니다.'}
                         </Text>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel pb={4} className="p-3 bg-white">
-                      {Array.from(
-                        {
-                          length: lectureslist?.lectures[index + 1].length ?? 0,
-                        },
-                        (_, index2) => (
-                          <div className="grid grid-cols-4 border-b border-b-2 border-hardBeige pt-1">
-                            <div className="col-span-2">
-                              <h2 className="text-xl">
-                                {
-                                  lectureslist?.lectures[index + 1][index2]
-                                    .lecture_title
-                                }
+                      {
+                        Array.from({ length: lectureslist?.lectures[index + 1].length ?? 0 }, (_, index2) => (
+                          <div className='grid grid-cols-4 border-b border-b-2 border-hardBeige pt-1' key={index2}>
+                            <div className='col-span-2'>
+                              <h2 className='text-xl'>
+                                {lectureslist?.lectures[index + 1][index2].lecture_title}
                               </h2>
                             </div>
-                            <div className="col-span-1 text-right">
-                              <text>강의 날짜 : </text>
-                              <p>시작 시간 : </p>
+                            <div className='col-span-1 text-right'>
+                              <span>강의 날짜 : </span>
+                              <span>시작 시간 : </span>
                             </div>
-                            <div className="col-span-1">
-                              <text>
-                                {lectureslist?.lectures[index + 1][
-                                  index2
-                                ].lecture_start_time.slice(0, 10)}
-                              </text>
-                              <p>
-                                {lectureslist?.lectures[index + 1][
-                                  index2
-                                ].lecture_start_time.slice(11, 19)}
-                              </p>
-                              <text className="hidden">
-                                {
-                                  (daysAgo = calculateDaysAgo(
-                                    lectureslist?.lectures[index + 1][
-                                      index2
-                                    ].lecture_start_time.slice(0, 10)
-                                  ))
-                                }
-                              </text>
+                            <div className='col-span-1'>
+                              <span>{lectureslist?.lectures[index + 1][index2].lecture_start_time.slice(0, 10)}</span>
+                              <p>{lectureslist?.lectures[index + 1][index2].lecture_start_time.slice(11,19)}</p>
+                              <span className='hidden'>{daysAgo = calculateDaysAgo(lectureslist?.lectures[index + 1][index2].lecture_start_time.slice(0, 10))}</span>
                             </div>
                           </div>
                         )
                       )}
                     </AccordionPanel>
                   </AccordionItem>
-                )
-              )}
-            </h2>
+                ))
+              }
           </Accordion>
-          <div></div>
+        <div>
         </div>
-        <div className="sticky top-24 lg:right-24 xl:right-44 right-0 h-96 w-96 bg-Beige ml-10 mt-3 p-4 flex flex-col rounded-lg border-2 border-hardBeige">
+        </div>
+        <div className="sticky top-24 lg:right-24 xl:right-44 right-0 h-96 w-96 bg-white ml-10 mt-3 p-4 flex flex-col rounded-lg border-2 border-hardBeige">
           <h3 className="text-3xl font-bold ml-4 mb-4 text-red-600">무료</h3>
           <h3 className="text-2xl font-bold mb-4">{lectures?.title}</h3>
-          <button className="w-full mb-5 py-2 px-4 bg-pink-500 hover:bg-pink-700 text-white font-bold rounded self-center">
+          {isApply === false
+            ?
+          <button
+            className="w-full mb-5 py-2 px-4 bg-pink-500 hover:bg-pink-700 text-white font-bold rounded self-center"
+            onClick={showLoading}
+          >
             수강 신청
           </button>
-          <div className="grid grid-cols-2">
+            :
+          <button
+            className="w-full mb-5 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded self-center"
+            onClick={showLoading}
+          >
+            수강 취소
+          </button>
+          }
+          <Modal
+            title={<p>수강 신청</p>}
+            footer={isApply === false
+              ?
+              <button
+                className="w-full mb-5 py-2 px-4 bg-pink-500 hover:bg-pink-700 text-white font-bold rounded self-center"
+                onClick={applyCurriculaBtn}>
+              수강신청
+            </button>
+              :
+              <button
+                className="w-full mb-5 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded self-center"
+                onClick={applyCurriculaBtn}>
+              수강취소
+            </button>
+            }
+            loading={loading}
+            open={open}
+            onCancel={() => setOpen(false)}
+          >
+          <div className='flex justify-center'>
+          <img src={url} className='w-60 h-60 m-10 border-4 border-pink-500 rounded-lg'/>
+          </div>
+          <div className='grid grid-cols-2'>
             <div>
               <ul>
                 <li>지식공유자</li>
@@ -232,10 +267,30 @@ const LectureDetail: React.FC = () => {
               </ul>
             </div>
             <div>
+              <span className='hidden'>{startLecture = calculateDaysAgo(lectures?.start_date)}</span>
               <ul>
-                <text className="hidden">
-                  {(startLecture = calculateDaysAgo(lectures?.start_date))}
-                </text>
+                <li>{lectures?.teacher_name} 강사님</li>
+                <li>{lectureslist?.lecture_count}개 강의</li>
+                <li>{lectures?.category}</li>
+                <li>{lectures?.current_attendees} / {lectures?.max_attendees}</li>
+                <li>발급</li>
+              </ul>
+            </div>
+          </div>
+          </Modal>
+          <div className='grid grid-cols-2'>
+            <div>
+              <ul>
+                <li>지식공유자</li>
+                <li>총 강의수</li>
+                <li>분류</li>
+                <li>현재 수강 인원</li>
+                <li>수료증 발급 유무</li>
+              </ul>
+            </div>
+            <div>
+              <span className='hidden'>{startLecture = calculateDaysAgo(lectures?.start_date)}</span>
+              <ul>
                 <li>{lectures?.teacher_name} 강사님</li>
                 <li>{lectureslist?.lecture_count}개 강의</li>
                 <li>{lectures?.category}</li>
@@ -257,6 +312,7 @@ const LectureDetail: React.FC = () => {
         <div className="lg:col-span-3 col-span-1"></div>
       </div>
       <div></div>
+      
     </>
   );
 };

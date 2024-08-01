@@ -3,6 +3,8 @@ import { Curricula, LectureSeries } from "../interface/Curriculainterface";
 import {
   fetchCurriculumDetails,
   fetchCurriculumLectures,
+  applyToCurriculum,
+  getCurriculimApply,
 } from "../api/lecture/curriculumAPI";
 import { SignUpLecture, deleteCurricula } from "../api/lecture/curriculumAPI";
 import axios from "axios";
@@ -13,6 +15,7 @@ export interface CurriculasState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
   selectlectures: Curricula | null;
+  isApply:  boolean ;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -22,6 +25,7 @@ const initialState: CurriculasState = {
   curricula: [],
   lectureslist: null,
   selectlectures: null,
+  isApply: false ,
   status: "idle",
   error: null,
 };
