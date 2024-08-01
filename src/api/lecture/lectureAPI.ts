@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://steach.ssafy.io:8080';
+const BASE_URL = 'http://192.168.100.208:8080';
 
 // Fetch lecture details
 export const fetchLectureDetails = async (lectureId: number) => {

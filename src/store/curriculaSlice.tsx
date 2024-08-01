@@ -3,6 +3,8 @@ import { Curricula, LectureSeries } from "../interface/Curriculainterface";
 import {
   fetchCurriculumDetails,
   fetchCurriculumLectures,
+  applyToCurriculum,
+  getCurriculimApply,
 } from "../api/lecture/curriculumAPI";
 import { SignUpLecture } from "../api/lecture/curriculumAPI";
 
@@ -12,6 +14,7 @@ export interface LecturesState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
   selectlectures: Curricula | null;
+  isApply:  boolean ;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -20,25 +23,55 @@ const initialState: LecturesState = {
   curricula: [],
   lectureslist: null,
   selectlectures: null,
+  isApply: false ,
   status: "idle",
   error: null,
 };
 
-export const getLectureDetails = createAsyncThunk<Curricula, string>(
-  "Curricula/detail",
+export const getCurriculaDetail = createAsyncThunk<Curricula, string>(
+  "curricula/detail",
   async (id) => {
     const data = await fetchCurriculumDetails(id);
     return data;
   }
 );
 
-export const getLecturelist = createAsyncThunk<LectureSeries, string>(
+export const getCurriculaLectureList = createAsyncThunk<LectureSeries, string>(
   "lectures/list",
   async (id) => {
     const data = await fetchCurriculumLectures(id);
     return data;
   }
 );
+
+
+export const applyCurricula = createAsyncThunk<string, string>(
+  "curricula/apply",
+  async (id) => {
+    const data = await applyToCurriculum(id);
+    return data;
+  }
+);
+
+
+export const applyCurriculaCheck = createAsyncThunk<boolean, string>(
+  "curricula/applyCheck",
+  async (id) => {
+    const data = await getCurriculimApply(id);
+    return data;
+  }
+);
+
+
+export const CurriculaCancel = createAsyncThunk<boolean, string>(
+  "curricula/cancel",
+  async (id) => {
+    const data = await getCurriculimApply(id);
+    return data;
+  }
+);
+
+
 
 const lecturesSlice = createSlice({
   name: "lecturesdetail",
@@ -61,35 +94,76 @@ const lecturesSlice = createSlice({
         state.error = action.error.message || "Failed to fetch lectures";
       })
       // 디테일 강의 가져오기
-      .addCase(getLectureDetails.pending, (state) => {
+      .addCase(getCurriculaDetail.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getLectureDetails.fulfilled, (state, action) => {
+      .addCase(getCurriculaDetail.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.selectlectures = action.payload;
       })
-      .addCase(getLectureDetails.rejected, (state, action) => {
+      .addCase(getCurriculaDetail.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       })
       // 커리큘럼에 해당하는 강의
-      .addCase(getLecturelist.pending, (state) => {
+      .addCase(getCurriculaLectureList.pending, (state) => {
         state.status = "loading";
       })
       .addCase(
-        getLecturelist.fulfilled,
+        getCurriculaLectureList.fulfilled,
         (state, action: PayloadAction<LectureSeries>) => {
           state.status = "succeeded";
           state.lectureslist = action.payload;
         }
       )
-      .addCase(getLecturelist.rejected, (state, action) => {
+      .addCase(getCurriculaLectureList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // [학생] 커리큘럼 수강신청
+      .addCase(applyCurricula.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        applyCurricula.fulfilled,
+        (state) => {
+          state.status = "succeeded";
+        }
+      )
+      .addCase(applyCurricula.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // [학생] 커리큘럼 수강신청 여부 체크
+      .addCase(applyCurriculaCheck.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        applyCurriculaCheck.fulfilled,
+        (state, action:PayloadAction<boolean>) => {
+          state.status = "succeeded";
+          state.isApply = action.payload
+        }
+      )
+      .addCase(applyCurriculaCheck.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // [학생] 커리큘럼 수강신청 취소
+      .addCase(CurriculaCancel.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        CurriculaCancel.fulfilled,
+        (state, action:PayloadAction<boolean>) => {
+          state.status = "succeeded";
+          state.isApply = action.payload
+        }
+      )
+      .addCase(CurriculaCancel.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       });
-    // peding : 로딩중
-    // fulfilled : 비동기 작업이 완료된 시점
-    // rejected : 비동기 작업이 실패한 시점
   },
 });
 

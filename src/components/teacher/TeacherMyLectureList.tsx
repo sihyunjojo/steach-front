@@ -19,7 +19,7 @@ import hokyung from "../../assets/futureHokyung.jpg";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { getLectureDetails, getLecturelist } from "../../store/curriculaSlice";
+import { getCurriculaDetail, getCurriculaLectureList } from "../../store/curriculaSlice";
 
 const TeacherMyLectureList: React.FC = () => {
   const navigate = useNavigate();
@@ -46,8 +46,8 @@ const TeacherMyLectureList: React.FC = () => {
 
   useEffect(() => {
     if (curricula_id) {
-      dispatch(getLectureDetails(curricula_id));
-      dispatch(getLecturelist(curricula_id));
+      dispatch(getCurriculaDetail(curricula_id));
+      dispatch(getCurriculaLectureList(curricula_id));
     }
   }, [curricula_id, dispatch]);
 
