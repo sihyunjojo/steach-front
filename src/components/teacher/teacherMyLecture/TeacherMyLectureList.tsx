@@ -181,14 +181,26 @@ const TeacherMyLectureList: React.FC = () => {
                             {daysAgo > 0 ? (
                               <TeacherMyLectureListButton
                                 lectureState={"completed"}
+                                lectureId={
+                                  lectureslist?.lectures[index + 1][index2]
+                                    .lecture_id
+                                }
                               />
                             ) : daysAgo < 0 ? (
                               <TeacherMyLectureListButton
                                 lectureState={"scheduled"}
+                                lectureId={
+                                  lectureslist?.lectures[index + 1][index2]
+                                    .lecture_id
+                                }
                               />
                             ) : (
                               <TeacherMyLectureListButton
                                 lectureState={"ongoing"}
+                                lectureId={
+                                  lectureslist?.lectures[index + 1][index2]
+                                    .lecture_id
+                                }
                               />
                             )}
                           </div>
