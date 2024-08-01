@@ -9,9 +9,10 @@ import {
   studentFormData,
   TeacherFormData,
 } from "../../interface/auth/AuthInterface";
+import { BASE_URL } from "../BASE_URL";
 
 // const BASE_URL = "http://43.202.1.52:8080";
-const BASE_URL = "http://192.168.100.208:8080";
+// const BASE_URL = "http://192.168.100.208:8080";
 
 const tokenData = localStorage.getItem("auth");
 const jsontokenData = tokenData ? JSON.parse(tokenData) : null;
