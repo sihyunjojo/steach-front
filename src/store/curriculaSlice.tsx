@@ -17,7 +17,6 @@ export interface CurriculasState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
   selectlectures: Curricula | null;
-  isApply:  boolean ;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -27,7 +26,6 @@ const initialState: CurriculasState = {
   curricula: [],
   lectureslist: null,
   selectlectures: null,
-  isApply: false ,
   status: "idle",
   error: null,
 };
@@ -128,7 +126,6 @@ export const CurriculaCancel = createAsyncThunk<boolean, string>(
   }
 }
 );
-
 
 // 커리큘럼 슬라이스
 const curriculaSlice = createSlice({

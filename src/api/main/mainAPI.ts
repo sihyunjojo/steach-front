@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { BASE_URL } from "../BASE_URL";
 
 // const instance = axios.create({
 //     baseURL: 'https://api.example.com',
@@ -7,6 +8,7 @@ import axios from "axios";
 
 // const BASE_URL = "http://steach.ssafy.io:8080";
 const BASE_URL = "http://192.168.100.208:8080";
+
 // Fetch curricula list
 export const fetchLatestCurricula = async () => {
   try {

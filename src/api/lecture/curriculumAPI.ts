@@ -4,6 +4,7 @@ import {
   CurriculaFormData,
 } from "../../interface/Curriculainterface";
 import axios from "axios";
+// import { BASE_URL } from "../BASE_URL";
 
 // const BASE_URL = "http://steach.ssafy.io:8080";
 const BASE_URL = "http://192.168.100.208:8080";
@@ -89,7 +90,7 @@ export const SignUpLecture = createAsyncThunk<Curricula, CurriculaFormData>(
 // [학생] 커리큘럼 수강신청
 export const applyToCurriculum = async (curricula_id: string) => {
   try {
-    console.log(AuthData.token)
+    console.log(AuthData.token);
     const response = await axios.post(
       `${BASE_URL}/api/v1/curricula/${curricula_id}/apply`,
       {}, // POST 요청의 바디가 비어 있다면 빈 객체를 전달합니다.
@@ -103,10 +104,10 @@ export const applyToCurriculum = async (curricula_id: string) => {
   } catch (error: any) {
     // 409 에러 처리
     if (error.response && error.response.status === 409) {
-      alert('이미 신청한 강의입니다. 다른 강의를 선택해주세요.');
+      alert("이미 신청한 강의입니다. 다른 강의를 선택해주세요.");
     } else {
       // 기타 에러 처리
-      alert('오류가 발생했습니다. 다시 시도해주세요.');
+      alert("오류가 발생했습니다. 다시 시도해주세요.");
     }
     throw error;
   }
@@ -197,11 +198,14 @@ export const getTeacherCurriculaList = async () => {
 // [학생] 학생이 커리큘럼을 수강 신청 여부 확인
 export const getCurriculimApply = async (curriculum_id: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/students/check/curriculum-apply/${curriculum_id}`, {
-      headers: {
-        Authorization: `Bearer ${AuthData.token}`,
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/students/check/curriculum-apply/${curriculum_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${AuthData.token}`,
+        },
       }
-    });
+    );
     return response.data.is_apply;
   } catch (error) {
     console.log(error);
@@ -209,21 +213,18 @@ export const getCurriculimApply = async (curriculum_id: string) => {
   }
 };
 
-
 // [학생] 학생이 커리큘럼 수강 취소하기
 
 export const postCurriculimCancel = async (curriculum_id: string) => {
   try {
-    console.log(curriculum_id)
-    console.log(AuthData.token)
     const response = await axios.post(`${BASE_URL}/api/v1/curricula/${curriculum_id}/cancel`,
     {},
     {
       headers: {
         Authorization: `Bearer ${AuthData.token}`,
       }
-    });
-    console.log(response.data)
+    );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

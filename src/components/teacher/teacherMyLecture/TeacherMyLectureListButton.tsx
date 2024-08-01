@@ -8,13 +8,17 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import TeacherMyLectureListModal from "./TeacherMyLectureListModal";
 
+// prop으로 들어올 요소의 interface 타입 지정
 interface TeacherMyLectureListButtonProps {
-  lectureState: string; // 'completed', 'scheduled', 'ongoing' 중 하나가 들어올 것으로 예상
+  lectureState: string;
+  lectureId: number | undefined;
 }
 
 const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
   lectureState,
+  lectureId,
 }) => {
   const navigate = useNavigate();
 
@@ -52,12 +56,11 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-6 bg-green-100 relative rounded-md shadow-md">
+            <PopoverContent className="p-6 bg-green-100 relative rounded-md shadow-md z-10">
               <PopoverArrow />
               <PopoverCloseButton className="absolute top-2 right-3" />
               <PopoverBody className="grid grid-cols-1">
-                <Button className="m-3">수정하기</Button>
-                <Button className="m-3">삭제하기</Button>
+                <Button className="m-3">수리중</Button>
               </PopoverBody>
             </PopoverContent>
           </Popover>
@@ -77,7 +80,7 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-7 text-center hover:text-white"
+                  className="size-7 text-center"
                 >
                   <path
                     strokeLinecap="round"
@@ -92,11 +95,11 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-6 bg-green-100 relative rounded-md shadow-md">
+            <PopoverContent className="p-6 bg-green-100 relative rounded-md shadow-md z-10">
               <PopoverArrow />
               <PopoverCloseButton className="absolute top-2 right-3" />
               <PopoverBody className="grid grid-cols-1">
-                <Button className="m-3">강의 관리</Button>
+                <TeacherMyLectureListModal />
                 <Button
                   className="m-3"
                   onClick={() =>
@@ -124,7 +127,7 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-7 text-center hover:text-white"
+                  className="size-7 text-center"
                 >
                   <path
                     strokeLinecap="round"
@@ -139,11 +142,11 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-6 bg-green-100 relative rounded-md shadow-md">
+            <PopoverContent className="p-6 bg-green-100 relative rounded-md shadow-md z-10">
               <PopoverArrow />
               <PopoverCloseButton className="absolute top-2 right-3" />
               <PopoverBody className="grid grid-cols-1">
-                <Button className="m-3">강의 관리</Button>
+                <TeacherMyLectureListModal />
                 <Button
                   className="m-3"
                   onClick={() =>
