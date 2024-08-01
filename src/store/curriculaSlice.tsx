@@ -78,6 +78,33 @@ export const getCurriculaLectureList = createAsyncThunk<LectureSeries, string>(
   }
 );
 
+export const applyCurricula = createAsyncThunk<string, string>(
+  "curricula/apply",
+  async (id) => {
+    const data = await applyToCurriculum(id);
+    return data;
+  }
+);
+
+
+export const applyCurriculaCheck = createAsyncThunk<boolean, string>(
+  "curricula/applyCheck",
+  async (id) => {
+    const data = await getCurriculimApply(id);
+    return data;
+  }
+);
+
+
+export const CurriculaCancel = createAsyncThunk<boolean, string>(
+  "curricula/cancel",
+  async (id) => {
+    const data = await getCurriculimApply(id);
+    return data;
+  }
+);
+
+
 // 커리큘럼 슬라이스
 const curriculaSlice = createSlice({
   name: "curricula",
