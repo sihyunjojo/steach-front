@@ -3,13 +3,59 @@ import { TeacherInfo } from "../../interface/profile/TeacherProfileInterface";
 import { StudentInfo } from "../../interface/profile/StudentProfileInterface";
 import { TeacherInfoUpdateForm } from "../../components/teacher/teacherMyInfo/TeacherMyInfoUpdateForm";
 import { StudentInfoUpdateForm } from "../../components/student/studentMyInfo/StudentMyInfoUpdateForm";
-import { LoginReturnForm, LoginForm } from "../../store/userInfo/AuthSlice";
+import {
+  LoginForm,
+  LoginReturnForm,
+  studentFormData,
+  TeacherFormData,
+} from "../../interface/auth/authinterface";
 
-const BASE_URL = "http://43.202.1.52:8080";
+// const BASE_URL = "http://43.202.1.52:8080";
+const BASE_URL = "http://192.168.100.208:8080";
 
 const tokenData = localStorage.getItem("auth");
 const jsontokenData = tokenData ? JSON.parse(tokenData) : null;
 const token = jsontokenData ? jsontokenData.token : "";
+
+// 학생 회원가입
+export const signUpStudentApi = async (formDataToSend: studentFormData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/student/join`,
+      formDataToSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 선생님 회원가입
+export const signUpTeacherApi = async (formData: TeacherFormData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/teacher/join`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 // 비밀번호 체크
 export const passwordCheck = async (password: string) => {

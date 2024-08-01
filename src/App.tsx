@@ -11,7 +11,7 @@ import LectureSignUpPage from "./pages/lecture/SignUpPage.tsx";
 import TeacherProfilePage from "./pages/teacher/TeacherMyRoomPage.tsx";
 import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
 import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
-import TeacherMyLectureList from "./components/teacher/TeacherMyLectureList.tsx";
+import TeacherMyLectureList from "./components/teacher/teacherMyLecture/TeacherMyLectureList.tsx";
 // import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";

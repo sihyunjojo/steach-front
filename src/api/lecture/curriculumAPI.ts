@@ -5,6 +5,7 @@ import {
 } from "../../interface/Curriculainterface";
 import axios from "axios";
 
+// const BASE_URL = "http://steach.ssafy.io:8080";
 const BASE_URL = "http://192.168.100.208:8080";
 const IMG_SERVER_URL = "http://steach.ssafy.io:8082";
 
@@ -127,8 +128,28 @@ export const fetchCurriculumLectures = async (curriculum_id: string) => {
     const response = await axios.get(
       `${BASE_URL}/api/v1/curricula/${curriculum_id}/lectures`
     );
+
     return response.data;
   } catch (error) {
+    throw error;
+  }
+};
+
+// 단일 커리큘럼 삭제
+export const deleteCurricula = async (curriculum_id: string) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/api/v1/curricula/${curriculum_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${AuthData.token}`,
+        },
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

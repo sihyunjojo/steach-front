@@ -55,6 +55,7 @@ const LectureDetail: React.FC = () => {
   useEffect(() => {
     if (id) {
       dispatch(getCurriculaDetail(id));
+      dispatch(getCurriculaDetail(id));
       dispatch(getLecturelist(id));
       dispatch(applyCurriculaCheck(id));
       dispatch(CurriculaCancel(id));
@@ -95,17 +96,18 @@ const LectureDetail: React.FC = () => {
     return isNaN(daysAgo) ? null : daysAgo;
   }
 
-
   return (
     <>
       <header className="flex bg-hoverNavy text-white text-left py-2.5 justify-center">
         <div className="w-3/5">
           <div>
-            <p>{lectures?.category} &gt; {lectures?.sub_category}</p>
-            <h1 className='text-7xl p-3'>{lectures?.title}</h1>
-            <p className='p-1'>{lectures?.sub_title}</p>
-            <p className='p-1'>{lectures?.intro}</p>
-            <Link to={'/teacher/profiledetail'}>
+            <p>
+              {lectures?.category} &gt; {lectures?.sub_category}
+            </p>
+            <h1 className="text-7xl p-3">{lectures?.title}</h1>
+            <p className="p-1">{lectures?.sub_title}</p>
+            <p className="p-1">{lectures?.intro}</p>
+            <Link to={"/teacher/profiledetail"}>
               <div className="flex items-center">
                 <img src={img3} className="w-10 h-10 m-5" />
                 <span>
@@ -113,34 +115,42 @@ const LectureDetail: React.FC = () => {
                 </span>
               </div>
             </Link>
-            </div>
           </div>
-          <div className='mt-60 mr-10'></div>
-          <div className='w-1/5'>
-            <div>
-              <img src={url} className='w-60 h-60'/>
-            </div>
+        </div>
+        <div className="mt-60 mr-10"></div>
+        <div className="w-1/5">
+          <div>
+            <img src={url} className="w-60 h-60" />
           </div>
+        </div>
       </header>
-      <div className='bg-ivory grid grid-cols-12'>
-        <div className='hidden lg:col-span-1 lg:block'></div>
-        <div className='lg:col-span-6 col-span-8 bg-ivory border-x-2 border-x-hardBeige p-4'>
-          <br className='text-black'></br>
+      <div className="bg-ivory grid grid-cols-12">
+        <div className="hidden lg:col-span-1 lg:block"></div>
+        <div className="lg:col-span-6 col-span-8 bg-ivory border-x-2 border-x-hardBeige p-4">
+          <br className="text-black"></br>
           <ul className="flex lg:flex-row text-lg font-bold ml-4">
             <li className="mr-5 mb-10">
-              <a href="#intro" className="hover:text-orange-300">강의 소개</a>
+              <a href="#intro" className="hover:text-orange-300">
+                강의 소개
+              </a>
             </li>
             <li className="mr-5 mb-10">
-              <a href="#day" className="hover:text-orange-300">강의 요일</a>
+              <a href="#day" className="hover:text-orange-300">
+                강의 요일
+              </a>
             </li>
             <li className="mr-5 mb-10">
-              <a href="#curriculum" className="hover:text-orange-300">커리큘럼</a>
+              <a href="#curriculum" className="hover:text-orange-300">
+                커리큘럼
+              </a>
             </li>
           </ul>
-          <div className='whitespace-pre-line break-words'>
-            <h1 className='text-5xl' id="intro">강의 소개</h1>
-            <div className='bg-lightBeige rounded-lg p-10 my-10'>
-              <p className='text-xl'>{lectures?.information}</p>  
+          <div className="whitespace-pre-line break-words">
+            <h1 className="text-5xl" id="intro">
+              강의 소개
+            </h1>
+            <div className="bg-lightBeige rounded-lg p-10 my-10">
+              <p className="text-xl">{lectures?.information}</p>
             </div>
           </div>
           <h1 className='text-5xl pt-10' id="day">강의 요일</h1>
@@ -173,7 +183,7 @@ const LectureDetail: React.FC = () => {
                           {daysAgo > 0 ? `이미 끝난 강의입니다.` : daysAgo < 0 ? `${-daysAgo}일 후 강의입니다.` : '오늘 강의입니다.'}
                         </Text>
                       </Box>
-                    <AccordionIcon />
+                      <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel pb={4} className="p-3 bg-white">
                       {
@@ -193,9 +203,9 @@ const LectureDetail: React.FC = () => {
                               <p>{lectureslist?.lectures[index + 1][index2].lecture_start_time.slice(11,19)}</p>
                               <span className='hidden'>{daysAgo = calculateDaysAgo(lectureslist?.lectures[index + 1][index2].lecture_start_time.slice(0, 10))}</span>
                             </div>
-                        </div>
-                        ))                              
-                      }
+                          </div>
+                        )
+                      )}
                     </AccordionPanel>
                   </AccordionItem>
                 ))
@@ -284,14 +294,22 @@ const LectureDetail: React.FC = () => {
                 <li>{lectures?.teacher_name} 강사님</li>
                 <li>{lectureslist?.lecture_count}개 강의</li>
                 <li>{lectures?.category}</li>
-                <li>{lectures?.current_attendees} / {lectures?.max_attendees}</li>
+                <li>
+                  {lectures?.current_attendees} / {lectures?.max_attendees}
+                </li>
                 <li>발급</li>
               </ul>
             </div>
           </div>
-            <p className='text-center mt-auto text-xl'>{startLecture > 0 ? `이미 ${startLecture}일 전에 강의가 시작했어요!` : startLecture < 0 ? `${-startLecture}일 후에 시작하는 강의에요!` : '오늘부터 시작하는 강의에요!'}</p>
+          <p className="text-center mt-auto text-xl">
+            {startLecture > 0
+              ? `이미 ${startLecture}일 전에 강의가 시작했어요!`
+              : startLecture < 0
+              ? `${-startLecture}일 후에 시작하는 강의에요!`
+              : "오늘부터 시작하는 강의에요!"}
+          </p>
         </div>
-        <div className='lg:col-span-3 col-span-1'></div>
+        <div className="lg:col-span-3 col-span-1"></div>
       </div>
       <div></div>
       
