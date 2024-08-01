@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Lecture } from "../../interface/Curriculainterface";
+import { Lecture, PatchLecture } from "../../interface/Curriculainterface";
 // import { BASE_URL } from "../BASE_URL";
 
 const BASE_URL = "http://steach.ssafy.io:8083";
@@ -35,7 +35,10 @@ export const getLectureDetailApi = async (lectureId: number) => {
 };
 
 // 강의 상세 업데이트
-export const patchLectureDetailApi = async (lectureData, lectureId: number) => {
+export const patchLectureDetailApi = async (
+  lectureData: PatchLecture,
+  lectureId: number
+) => {
   try {
     const response = await axios.patch(
       `${BASE_URL}/api/v1/lectures/${lectureId}`,

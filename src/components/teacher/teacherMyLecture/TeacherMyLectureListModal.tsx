@@ -57,10 +57,10 @@ const TeacherMyLectureListModal: React.FC<TeacherMyLectureListModalProps> = ({
 
   // 수정하기 핸들러 함수
   const handleOk = () => {
-    // const lectureData: PatchLecture = {
-    //   lecture_title = lectureTitle,
-    //   lecture_start_time = timePicker,
-    // };
+    const lectureData: PatchLecture = {
+      lecture_title: lectureTitle,
+      lecture_start_time: timePicker,
+    };
 
     setIsModalOpen(false);
   };
@@ -96,7 +96,11 @@ const TeacherMyLectureListModal: React.FC<TeacherMyLectureListModalProps> = ({
             <TimePicker
               value={timePicker ? dayjs(timePicker, format) : undefined}
               format={format}
-              onChange={(time, timeString) => setTimePicker(timeString)}
+              onChange={(time, timeString) => {
+                setTimePicker(
+                  Array.isArray(timeString) ? timeString[0] : timeString
+                );
+              }}
             />
           </div>
         </div>

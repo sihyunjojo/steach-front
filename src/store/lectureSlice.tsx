@@ -48,19 +48,19 @@ export const getLectureDetail = createAsyncThunk<Lecture, number>(
 );
 
 // 강의 단일 정보 수정하기
-export const patchLectureDetail = createAsyncThunk<Lecture, number>(
-  "lectures/patchDetail",
-  async (lectureId: number, thunkAPI) => {
-    try {
-      const data = await patchLectureDetailApi(lectureId);
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        return thunkAPI.rejectWithValue(error.response.data);
-      }
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+// export const patchLectureDetail = createAsyncThunk<Lecture, number>(
+//   "lectures/patchDetail",
+//   async (lectureId: number, thunkAPI) => {
+//     try {
+//       const data = await patchLectureDetailApi(lectureId);
+//     } catch (error) {
+//       if (axios.isAxiosError(error) && error.response) {
+//         return thunkAPI.rejectWithValue(error.response.data);
+//       }
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
 
 // 강의 슬라이스
 const lecturesSlice = createSlice({

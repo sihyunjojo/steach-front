@@ -58,8 +58,8 @@ export interface Lecture {
 
 // 강의 상세 수정 인터페이스
 export interface PatchLecture {
-  lecture_title: string;
-  lecture_start_time: string;
+  lecture_title: string | undefined;
+  lecture_start_time: string | undefined;
 }
 
 // 학생 커리큘럼 신청 리스트 조회 폼
