@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Curricula, LectureSeries } from "../interface/Curriculainterface";
 import {
   fetchCurriculumDetails,
+  petchCurriculumDetails,
   fetchCurriculumLectures,
   SignUpLecture,
   deleteCurricula,
@@ -28,7 +29,6 @@ const initialState: CurriculasState = {
   lectureslist: null,
   selectlectures: null,
   isApply: false,
-  isApply: false,
   status: "idle",
   error: null,
 };
@@ -48,6 +48,8 @@ export const getCurriculaDetail = createAsyncThunk<Curricula, string>(
     }
   }
 );
+
+
 
 // 단일 커리큘럼 삭제
 export const deleteCurriculaDetail = createAsyncThunk<string, string>(
@@ -136,6 +138,7 @@ const curriculaSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // 커리큘럼 등록
       .addCase(SignUpLecture.pending, (state) => {
         state.status = "loading";
       })
@@ -147,6 +150,21 @@ const curriculaSlice = createSlice({
         }
       )
       .addCase(SignUpLecture.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // 커리큘럼 상세 수정
+      .addCase(petchCurriculumDetails.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        petchCurriculumDetails.fulfilled,
+        (state, action: PayloadAction<Curricula>) => {
+          state.status = "succeeded";
+          state.curricula.push(action.payload);
+        }
+      )
+      .addCase(petchCurriculumDetails.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       })
