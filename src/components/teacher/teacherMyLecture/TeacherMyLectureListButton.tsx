@@ -14,11 +14,15 @@ import TeacherMyLectureListModal from "./TeacherMyLectureListModal";
 interface TeacherMyLectureListButtonProps {
   lectureState: string;
   lectureId: number | undefined;
+  curriculaId: string | undefined;
+  username: string | undefined;
 }
 
 const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
   lectureState,
   lectureId,
+  curriculaId,
+  username,
 }) => {
   const navigate = useNavigate();
 
@@ -103,7 +107,9 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                 <Button
                   className="m-3"
                   onClick={() =>
-                    navigate("/teacher/profile/lecture/createQuiz")
+                    navigate(
+                      `/teacher/profile/${username}/curricula/${curriculaId}/lecture/${lectureId}/createQuiz`
+                    )
                   }
                 >
                   퀴즈 관리

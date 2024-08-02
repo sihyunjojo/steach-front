@@ -35,7 +35,10 @@ const App: React.FC = () => {
           element={<CurriculaDetailPage />}
         ></Route>
         <Route path="/lecture/signup" element={<LectureSignUpPage />}></Route>
-        <Route path="/curricula/update/:id" element={<LectureUpdatePage />}></Route>
+        <Route
+          path="/curricula/update/:id"
+          element={<LectureUpdatePage />}
+        ></Route>
         <Route
           path="/teacher/profile/:username"
           element={<TeacherProfilePage />}
@@ -53,7 +56,7 @@ const App: React.FC = () => {
           element={<MyInfoDetailUpdate />}
         ></Route>
         <Route
-          path="/teacher/profile/lecture/createQuiz"
+          path="/teacher/profile/:username/curricula/:curricula_id/lecture/:lecture_id/createQuiz"
           element={<CreateQuiz />}
         ></Route>
         <Route
