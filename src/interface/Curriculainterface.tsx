@@ -1,5 +1,5 @@
 export interface Curricula {
-  curriculum_id: number;
+  curriculum_id: string;
   title: string;
   sub_title: string;
   intro: string;

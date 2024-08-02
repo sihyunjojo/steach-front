@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store'
-import { getCurriculaDetail, applyCurricula, applyCurriculaCheck, CurriculaCancel } from '../../store/curriculaSlice'
+import { getCurriculaLectureList, getCurriculaDetail, applyCurricula, applyCurriculaCheck, CurriculaCancel } from '../../store/curriculaSlice'
 import { getLecturelist } from '../../store/lectureSlice'
 import { useDispatch } from 'react-redux';
 import img1 from '../../../src/assets/checked.jpg'
 import img2 from '../../../src/assets/unchecked.jpg'
 import img3 from '../../../src/assets/human.png'
-import { Modal, Alert } from "antd";
+import { Modal } from "antd";
 import {
   Accordion,
   AccordionItem,
@@ -21,7 +21,9 @@ import {
 
 const LectureDetail: React.FC = () => {
   // 이진송
-  // 틀만 짜서 디자인 정하고 서버받고 난 후 axios 해야함
+  const userDataString = localStorage.getItem("auth");
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+
   const [_, setToday] = useState('');
   const { id } = useParams<{ id: string }>();
   const a = id
@@ -33,9 +35,11 @@ const LectureDetail: React.FC = () => {
   const lectureslist = useSelector(
     (state: RootState) => state.curriculum.lectureslist
   );
+
   const isApply = useSelector((state: RootState) => state.curriculum.isApply);
   const status = useSelector((state: RootState) => state.curriculum.status);
   const error = useSelector((state: RootState) => state.curriculum.error);
+
 
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -53,11 +57,15 @@ const LectureDetail: React.FC = () => {
   
   useEffect(() => {
     if (id) {
-      dispatch(getCurriculaDetail(id));
       dispatch(getLecturelist(id));
-      dispatch(applyCurriculaCheck(id));
+      dispatch(getCurriculaDetail(id));
+      dispatch(getCurriculaLectureList(id));
+      userData && userData.role === "STUDENT" && (
+        dispatch(applyCurriculaCheck(id))
+      )
     }
   }, [id, dispatch]);
+              
   
 
   useEffect(() => {
@@ -101,7 +109,6 @@ const LectureDetail: React.FC = () => {
 
   return (
     <>
-      <button onClick={() => { navigate(`/curricula/detail/${a}#`) }}>dddd</button>
       <header className="flex bg-hoverNavy text-white text-left py-2.5 justify-center">
         <div className="w-3/5">
           <div>
@@ -221,22 +228,38 @@ const LectureDetail: React.FC = () => {
         <div className="sticky top-24 lg:right-24 xl:right-44 right-0 h-96 w-96 bg-white ml-10 mt-3 p-4 flex flex-col rounded-lg border-2 border-hardBeige">
           <h3 className="text-3xl font-bold ml-4 mb-4 text-red-600">무료</h3>
           <h3 className="text-2xl font-bold mb-4">{lectures?.title}</h3>
-          {isApply === false
-            ?
-          <button
-            className="w-full mb-5 py-2 px-4 bg-pink-500 hover:bg-pink-700 text-white font-bold rounded self-center"
-            onClick={showLoading}
-          >
-            수강 신청
-          </button>
-            :
-          <button
-            className="w-full mb-5 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded self-center"
-            onClick={showLoading}
-          >
-            수강 취소
-          </button>
-          }
+          {userData && userData.role === "TEACHER" && userData.nickname === lectures?.teacher_name ? (
+            
+            <button
+              className="w-full mb-5 py-2 px-4 bg-gray-500 text-white font-bold rounded self-center"
+              onClick={() => {navigate(`/curricula/update/${id}`)}}
+            >
+              수정하기
+            </button>
+          ) : (
+              userData && userData.role === "TEACHER" && userData.nickname ? (
+            <button
+              className="w-full mb-5 py-2 px-4 bg-gray-500 text-white font-bold rounded self-center"
+              disabled
+            >
+              수강 신청은 학생만 가능합니다.
+            </button>
+          ) : (
+            isApply === false ? (
+              <button
+                className="w-full mb-5 py-2 px-4 bg-pink-500 hover:bg-pink-700 text-white font-bold rounded self-center"
+                onClick={showLoading}
+              >
+                수강 신청
+              </button>
+            ) : (
+              <button
+                className="w-full mb-5 py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded self-center"
+                onClick={showLoading}
+              >
+                수강 취소
+              </button>
+            )))}
           <Modal
             title={<p>수강 신청</p>}
             footer={isApply === false
