@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Classroom from './classroom.tsx';
+import Classroom from './classroom';
 
 ReactDOM.render(
   <React.StrictMode>
