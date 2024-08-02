@@ -17,6 +17,7 @@ export interface CurriculasState {
   curricula: Curricula[];
   lectureslist: LectureSeries | null;
   selectlectures: Curricula | null;
+  isApply: boolean
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -26,6 +27,7 @@ const initialState: CurriculasState = {
   curricula: [],
   lectureslist: null,
   selectlectures: null,
+  isApply: false,
   status: "idle",
   error: null,
 };

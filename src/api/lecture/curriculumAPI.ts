@@ -4,13 +4,11 @@ import {
   CurriculaFormData,
 } from "../../interface/Curriculainterface";
 import axios from "axios";
-// import { BASE_URL } from "../BASE_URL";
+import { BASE_URL } from "../BASE_URL";
 
-const BASE_URL = "http://steach.ssafy.io:8083";
-// const BASE_URL = "http://192.168.100.208:8080";
 const IMG_SERVER_URL = "http://steach.ssafy.io:8082";
-
 const Auth = localStorage.getItem("auth");
+
 let AuthData: any;
 if (Auth) {
   AuthData = JSON.parse(Auth);
@@ -93,7 +91,7 @@ export const applyToCurriculum = async (curricula_id: string) => {
     console.log(AuthData.token);
     const response = await axios.post(
       `${BASE_URL}/api/v1/curricula/${curricula_id}/apply`,
-      {}, // POST 요청의 바디가 비어 있다면 빈 객체를 전달합니다.
+      {},
       {
         headers: {
           Authorization: `Bearer ${AuthData.token}`,
@@ -102,11 +100,9 @@ export const applyToCurriculum = async (curricula_id: string) => {
     );
     return response.data;
   } catch (error: any) {
-    // 409 에러 처리
     if (error.response && error.response.status === 409) {
       alert("이미 신청한 강의입니다. 다른 강의를 선택해주세요.");
     } else {
-      // 기타 에러 처리
       alert("오류가 발생했습니다. 다시 시도해주세요.");
     }
     throw error;
@@ -219,7 +215,7 @@ export const postCurriculimCancel = async (curriculum_id: string) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/api/v1/curricula/${curriculum_id}/cancel`,
-
+      {},
       {
         headers: {
           Authorization: `Bearer ${AuthData.token}`,

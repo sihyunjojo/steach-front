@@ -1,9 +1,7 @@
 import axios from "axios";
 import { Lecture } from "../../interface/Curriculainterface";
-// import { BASE_URL } from "../BASE_URL";
+import { BASE_URL } from "../BASE_URL";
 
-const BASE_URL = "http://steach.ssafy.io:8083";
-// const BASE_URL = "http://192.168.100.208:8080";
 
 // 토큰 가져오기
 const userData = localStorage.getItem("auth");
