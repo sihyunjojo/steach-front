@@ -12,6 +12,7 @@ import TeacherProfilePage from "./pages/teacher/TeacherMyRoomPage.tsx";
 import MyInfoDetailPage from "./pages/teacher/MyInfoDetailPage.tsx";
 import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
 import TeacherMyLectureList from "./components/teacher/teacherMyLecture/TeacherMyLectureList.tsx";
+import Classroom from "./pages/classroom/classroom.tsx";
 // import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
@@ -28,6 +29,7 @@ const App: React.FC = () => {
         ></Route>
         <Route path="/user/login" element={<LoginPage />}></Route>
         <Route path="/user/signup" element={<SignUpPage />}></Route>
+        <Route path="/classroom" element={<Classroom />}></Route>
         <Route
           path="/curricula/detail/:id"
           element={<CurriculaDetailPage />}
