@@ -2,28 +2,17 @@ import React, { useState } from "react";
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { QuizData } from "../../../interface/quiz/QuizInterface";
 
 // 퀴즈 생성 컴포넌트
 const CreateQuiz: React.FC = () => {
-  interface QuizData {
-    // 수업 고유 ID
-    lectureId: number;
-    // 퀴즈 번호
-    quizNumber: number;
-    // 퀴즈 문제 내용
-    question: string;
-    // 퀴즈 정답 여부
-    isAnswer: number;
-    // 퀴즈 선택지 문항(리스트)
-    choiceSentence: string[];
-  }
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [tab, setTab] = useState<number>(1);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const [qui, setQui] = useState<QuizData[]>([
+  const [quiz, setQuiz] = useState<QuizData[]>([
     {
       lectureId: 0, // params로 받을듯?
       quizNumber: 1,
@@ -34,13 +23,13 @@ const CreateQuiz: React.FC = () => {
   ]);
 
   const plusTab = () => {
-    const counTab = qui.length + 1;
+    const counTab = quiz.length + 1;
     if (counTab > 4) {
       alert("최대4개");
       return;
     } else {
-      setQui([
-        ...qui,
+      setQuiz([
+        ...quiz,
         {
           lectureId: 0, // params로 받을듯?
           quizNumber: counTab,
@@ -54,7 +43,7 @@ const CreateQuiz: React.FC = () => {
 
   const handleSaveQuizzes = () => {
     // axios 추가해야함
-    console.log(qui);
+    console.log(quiz);
   };
   // handleChange, handleChoiceChange 아래 두 함수는 받은 값을 qui배열에 저장하는 역할, 특별한 이유 없이 수정x
   const handleChange = (
@@ -62,9 +51,9 @@ const CreateQuiz: React.FC = () => {
     name: string,
     value: string | number
   ) => {
-    const newQuizzes = [...qui];
+    const newQuizzes = [...quiz];
     newQuizzes[index] = { ...newQuizzes[index], [name]: value };
-    setQui(newQuizzes);
+    setQuiz(newQuizzes);
   };
 
   const handleChoiceChange = (
@@ -72,9 +61,9 @@ const CreateQuiz: React.FC = () => {
     choiceIndex: number,
     value: string
   ) => {
-    const newQuizzes = [...qui];
+    const newQuizzes = [...quiz];
     newQuizzes[quizIndex].choiceSentence[choiceIndex] = value;
-    setQui(newQuizzes);
+    setQuiz(newQuizzes);
   };
 
   return (
@@ -82,7 +71,7 @@ const CreateQuiz: React.FC = () => {
       <div className="col-span-3"></div>
       <div className=" flex col-span-6 p-4">
         <div className="hidden lg:flex lg:flex-row lg:justify-between lg:ml-0 my-auto">
-          {Array.from({ length: qui.length }, (_, i) => (
+          {Array.from({ length: quiz.length }, (_, i) => (
             <div key={i}>
               <button
                 onClick={() => setTab(i + 1)}
@@ -98,7 +87,7 @@ const CreateQuiz: React.FC = () => {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-row ml-auto mr-10 my-auto hover:text-lightOrange">
-          <button onClick={() => plusTab} className="flex justify-end">
+          <button onClick={plusTab} className="flex justify-end">
             퀴즈 추가하기
           </button>
         </div>
@@ -107,7 +96,7 @@ const CreateQuiz: React.FC = () => {
         {isMenuOpen && (
           <div className="flex flex-grow p-4 lg:hidden">
             <ul className="flex flex-col mx-auto text-lg font-bold mt-4">
-              {Array.from({ length: qui.length }, (_, i) => (
+              {Array.from({ length: quiz.length }, (_, i) => (
                 <div key={i} className="w-full flex flex-col">
                   <li className="p-2">
                     <button
@@ -124,14 +113,14 @@ const CreateQuiz: React.FC = () => {
                 </div>
               ))}
               <div className="flex items-center mx-auto hover:text-lightOrange">
-                <button onClick={() => plusTab}>퀴즈 추가하기</button>
+                <button onClick={plusTab}>퀴즈 추가하기</button>
               </div>
             </ul>
           </div>
         )}
         {/* 햄버거 */}
         <div className="ml-auto mt-5 lg:hidden">
-          <button onClick={() => toggleMenu} className="focus:outline-none">
+          <button onClick={toggleMenu} className="focus:outline-none">
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="2x" />
           </button>
         </div>
@@ -141,7 +130,7 @@ const CreateQuiz: React.FC = () => {
       <div className="col-span-3"></div>
       <div className="col-span-6 ">
         <div className="p-4 flex justify-center">
-          {qui.map((a, i) => {
+          {quiz.map((a, i) => {
             return (
               tab === i + 1 && (
                 <div key={i} className="w-full">

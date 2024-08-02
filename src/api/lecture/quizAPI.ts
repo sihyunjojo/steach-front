@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
 
-
 // Create quiz for a lecture
 export const createQuiz = async (
   lectureId: number,

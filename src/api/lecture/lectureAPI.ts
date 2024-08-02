@@ -2,7 +2,6 @@ import axios from "axios";
 import { Lecture } from "../../interface/Curriculainterface";
 import { BASE_URL } from "../BASE_URL";
 
-
 // 토큰 가져오기
 const userData = localStorage.getItem("auth");
 const token = userData ? JSON.parse(userData).token : null;

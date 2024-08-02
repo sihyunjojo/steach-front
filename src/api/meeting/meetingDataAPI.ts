@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
 
-
 // Post student focus time
 export const postStudentFocusTime = async (
   lectureId: number,

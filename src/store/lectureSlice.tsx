@@ -1,7 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { LectureSeries, Lecture } from "../interface/Curriculainterface";
+import {
+  LectureSeries,
+  Lecture,
+  PatchLecture,
+} from "../interface/Curriculainterface";
 import { fetchCurriculumLectures } from "../api/lecture/curriculumAPI";
-import { getLectureDetailApi } from "../api/lecture/lectureAPI";
+import {
+  getLectureDetailApi,
+  patchLectureDetailApi,
+} from "../api/lecture/lectureAPI";
 import axios from "axios";
 
 // 이진송
@@ -48,11 +55,14 @@ export const getLectureDetail = createAsyncThunk<Lecture, number>(
 );
 
 // 강의 단일 정보 수정하기
-export const patchLectureDetail = createAsyncThunk<Lecture, number>(
+export const patchLectureDetail = createAsyncThunk<Lecture, PatchLecture>(
   "lectures/patchDetail",
-  async (lectureId: number, thunkAPI) => {
+  async (lectureData, thunkAPI) => {
     try {
-      const data = await patchLectureDetailApi(lectureId);
+      // 데이터 수정 함수 호출
+      const data = await patchLectureDetailApi(lectureData);
+
+      return data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         return thunkAPI.rejectWithValue(error.response.data);
@@ -64,7 +74,7 @@ export const patchLectureDetail = createAsyncThunk<Lecture, number>(
 
 // 강의 슬라이스
 const lecturesSlice = createSlice({
-  name: "lecturesdetail",
+  name: "lecture",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
