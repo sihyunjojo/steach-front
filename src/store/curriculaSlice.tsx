@@ -28,6 +28,7 @@ const initialState: CurriculasState = {
   lectureslist: null,
   selectlectures: null,
   isApply: false,
+  isApply: false,
   status: "idle",
   error: null,
 };

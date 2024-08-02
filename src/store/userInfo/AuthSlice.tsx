@@ -79,6 +79,7 @@ export const signUpTeacher = createAsyncThunk<UserState, TeacherFormData>(
       // if (newUserData.file) {
       //   formData.append("file", newUserData.file);
       // }
+
       // FormData에 잘 추가되었는지 확인
       const response = await signUpTeacherApi(formData);
 

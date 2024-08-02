@@ -1,5 +1,5 @@
 export interface Curricula {
-  curriculum_id: number;
+  curriculum_id: string;
   title: string;
   sub_title: string;
   intro: string;
@@ -58,6 +58,7 @@ export interface Lecture {
 
 // 강의 상세 수정 인터페이스
 export interface PatchLecture {
+  lecture_id: number | undefined;
   lecture_title: string | undefined;
   lecture_start_time: string | undefined;
 }

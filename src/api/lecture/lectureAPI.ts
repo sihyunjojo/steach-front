@@ -1,9 +1,6 @@
 import axios from "axios";
-import { Lecture, PatchLecture } from "../../interface/Curriculainterface";
-// import { BASE_URL } from "../BASE_URL";
-
-const BASE_URL = "http://steach.ssafy.io:8083";
-// const BASE_URL = "http://192.168.100.208:8080";
+import { Lecture } from "../../interface/Curriculainterface";
+import { BASE_URL } from "../BASE_URL";
 
 // 토큰 가져오기
 const userData = localStorage.getItem("auth");
@@ -35,10 +32,7 @@ export const getLectureDetailApi = async (lectureId: number) => {
 };
 
 // 강의 상세 업데이트
-export const patchLectureDetailApi = async (
-  lectureData: PatchLecture,
-  lectureId: number
-) => {
+export const patchLectureDetailApi = async (lectureData, lectureId: number) => {
   try {
     const response = await axios.patch(
       `${BASE_URL}/api/v1/lectures/${lectureId}`,
