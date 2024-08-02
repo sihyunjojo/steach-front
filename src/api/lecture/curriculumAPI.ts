@@ -42,7 +42,7 @@ export const fetchCurricula = async (params: {
 
 // 커리큘럼 만들기
 export const SignUpLecture = createAsyncThunk<Curricula, CurriculaFormData>(
-  "Curricula/signup",
+  "curricula/signup",
   async (newLectureData) => {
     const formData = new FormData();
     formData.append("userName", AuthData.username);
@@ -109,7 +109,7 @@ export const applyToCurriculum = async (curricula_id: string) => {
   }
 };
 
-// Fetch curriculum details
+// 커리큘럼 상세 보기
 export const fetchCurriculumDetails = async (id: string) => {
   try {
     const response = await axios.get(`${BASE_URL}/api/v1/curricula/${id}`);
@@ -118,6 +118,60 @@ export const fetchCurriculumDetails = async (id: string) => {
     throw error;
   }
 };
+
+
+// 커리큘럼 상세 수정하기
+export const petchCurriculumDetails = createAsyncThunk<Curricula, { newLectureData: any, id: any }>(
+  "curricula/update",
+  async ({newLectureData, id}) => {
+    let bannerImgUrl;
+
+    const formData = new FormData();
+    formData.append("userName", AuthData.username);
+    if (typeof newLectureData.banner_img_url === "string") {
+      bannerImgUrl = newLectureData.banner_img_url
+    } else {
+      formData.append("file", newLectureData.banner_img_url);
+      const imgPost = await axios.post(
+        `${IMG_SERVER_URL}/img-upload/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      bannerImgUrl = imgPost.data.url
+    }
+    
+    console.log(bannerImgUrl, id)
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/curricula/${id}`,
+      {
+        title: newLectureData.title,
+        sub_title: newLectureData.sub_title,
+        intro: newLectureData.intro,
+        information: newLectureData.information,
+        category: newLectureData.category,
+        sub_category: newLectureData.sub_category,
+        banner_img_url: bannerImgUrl,
+        start_date: newLectureData.start_date,
+        end_date: newLectureData.end_date,
+        lecture_start_time: newLectureData.lecture_start_time,
+        lecture_end_time: newLectureData.lecture_end_time,
+        weekdays_bitmask: newLectureData.weekdays_bitmask,
+        max_attendees: newLectureData.max_attendees,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${AuthData.token}`,
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 // 커리큘럼에 해당하는 강의 가져오기
 export const fetchCurriculumLectures = async (curriculum_id: string) => {
