@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
 
+
 // Function to start a lecture
 export const startLecture = async (lectureId: number) => {
   try {

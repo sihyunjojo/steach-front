@@ -58,8 +58,10 @@ const NavbarLogin: React.FC = () => {
               내 강의실
             </button>
           </li>
-          <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            <a href="#" className="hover:text-orange-300">
+          <li className="p-2">
+            <a onClick={() => {
+              navigate("/classroom");
+            }} className="hover:text-orange-300">
               문의하기
             </a>
           </li>
@@ -68,8 +70,8 @@ const NavbarLogin: React.FC = () => {
       {/* 로그인 및 회원가입 버튼 */}
       <div className="hidden mr-3 lg:flex items-center ml-4 lg:ml-0">
         <button
-          className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
-          onClick={() => {
+            className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
+            onClick={() => {
             navigate("/user/login");
           }}
         >
@@ -107,8 +109,10 @@ const NavbarLogin: React.FC = () => {
               </button>
             </li>
             <li className="p-2">
-              <a href="#" className="hover:text-orange-300">
-                문의하기
+              <a onClick={() => {
+                navigate("/classroom");
+              }} className="hover:text-orange-300">
+                문의하기2
               </a>
             </li>
           </ul>

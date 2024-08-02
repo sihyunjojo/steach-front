@@ -4,7 +4,6 @@ import studentReducer from "./store/userInfo/AuthSlice.tsx";
 import lecturesListReducer from "./store/lectureSlice.tsx";
 import studentProfileReducer from "./store/userInfo/StudentProfileSlice.tsx";
 import teacherProfileReducer from "./store/userInfo/TeacherProfileSlice.tsx";
-import quizReducer from "./store/QuizSlice.tsx";
 
 // 중앙 스토어 설정
 const store = configureStore({
@@ -14,7 +13,6 @@ const store = configureStore({
     lectures: lecturesListReducer,
     studentProfile: studentProfileReducer,
     teacherProfile: teacherProfileReducer,
-    quiz: quizReducer,
   },
 });
 
