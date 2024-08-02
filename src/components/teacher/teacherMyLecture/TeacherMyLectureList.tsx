@@ -22,6 +22,7 @@ import TeacherMyLectureListButton from "./TeacherMyLectureListButton";
 const TeacherMyLectureList: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
   // curricula_id 추출
   const { curricula_id } = useParams<{ curricula_id: string }>();
 
@@ -185,6 +186,8 @@ const TeacherMyLectureList: React.FC = () => {
                                   lectureslist?.lectures[index + 1][index2]
                                     .lecture_id
                                 }
+                                curriculaId={curricula_id}
+                                username={username}
                               />
                             ) : daysAgo < 0 ? (
                               <TeacherMyLectureListButton
@@ -193,6 +196,8 @@ const TeacherMyLectureList: React.FC = () => {
                                   lectureslist?.lectures[index + 1][index2]
                                     .lecture_id
                                 }
+                                curriculaId={curricula_id}
+                                username={username}
                               />
                             ) : (
                               <TeacherMyLectureListButton
@@ -201,6 +206,8 @@ const TeacherMyLectureList: React.FC = () => {
                                   lectureslist?.lectures[index + 1][index2]
                                     .lecture_id
                                 }
+                                curriculaId={curricula_id}
+                                username={username}
                               />
                             )}
                           </div>

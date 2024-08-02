@@ -2,26 +2,41 @@ import React, { useState } from "react";
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { QuizData } from "../../../interface/quiz/QuizInterface";
+import {
+  QuizListData,
+  QuizCreateSendForm,
+} from "../../../interface/quiz/QuizInterface";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store";
+import { useParams } from "react-router-dom";
 
 // 퀴즈 생성 컴포넌트
 const CreateQuiz: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { lecture_id } = useParams<{ lecture_id: string }>();
+
+  // 메뉴 여닫이 상태
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // tab 상태
   const [tab, setTab] = useState<number>(1);
+
+  // 퀴즈 상태
+  const [quiz, setQuiz] = useState<QuizListData[]>([
+    {
+      quizNumber: 1,
+      question: "",
+      choices: ["", "", "", ""],
+      answers: 1,
+    },
+  ]);
+
+  // 메뉴 토글 함수
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const [quiz, setQuiz] = useState<QuizData[]>([
-    {
-      lectureId: 0, // params로 받을듯?
-      quizNumber: 1,
-      question: "",
-      isAnswer: 1,
-      choiceSentence: ["", "", "", ""],
-    },
-  ]);
-
+  // 탭 추가 함수
   const plusTab = () => {
     const counTab = quiz.length + 1;
     if (counTab > 4) {
@@ -31,20 +46,23 @@ const CreateQuiz: React.FC = () => {
       setQuiz([
         ...quiz,
         {
-          lectureId: 0, // params로 받을듯?
           quizNumber: counTab,
+          choices: ["", "", "", ""],
           question: "",
-          isAnswer: 1,
-          choiceSentence: ["", "", "", ""],
+          answers: 1,
         },
       ]);
     }
   };
 
   const handleSaveQuizzes = () => {
-    // axios 추가해야함
-    console.log(quiz);
+    // const createQuizData: QuizCreateSendForm = {
+    //   lectureId: lecture_id,
+    //   quiz_list: quiz,
+    // };
+    // dispatch();
   };
+
   // handleChange, handleChoiceChange 아래 두 함수는 받은 값을 qui배열에 저장하는 역할, 특별한 이유 없이 수정x
   const handleChange = (
     index: number,
@@ -62,7 +80,7 @@ const CreateQuiz: React.FC = () => {
     value: string
   ) => {
     const newQuizzes = [...quiz];
-    newQuizzes[quizIndex].choiceSentence[choiceIndex] = value;
+    newQuizzes[quizIndex].choices[choiceIndex] = value;
     setQuiz(newQuizzes);
   };
 
@@ -159,7 +177,7 @@ const CreateQuiz: React.FC = () => {
                     >
                       퀴즈 보기를 입력하세요! - choiceSentence
                     </FormLabel>
-                    {a.choiceSentence.map((choice, choicei) => (
+                    {a.choices.map((choice: number, choicei: number) => (
                       <div key={choicei}>
                         <label className="mx-2">보기 {choicei + 1}</label>
                         <br></br>
@@ -180,9 +198,9 @@ const CreateQuiz: React.FC = () => {
                     <select
                       id="isAnswer"
                       name="isAnswer"
-                      value={a.isAnswer}
+                      value={a.answer}
                       onChange={(e) =>
-                        handleChange(i, "isAnswer", parseInt(e.target.value))
+                        handleChange(i, "answer", parseInt(e.target.value))
                       }
                       className="border-2 rounded-lg p-2 mb-5"
                     >

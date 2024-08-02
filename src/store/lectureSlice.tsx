@@ -57,7 +57,7 @@ export const getLectureDetail = createAsyncThunk<Lecture, number>(
 // 강의 단일 정보 수정하기
 export const patchLectureDetail = createAsyncThunk<Lecture, PatchLecture>(
   "lectures/patchDetail",
-  async (lectureData, thunkAPI) => {
+  async (lectureData: PatchLecture, thunkAPI) => {
     try {
       // 데이터 수정 함수 호출
       const data = await patchLectureDetailApi(lectureData);
