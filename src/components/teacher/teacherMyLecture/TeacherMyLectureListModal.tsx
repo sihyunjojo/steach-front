@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Modal, TimePicker } from "antd";
 import { Button } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLectureDetail } from "../../../store/lectureSlice";
-import { AppDispatch } from "../../../store";
-import { RootState } from "../../../store";
+import {
+  getLectureDetail,
+  patchLectureDetail,
+} from "../../../store/lectureSlice";
+import { RootState, AppDispatch } from "../../../store";
 import { PatchLecture } from "../../../interface/Curriculainterface";
 import dayjs from "dayjs";
+import { getCurriculaDetail } from "../../../store/curriculaSlice";
 
 // props 인터페이스
 interface TeacherMyLectureListModalProps {
@@ -20,13 +23,6 @@ const TeacherMyLectureListModal: React.FC<TeacherMyLectureListModalProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const format = "HH:mm";
 
-  // 모달을 열자마자 강의 정보 호출
-  useEffect(() => {
-    if (lectureId) {
-      dispatch(getLectureDetail(lectureId));
-    }
-  }, [lectureId, dispatch]);
-
   // 강의 상태 정보를 가져오기
   const lecture = useSelector((state: RootState) => state.lectures.lecture);
 
@@ -39,10 +35,17 @@ const TeacherMyLectureListModal: React.FC<TeacherMyLectureListModalProps> = ({
     undefined
   );
 
+  // 모달을 열자마자 강의 정보 호출
+  useEffect(() => {
+    if (lectureId && isModalOpen) {
+      dispatch(getLectureDetail(lectureId));
+    }
+  }, [lectureId, dispatch, isModalOpen]);
+
   // lecture가 업데이트될 때마다 timePicker와 lectureTitle 상태를 업데이트
   useEffect(() => {
     if (lecture) {
-      setTimePicker(lecture.lecture_start_time.substring(11, 17));
+      setTimePicker(lecture.lecture_start_time.substring(11, 16));
       setLectureTitle(lecture.lecture_title);
     }
   }, [lecture]);
@@ -57,13 +60,19 @@ const TeacherMyLectureListModal: React.FC<TeacherMyLectureListModalProps> = ({
   };
 
   // 수정하기 핸들러 함수
-  const handleOk = () => {
-    // const lectureData: PatchLecture = {
-    //   lecture_title = lectureTitle,
-    //   lecture_start_time = timePicker,
-    // };
+  const handleOk = async () => {
+    const lectureData: PatchLecture = {
+      lecture_id: lectureId,
+      lecture_title: lectureTitle,
+      lecture_start_time: timePicker,
+    };
 
+    // 강의 정보 수정 함수 호출
+    await dispatch(patchLectureDetail(lectureData));
     setIsModalOpen(false);
+
+    // 새로고침 - 나중에 새로고침 없이 상태 변화를 실시간으로 가져올 방법으로 로직을 짤 필요가 있음.
+    window.location.reload();
   };
 
   // 취소하기 핸들러 함수
@@ -97,7 +106,11 @@ const TeacherMyLectureListModal: React.FC<TeacherMyLectureListModalProps> = ({
             <TimePicker
               value={timePicker ? dayjs(timePicker, format) : undefined}
               format={format}
-              onChange={(time, timeString) => setTimePicker(timeString)}
+              onChange={(timeString) =>
+                setTimePicker(
+                  Array.isArray(timeString) ? timeString[0] : timeString
+                )
+              }
             />
           </div>
         </div>

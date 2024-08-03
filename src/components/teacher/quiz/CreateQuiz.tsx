@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
-  QuizListData,
+  QuizCreateDetailForm,
   QuizCreateSendForm,
 } from "../../../interface/quiz/QuizInterface";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { useParams } from "react-router-dom";
+import { createQuiz } from "../../../store/QuizSlice";
 
 // 퀴즈 생성 컴포넌트
 const CreateQuiz: React.FC = () => {
@@ -22,9 +22,9 @@ const CreateQuiz: React.FC = () => {
   const [tab, setTab] = useState<number>(1);
 
   // 퀴즈 상태
-  const [quiz, setQuiz] = useState<QuizListData[]>([
+  const [quiz, setQuiz] = useState<QuizCreateDetailForm[]>([
     {
-      quizNumber: 1,
+      quiz_number: 1,
       question: "",
       choices: ["", "", "", ""],
       answers: 1,
@@ -46,7 +46,7 @@ const CreateQuiz: React.FC = () => {
       setQuiz([
         ...quiz,
         {
-          quizNumber: counTab,
+          quiz_number: counTab,
           choices: ["", "", "", ""],
           question: "",
           answers: 1,
@@ -55,12 +55,23 @@ const CreateQuiz: React.FC = () => {
     }
   };
 
-  const handleSaveQuizzes = () => {
-    // const createQuizData: QuizCreateSendForm = {
-    //   lectureId: lecture_id,
-    //   quiz_list: quiz,
-    // };
-    // dispatch();
+  // 퀴즈 생성 핸들러 함수
+  const handleSaveQuizzes = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("handleSaveQuizzes has been triggered");
+    const quizData: QuizCreateSendForm = {
+      lectureId: lecture_id,
+      quiz_list: quiz,
+    };
+
+    console.log("Quiz data to be sent:", quizData);
+
+    try {
+      const result = await dispatch(createQuiz(quizData));
+      console.log("Quiz creation result:", result);
+    } catch (error) {
+      console.error("Failed to create quiz:", error);
+    }
   };
 
   // handleChange, handleChoiceChange 아래 두 함수는 받은 값을 qui배열에 저장하는 역할, 특별한 이유 없이 수정x
@@ -146,21 +157,18 @@ const CreateQuiz: React.FC = () => {
       </div>
       <div className="col-span-3"></div>
       <div className="col-span-3"></div>
-      <div className="col-span-6 ">
+      <form className="col-span-6 " onSubmit={(e) => handleSaveQuizzes(e)}>
         <div className="p-4 flex justify-center">
           {quiz.map((a, i) => {
             return (
               tab === i + 1 && (
                 <div key={i} className="w-full">
-                  <FormControl>
+                  <div>
                     <hr className="border-2 border-hardBeige"></hr>
-                    <FormLabel
-                      htmlFor="question"
-                      className="mt-3 mx-3 text-2xl "
-                    >
+                    <label htmlFor="question" className="mt-3 mx-3 text-2xl ">
                       퀴즈 문제를 입력하세요! - question
-                    </FormLabel>
-                    <Input
+                    </label>
+                    <input
                       type="text"
                       id="question"
                       name="question"
@@ -171,17 +179,17 @@ const CreateQuiz: React.FC = () => {
                       className="border-2 rounded-lg w-full p-2 mt-3"
                       required
                     />
-                    <FormLabel
+                    <label
                       htmlFor="choiceSentence"
                       className="mt-3 mx-3 text-2xl "
                     >
                       퀴즈 보기를 입력하세요! - choiceSentence
-                    </FormLabel>
-                    {a.choices.map((choice: number, choicei: number) => (
+                    </label>
+                    {a.choices.map((choice: string, choicei: number) => (
                       <div key={choicei}>
                         <label className="mx-2">보기 {choicei + 1}</label>
                         <br></br>
-                        <Input
+                        <input
                           type="text"
                           value={choice}
                           onChange={(e) =>
@@ -192,15 +200,15 @@ const CreateQuiz: React.FC = () => {
                         />
                       </div>
                     ))}
-                    <FormLabel htmlFor="isAnswer" className="text-2xl">
+                    <label htmlFor="answers" className="text-2xl">
                       정답
-                    </FormLabel>
+                    </label>
                     <select
-                      id="isAnswer"
-                      name="isAnswer"
-                      value={a.answer}
+                      id="answers"
+                      name="answers"
+                      value={a.answers}
                       onChange={(e) =>
-                        handleChange(i, "answer", parseInt(e.target.value))
+                        handleChange(i, "answers", parseInt(e.target.value))
                       }
                       className="border-2 rounded-lg p-2 mb-5"
                     >
@@ -211,20 +219,20 @@ const CreateQuiz: React.FC = () => {
                     </select>
                     <br></br>
                     <div className="flex">
-                      <Button
+                      <button
+                        type="submit"
                         className="bg-orange-300 w-20 p-2 ml-auto mr-3 rounded-lg hover:bg-orange-400 hover:text-white"
-                        onClick={handleSaveQuizzes}
                       >
-                        저장
-                      </Button>
+                        퀴즈 생성
+                      </button>
                     </div>
-                  </FormControl>
+                  </div>
                 </div>
               )
             );
           })}
         </div>
-      </div>
+      </form>
       <div className="col-span-3"></div>
     </div>
   );

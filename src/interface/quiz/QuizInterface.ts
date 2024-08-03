@@ -1,26 +1,41 @@
 // 퀴즈 생성 내부 인터페이스
-export interface QuizDetailForm {
+export interface QuizCreateDetailForm {
   quiz_number: number;
   question: string;
   choices: string[];
   answers: number;
 }
 
+// 퀴즈 단일 조회 인터페이스
+export interface QuizFetchDetailForm {
+  quiz_id: number;
+  lecture_id: number;
+  quiz_number: number;
+  question: string;
+  choices: string[];
+  answers: number;
+}
+
+// 강의에 대한 퀴즈 조회 인터페이스
+export interface QuizFetchListForm {
+  quiz_response_dtos: QuizFetchDetailForm[];
+}
+
 // 퀴즈 생성 리스트 제출 인터페이스
 export interface QuizCreateSendForm {
   // 수업 고유 ID
-  lectureId: number | undefined;
-  quiz_list: QuizDetailForm[];
+  lectureId: string | undefined;
+  quiz_list: QuizCreateDetailForm[];
 }
 
 // 퀴즈 생성 리스트 반환 인터페이스
 export interface QuizCreateReturnForm {
-  quiz_list: QuizDetailForm[];
+  quiz_list: QuizCreateDetailForm[];
 }
 
 // 퀴즈 상태 인터페이스
 export interface QuizState {
-  quizzes: QuizDetailForm[] | null;
+  quizzes: QuizFetchDetailForm[] | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }

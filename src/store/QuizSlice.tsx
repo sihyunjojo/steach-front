@@ -3,8 +3,13 @@ import {
   QuizState,
   QuizCreateSendForm,
   QuizCreateReturnForm,
+  QuizFetchListForm,
 } from "../interface/quiz/QuizInterface";
-import { createQuizApi } from "../api/lecture/quizAPI";
+import {
+  createQuizApi,
+  fetchLectureQuizApi,
+  deleteQuizApi,
+} from "../api/lecture/quizAPI";
 import axios from "axios";
 
 // 퀴즈 초기 상태
@@ -13,6 +18,25 @@ const initialState: QuizState = {
   status: "idle",
   error: null,
 };
+
+// 하나의 강의에 대한 퀴즈들 조회 함수
+export const fetchLectureQuiz = createAsyncThunk<QuizFetchListForm, string>(
+  "quiz/lecture/fetch",
+  async (lectureId, thunkAPI) => {
+    try {
+      // 강의에 대한 퀴즈 조회 api 호출
+      const response = await fetchLectureQuizApi(lectureId);
+
+      console.log(response);
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 // 퀴즈 생성 함수
 export const createQuiz = createAsyncThunk<
@@ -33,6 +57,24 @@ export const createQuiz = createAsyncThunk<
   }
 });
 
+// 퀴즈 삭제 함수
+export const deleteQuiz = createAsyncThunk<any, number>(
+  "quiz/delete",
+  async (quizId, thunkAPI) => {
+    try {
+      // 퀴즈 삭제 api 호출
+      const response = await deleteQuizApi(quizId);
+
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // 퀴즈 슬라이스
 const quizSlice = createSlice({
   name: "quiz",
@@ -40,15 +82,40 @@ const quizSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // 강의에 대한 퀴즈 조회 addCase
+      .addCase(fetchLectureQuiz.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchLectureQuiz.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.quizzes = action.payload.quiz_response_dtos;
+        console.log("조회 성공!");
+      })
+      .addCase(fetchLectureQuiz.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
       // 퀴즈 생성 addCase
       .addCase(createQuiz.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(createQuiz.fulfilled, (state, action) => {
+      .addCase(createQuiz.fulfilled, (state) => {
         state.status = "succeeded";
-        state.quizzes = action.payload.quiz_list;
+        console.log("퀴즈 생성 성공!");
       })
       .addCase(createQuiz.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // 퀴즈 삭제 addCase
+      .addCase(deleteQuiz.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteQuiz.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        console.log("삭제 성공!");
+      })
+      .addCase(deleteQuiz.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       });

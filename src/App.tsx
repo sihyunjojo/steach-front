@@ -14,8 +14,9 @@ import MyInfoDetailUpdate from "./pages/teacher/MyInfoDetailUpdatePage.tsx";
 import TeacherMyLectureList from "./components/teacher/teacherMyLecture/TeacherMyLectureList.tsx";
 import Classroom from "./pages/classroom/classroom.tsx";
 // import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
-import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
+import CreateQuiz from "./components/teacher/quiz/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
+import QuizManagementPage from "./pages/quiz/QuizManagementPage.tsx";
 
 const App: React.FC = () => {
   return (
@@ -58,6 +59,10 @@ const App: React.FC = () => {
         <Route
           path="/teacher/profile/:username/curricula/:curricula_id/lecture/:lecture_id/createQuiz"
           element={<CreateQuiz />}
+        ></Route>
+        <Route
+          path="/teacher/profile/:username/curricula/:curricula_id/lecture/:lecture_id/quiz"
+          element={<QuizManagementPage />}
         ></Route>
         <Route
           path="/teacher/profile/lecture/lectureReport"

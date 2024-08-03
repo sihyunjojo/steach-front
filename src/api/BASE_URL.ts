@@ -1,1 +1,1 @@
-export const BASE_URL = "http://steach.ssafy.io:8080";
+export const BASE_URL = "http://steach.ssafy.io:8083";
