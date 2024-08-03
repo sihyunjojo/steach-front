@@ -16,6 +16,10 @@ import Classroom from "./pages/classroom/classroom.tsx";
 // import ProfileLectureHistory from "./components/teacher/LectureReport.tsx";
 import CreateQuiz from "./components/teacher/CreateQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
+import Man from "./pages/sub/Man.tsx";
+import Cat from "./pages/sub/Cat.tsx";
+import Reva from "./pages/sub/Reva.tsx";
+
 
 const App: React.FC = () => {
   return (
@@ -62,6 +66,18 @@ const App: React.FC = () => {
         <Route
           path="/teacher/profile/lecture/lectureReport"
           element={<LectureReport />}
+        ></Route>
+        <Route
+          path="/man"
+          element={<Man />}
+        ></Route>
+        <Route
+          path="/cat"
+          element={<Cat />}
+        ></Route>
+        <Route
+          path="/reva"
+          element={<Reva />}
         ></Route>
       </Routes>
       <Footer />
