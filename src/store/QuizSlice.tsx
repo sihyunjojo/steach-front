@@ -4,11 +4,14 @@ import {
   QuizCreateSendForm,
   QuizCreateReturnForm,
   QuizFetchListForm,
+  QuizUpdateSendForm,
+  QuizUpdateReturnForm,
 } from "../interface/quiz/QuizInterface";
 import {
   createQuizApi,
   fetchLectureQuizApi,
   deleteQuizApi,
+  updateQuizApi,
 } from "../api/lecture/quizAPI";
 import axios from "axios";
 
@@ -46,6 +49,25 @@ export const createQuiz = createAsyncThunk<
   try {
     // 퀴즈 생성 api 호출
     const response = await createQuizApi(quizCreateData);
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+// 퀴즈 수정 함수
+export const updateQuiz = createAsyncThunk<
+  QuizUpdateReturnForm,
+  QuizUpdateSendForm
+>("quiz/update", async (quizUpdateData, thunkAPI) => {
+  try {
+    // 퀴즈 수정 api 호출
+    const response = await updateQuizApi(quizUpdateData);
 
     console.log(response);
     return response;
@@ -101,9 +123,20 @@ const quizSlice = createSlice({
       })
       .addCase(createQuiz.fulfilled, (state) => {
         state.status = "succeeded";
-        console.log("퀴즈 생성 성공!");
       })
       .addCase(createQuiz.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch lectures";
+      })
+      // 퀴즈 수정 addCase
+      .addCase(updateQuiz.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateQuiz.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.quizzes = action.payload.quiz_list;
+      })
+      .addCase(updateQuiz.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch lectures";
       })
@@ -111,7 +144,7 @@ const quizSlice = createSlice({
       .addCase(deleteQuiz.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(deleteQuiz.fulfilled, (state, action) => {
+      .addCase(deleteQuiz.fulfilled, (state) => {
         state.status = "succeeded";
         console.log("삭제 성공!");
       })

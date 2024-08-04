@@ -4,10 +4,20 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { deleteQuiz } from "../../../store/QuizSlice";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // 퀴즈 조회 컴포넌트
 const FetchQuiz: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  // username, curricula_id, lecture_id 추출
+  const { username, curricula_id, lecture_id } = useParams<{
+    username: string;
+    curricula_id: string;
+    lecture_id: string;
+  }>();
 
   // store에서 quizzes 상태 가져오기
   const quizzes = useSelector((state: RootState) => state.quiz.quizzes);
@@ -48,6 +58,16 @@ const FetchQuiz: React.FC = () => {
     <div className="grid grid-cols-12 bg-Beige">
       <div className="col-span-3"></div>
       <div className=" flex col-span-6 p-4 relative">
+        <button
+          className="p-3 absolute top-8 right-36"
+          onClick={() =>
+            navigate(
+              `/teacher/profile/${username}/curricula/${curricula_id}/lecture/${lecture_id}/updateQuiz`
+            )
+          }
+        >
+          수정하기
+        </button>
         <button
           className="p-3 absolute top-8 right-10 bg-red-200 rounded-md text-white hover:bg-red-300"
           onClick={handleDeleteQuiz}
