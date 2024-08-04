@@ -11,7 +11,6 @@ import {
 } from "../../interface/auth/AuthInterface";
 import { BASE_URL } from "../BASE_URL";
 
-
 const tokenData = localStorage.getItem("auth");
 const jsontokenData = tokenData ? JSON.parse(tokenData) : null;
 const token = jsontokenData ? jsontokenData.token : "";

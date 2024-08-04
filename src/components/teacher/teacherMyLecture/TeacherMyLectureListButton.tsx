@@ -108,7 +108,7 @@ const TeacherMyLectureListButton: React.FC<TeacherMyLectureListButtonProps> = ({
                   className="m-3"
                   onClick={() =>
                     navigate(
-                      `/teacher/profile/${username}/curricula/${curriculaId}/lecture/${lectureId}/createQuiz`
+                      `/teacher/profile/${username}/curricula/${curriculaId}/lecture/${lectureId}/quiz`
                     )
                   }
                 >

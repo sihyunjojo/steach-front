@@ -6,7 +6,6 @@ import { BASE_URL } from "../BASE_URL";
 //     headers: {'Authorization': `Bearer ${token}`}
 //   });
 
-
 // Fetch curricula list
 export const fetchLatestCurricula = async () => {
   try {
