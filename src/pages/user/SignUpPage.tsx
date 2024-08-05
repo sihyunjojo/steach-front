@@ -3,7 +3,6 @@ import student from "../../assets/student.png";
 import teacher from "../../assets/teacher.png";
 import StudentSignUp from "../../components/user/SignUp/StudentSignUp";
 import TeacherSignUp from "../../components/user/SignUp/TeacherSignUp";
-import IntroductionSignUp from "../../components/user/SignUp/IntroductionSignUp";
 
 // 이진송
 // 디자인 수정 필요
@@ -52,8 +51,6 @@ const SignUpStudentPage: React.FC = () => {
                 </button>
               </div>
             </div>
-            {/* 아래 페이지 메인(홈보다 앞)페이지로 옮길 예정, 임시로 여기 둠ㅋ */}
-            <IntroductionSignUp />
           </>
         )}
 
@@ -66,6 +63,7 @@ const SignUpStudentPage: React.FC = () => {
             <TeacherSignUp />
           </>
         ) : null}
+
       </div>
     </>
   );
