@@ -8,7 +8,7 @@ import {
   TeacherFormData,
   LoginForm,
   LoginReturnForm,
-} from "../../interface/auth/authinterface";
+} from "../../interface/auth/AuthInterface";
 import { signUpStudentApi, signUpTeacherApi } from "../../api/user/userAPI";
 
 // 유저 상태 형식
