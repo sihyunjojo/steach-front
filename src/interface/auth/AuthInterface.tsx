@@ -1,5 +1,5 @@
 // 학생 회원가입 폼 형식
-export interface studentFormData {
+export interface StudentFormData {
   username: string;
   password: string;
   nickname: string;

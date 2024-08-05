@@ -6,7 +6,7 @@ import { StudentInfoUpdateForm } from "../../components/student/studentMyInfo/St
 import {
   LoginForm,
   LoginReturnForm,
-  studentFormData,
+  StudentFormData,
   TeacherFormData,
 } from "../../interface/auth/AuthInterface";
 import { BASE_URL } from "../BASE_URL";
@@ -16,7 +16,7 @@ const jsontokenData = tokenData ? JSON.parse(tokenData) : null;
 const token = jsontokenData ? jsontokenData.token : "";
 
 // 학생 회원가입
-export const signUpStudentApi = async (formDataToSend: studentFormData) => {
+export const signUpStudentApi = async (formDataToSend: StudentFormData) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/api/v1/student/join`,

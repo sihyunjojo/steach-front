@@ -49,9 +49,6 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         allow: ['.']
       }
     },
-    optimizeDeps: {
-      exclude: ['@ruffle-rs/ruffle']
-    },
     build: {
       commonjsOptions: {
         include: [/@ruffle-rs\/ruffle/, /node_modules/]
