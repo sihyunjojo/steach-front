@@ -1,5 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import korean from "../../assets/subject/korean.png"
 import math from "../../assets/subject/math.png"
 import social from "../../assets/subject/social.png"
@@ -7,6 +6,7 @@ import science from "../../assets/subject/science.png"
 import artsandphysical from "../../assets/subject/artsandphysical.png"
 import engineering from "../../assets/subject/engineering.png"
 import foreignlanguage from "../../assets/subject/foreignlanguage.png"
+import etc from "../../assets/subject/etc.png"
 
 // 김헌규 - 자바스크립트 코드를 타입스크립트 코드로 변경(컴포넌트 함수 및 interface와 Subject 타입으로 작성)
 // 김헌규 - 화면 크기에 따른 아이콘 크기 설정(점점 작아지도록)
@@ -28,6 +28,7 @@ const Subjects: React.FC = () => {
     { name: "#예체능", icon: artsandphysical, http: "artsandphysical"},
     { name: "#공학", icon: engineering, http: "engineering"},
     { name: "#외국어", icon: foreignlanguage, http: "foreignlanguage"},
+    { name: "#ETC", icon: etc, http: "etc"},
   ];
 
   return (
@@ -35,7 +36,7 @@ const Subjects: React.FC = () => {
       <div>
         <div className="flex text-center">
           {subjects.map((subject, index) => (
-            <a href={`${subject.http}`} className="mx-6 my-12" key={index}>
+            <a href={`${subject.http}`} className="mx-6 my-12 transform transition-transform duration-300 hover:scale-150" key={index}>
               <img
                 src={`${subject.icon}`}
                 className="sm:size-8 md:size-12 lg:size-16 text-indigo-950"

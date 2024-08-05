@@ -32,14 +32,14 @@ const NavbarStudent: React.FC<Props> = ({ username }) => {
   // 로그아웃 요청 함수
   const logoutbtn = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/home");
     window.location.reload();
   };
 
   return (
     <nav className="sticky top-0 flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige z-10">
       {/* Navbar 로고 */}
-      <Link to={"/"}>
+      <Link to={"/home"}>
         <div className="w-28 ml-4">
           <img src={logoImage} alt="logo" className="w-full h-20" />
         </div>
