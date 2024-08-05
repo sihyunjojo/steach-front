@@ -18,6 +18,7 @@ import QuizManagementPage from "./pages/quiz/QuizManagementPage.tsx";
 import CreateQuiz from "./components/teacher/quiz/CreateQuiz.tsx";
 import PatchQuiz from "./components/teacher/quiz/PatchQuiz.tsx";
 import LectureReport from "./components/teacher/LectureReport.tsx";
+import SearchPage from "./pages/main/SearchPage.tsx";
 
 const App: React.FC = () => {
   return (
@@ -73,6 +74,7 @@ const App: React.FC = () => {
           path="/teacher/profile/lecture/lectureReport"
           element={<LectureReport />}
         ></Route>
+        <Route path="/search" element={<SearchPage />}></Route>
       </Routes>
       <Footer />
     </div>
