@@ -60,9 +60,9 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
         {/* 메뉴 */}
         <ul className="hidden lg:flex lg:flex-row lg:justify-between text-lg font-bold ml-4 lg:ml-0">
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
-            <a href="#" className="hover:text-orange-300">
+            <Link to={"/search"} className="hover:text-orange-300">
               강의
-            </a>
+            </Link>
           </li>
           <li className="mx-4 lg: m-2 lg:px-2 lg:py-0">
             <Link
@@ -104,9 +104,9 @@ const NavbarTeacher: React.FC<Props> = ({ username }) => {
         <div className="w-full flex flex-col lg:hidden">
           <ul className="flex flex-col w-full text-lg font-bold mt-4">
             <li className="p-2">
-              <a href="#" className="hover:text-orange-300">
+              <Link to={"/search"} className="hover:text-orange-300">
                 강의
-              </a>
+              </Link>
             </li>
             <li className="p-2">
               <Link

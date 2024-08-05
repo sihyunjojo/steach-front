@@ -29,28 +29,60 @@ const SearchPage: React.FC = () => {
     target: { name: string; value: string | boolean };
   }) => {
     const { name, value } = e.target;
-    setSearchOption({
-      ...searchOption,
+    setSearchOption((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
   // 검색 핸들러 함수
-  const handleSearch = () => {
-    dispatch(searchCurricula(searchOption));
+  const handleSearch = (e: React.FormEvent | null) => {
+    if (e) {
+      e.preventDefault();
+      console.log("Search triggered", searchOption);
+      dispatch(searchCurricula(searchOption));
+    }
   };
 
   return (
-    <div>
-      <SearchCard />
-      <form className="flex items-center">
-        <SearchCategoryMenu handleOptionChange={handleOptionChange} />
-        <SearchOrderMenu handleOptionChange={handleOptionChange} />
-        <SearchSwitch handleOptionChange={handleOptionChange} />
-        <button className="mx-2 p-3  rounded-md bg-red-200 text-white hover:bg-red-300">
-          검색하기
-        </button>
-      </form>
+    <div className="grid grid-cols-12">
+      <div className="col-span-1"></div>
+      <main className="col-span-10">
+        <form className="my-4" onSubmit={(e) => handleSearch(e)}>
+          <div className="flex justify-center">
+            <SearchCategoryMenu handleOptionChange={handleOptionChange} />
+          </div>
+          <div className="flex justify-evenly items-center">
+            <SearchOrderMenu handleOptionChange={handleOptionChange} />
+            <input
+              type="text"
+              name="search"
+              className="ml-3 p-3 w-2/3 border-2 rounded-md"
+              value={searchOption.search}
+              onChange={(e) => handleOptionChange(e)}
+            />
+            <button
+              type="submit"
+              className="mr-2 p-3 rounded-md bg-red-200 text-white hover:bg-red-300"
+            >
+              검색하기
+            </button>
+            <SearchSwitch
+              handleOptionChange={handleOptionChange}
+              handleSearch={handleSearch}
+            />
+          </div>
+        </form>
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {curriculas.map((curriculum) => (
+            <SearchCard
+              key={curriculum.curriculum_id}
+              curriculum={curriculum}
+            />
+          ))}
+        </div>
+      </main>
+      <div className="col-span-1"></div>
     </div>
   );
 };
