@@ -4,11 +4,11 @@ import { studentReset } from "./StudentProfileSlice";
 import { teacherReset } from "./TeacherProfileSlice";
 import { deleteMember, login } from "../../api/user/userAPI";
 import {
-  studentFormData,
+  StudentFormData,
   TeacherFormData,
   LoginForm,
   LoginReturnForm,
-} from "../../interface/auth/authinterface";
+} from "../../interface/auth/AuthInterface";
 import { signUpStudentApi, signUpTeacherApi } from "../../api/user/userAPI";
 
 // 유저 상태 형식
@@ -32,7 +32,7 @@ export const initialState: UserState = {
 // createAsyncThunk 첫번째 인수 Returned - 비동기 작업이 성공적으로 완료된 후 반환되는 값의 타입
 // 두번째 인수 ThunkArg - 비동기 작업을 시작할 때 액션 생성 함수에 전달되는 인수의 타입.
 // 학생 회원가입
-export const signUpStudent = createAsyncThunk<UserState, studentFormData>(
+export const signUpStudent = createAsyncThunk<UserState, StudentFormData>(
   "student/signup",
   async (userFormData, thunkAPI) => {
     try {

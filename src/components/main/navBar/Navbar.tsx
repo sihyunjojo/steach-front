@@ -1,4 +1,3 @@
-// import { authActions } from "../../../store/AuthSlice";
 import NavbarLogin from "./NavbarLogin";
 import NavbarStudent from "./NavbarStudent";
 import NavbarTeacher from "./NavbarTeacher";
