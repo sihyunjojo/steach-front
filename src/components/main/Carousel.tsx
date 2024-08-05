@@ -7,8 +7,8 @@ import "swiper/css/pagination";
 const imageUrls = [
   "https://cdn.m-i.kr/news/photo/202405/1119678_887147_344.jpg",
   "https://mblogthumb-phinf.pstatic.net/MjAyNDAxMzFfMTE5/MDAxNzA2NjkwOTQ1NjY1.DE4CKXk67V-GF8veQ4uGeWY_oEbwBLgf2pCXCWDRDwkg.32FUNPUbJAfEuHGVlL0JAcfgoIdM75KBlOuv6EFg5HEg.PNG.bee4sunset/%EB%A7%88%EB%A3%A8_%EC%98%88%EC%8B%9C-01.png?type=w800",
-  "https://i.ytimg.com/vi/NhRUZyZGU_E/maxresdefault.jpg",
-  "https://i.ytimg.com/vi/uYP8tzntElI/mqdefault.jpg",
+  "https://cdn.imweb.me/upload/a7c97c29da69a.png",
+  "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202401/17/f1984fc9-dd96-4ccf-93e4-7b5064d1bebf.jpg",
 ];
 
 const generateSlides = (urls: string[]) => {
@@ -30,7 +30,7 @@ const HomePageCarousel: React.FC = () => {
 
         .carousel-image {
           display: block;
-          width: auto;
+          width: 100%;
           height: 100%;
           max-width: 100%;
           margin: 0 auto;
@@ -59,7 +59,7 @@ const HomePageCarousel: React.FC = () => {
 
 const imageStyle: React.CSSProperties = {
   display: "block",
-  width: "auto",
+  width: "100%",
   height: "100%",
   maxWidth: "100%",
   margin: "0 auto",
