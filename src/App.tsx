@@ -22,6 +22,7 @@ import Man from "./pages/sub/Man.tsx";
 import Cat from "./pages/sub/Cat.tsx";
 import Reva from "./pages/sub/Reva.tsx";
 
+import SearchPage from "./pages/main/SearchPage.tsx";
 
 const App: React.FC = () => {
   return (
@@ -77,18 +78,10 @@ const App: React.FC = () => {
           path="/teacher/profile/lecture/lectureReport"
           element={<LectureReport />}
         ></Route>
-        <Route
-          path="/man"
-          element={<Man />}
-        ></Route>
-        <Route
-          path="/cat"
-          element={<Cat />}
-        ></Route>
-        <Route
-          path="/reva"
-          element={<Reva />}
-        ></Route>
+        <Route path="/man" element={<Man />}></Route>
+        <Route path="/cat" element={<Cat />}></Route>
+        <Route path="/reva" element={<Reva />}></Route>
+        <Route path="/search" element={<SearchPage />}></Route>
       </Routes>
       <Footer />
     </div>

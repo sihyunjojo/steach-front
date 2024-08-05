@@ -10,9 +10,16 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 const NavbarLogin: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [inputSearch, setInputSearch] = useState("");
 
+  // 검색창 바인딩
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputSearch(e.target.value);
+  };
+
+  // 메뉴 토글하기
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -25,6 +32,9 @@ const NavbarLogin: React.FC = () => {
     navigate("/user/login");
   };
 
+  // 검색바에서 검색 기능 구현할 핸들러
+  const handleSearchBar = () => {};
+
   return (
     <nav className="sticky top-0 flex flex-wrap items-center justify-between p-2 bg-Beige border-b-2 border-hardBeige z-10">
       {/* Navbar 로고 */}
@@ -35,13 +45,21 @@ const NavbarLogin: React.FC = () => {
       </Link>
       {/* 검색창 */}
       <div className="flex-1 flex items-center justify-between lg:justify-around">
-        <form className="relative mx-2 lg:mx-4 flex-grow lg:flex-grow-0 lg:w-1/2">
+        <form
+          className="relative mx-2 lg:mx-4 flex-grow lg:flex-grow-0 lg:w-1/2"
+          onSubmit={handleSearchBar}
+        >
           <input
             type="text"
             placeholder="나의 성장을 도와줄 강의를 검색해보세요."
+            value={inputSearch}
+            onChange={(e) => handleChange(e)}
             className="p-2 border-2 w-full h-10 rounded-md border-hardBeige"
           />
-          <button className="absolute right-3 inset-y-2 hover:text-orange-300">
+          <button
+            className="absolute right-3 inset-y-2 hover:text-orange-300"
+            onClick={handleSearchBar}
+          >
             <FontAwesomeIcon icon={faMagnifyingGlass} className="size-6" />
           </button>
         </form>
@@ -59,9 +77,12 @@ const NavbarLogin: React.FC = () => {
             </button>
           </li>
           <li className="p-2">
-            <a onClick={() => {
-              navigate("/classroom");
-            }} className="hover:text-orange-300">
+            <a
+              onClick={() => {
+                navigate("/classroom");
+              }}
+              className="hover:text-orange-300"
+            >
               문의하기
             </a>
           </li>
@@ -70,8 +91,8 @@ const NavbarLogin: React.FC = () => {
       {/* 로그인 및 회원가입 버튼 */}
       <div className="hidden mr-3 lg:flex items-center ml-4 lg:ml-0">
         <button
-            className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
-            onClick={() => {
+          className="w-auto ml-2 p-2 border-2 border-hardBeige rounded-md"
+          onClick={() => {
             navigate("/user/login");
           }}
         >
@@ -109,9 +130,12 @@ const NavbarLogin: React.FC = () => {
               </button>
             </li>
             <li className="p-2">
-              <a onClick={() => {
-                navigate("/classroom");
-              }} className="hover:text-orange-300">
+              <a
+                onClick={() => {
+                  navigate("/classroom");
+                }}
+                className="hover:text-orange-300"
+              >
                 문의하기2
               </a>
             </li>

@@ -31,7 +31,7 @@ const RevaGame: React.FC = () => {
       container.replaceWith(player);
       player.load("/revaGame.swf").then(() => {
         setLoading(false);
-      }).catch((loadError) => {
+      }).catch((loadError: Error) => {
         const errorMsg = 'Failed to load the SWF file';
         console.error(errorMsg, loadError);
         // setError(`${errorMsg}: ${loadError.message}`);

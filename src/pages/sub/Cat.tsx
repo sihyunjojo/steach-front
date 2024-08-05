@@ -31,7 +31,7 @@ const CatGame: React.FC = () => {
       container.appendChild(player); // 다른 코드
       player.load("/catGame.swf").then(() => {
         setLoading(false);
-      }).catch((loadError) => {
+      }).catch((loadError: Error) => {
         const errorMsg = 'Failed to load the SWF file';
         console.error(errorMsg, loadError);
         // setError(`${errorMsg}: ${loadError.message}`);
