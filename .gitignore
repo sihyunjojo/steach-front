@@ -24,4 +24,8 @@ dist-ssr
 *.sw?
 
 # 없어지지마!!
-/Users/김헌규/AppData/Roaming/npm-cache/
+/Users김헌규AppDataRoamingnpm-cache/**
+/Users/김헌규/AppData/Roaming/npm-cache/**
+
+# 내꺼
+!.*G.swf

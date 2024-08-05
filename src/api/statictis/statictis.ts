@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
 
-
 export const getRadarChartResponse = async () => {
   try {
     const response = await axios.get(
