@@ -292,8 +292,8 @@ export const searchCurriculaApi = async (searchData: SearchSendCurricula) => {
       order: searchData.order,
       only_available: searchData.only_available,
       search: searchData.search,
-      pageSize: null,
-      currentPageNumber: null,
+      pageSize: searchData.pageSize,
+      currentPageNumber: searchData.currentPageNumber,
     },
     headers: {
       Authorization: `Bearer ${token}`,

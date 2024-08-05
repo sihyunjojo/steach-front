@@ -4,8 +4,8 @@ export interface SearchSendCurricula {
   order: string;
   only_available: boolean;
   search: string;
-  pageSize: null;
-  currentPageNumber: null;
+  pageSize: number | null;
+  currentPageNumber: number | null;
 }
 
 // 커리큘럼 검색 인터페이스
