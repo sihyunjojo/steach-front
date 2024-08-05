@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://steach.ssafy.io:8080';
+const BASE_URL = 'https://steach.ssafy.io:8080';
 
 // Post student focus time
 export const postStudentFocusTime = async (lectureId: number, focusTimeData: { focus_time: number }) => {

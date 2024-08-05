@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
 
-const IMG_SERVER_URL = "http://steach.ssafy.io:8082";
+const IMG_SERVER_URL = "https://steach.ssafy.io:8082";
 const Auth = localStorage.getItem("auth");
 
 let AuthData: any;

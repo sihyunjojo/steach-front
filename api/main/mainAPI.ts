@@ -5,7 +5,7 @@ import axios from 'axios';
 //     headers: {'Authorization': `Bearer ${token}`}
 //   });
 
-const BASE_URL = 'http://steach.ssafy.io:8080';
+const BASE_URL = 'https://steach.ssafy.io:8080';
 // Fetch curricula list
 const JWT_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxd2UiLCJpYXQiOjE3MjE5MjMzMDYsImV4cCI6MTcyMTkzNTMwNiwidG9rZW5fdHlwZSI6ImFjY2VzcyJ9.CW2qv9swCuxH2mBsuKeIAtOyP0cyCL0xU3hqbIY_1LU';
 
