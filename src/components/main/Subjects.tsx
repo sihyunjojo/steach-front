@@ -8,6 +8,7 @@ import engineering from "../../assets/subject/engineering.png"
 import foreignlanguage from "../../assets/subject/foreignlanguage.png"
 import etc from "../../assets/subject/etc.png"
 
+
 // 김헌규 - 자바스크립트 코드를 타입스크립트 코드로 변경(컴포넌트 함수 및 interface와 Subject 타입으로 작성)
 // 김헌규 - 화면 크기에 따른 아이콘 크기 설정(점점 작아지도록)
 const Subjects: React.FC = () => {
@@ -21,6 +22,7 @@ const Subjects: React.FC = () => {
   // 배열의 타입을 Subject 배열로 정의
   // 김헌규
   const subjects: Subject[] = [
+
     { name: "#국어", icon: korean, http: "korean"},
     { name: "#수학", icon: math, http: "math"},
     { name: "#사회", icon: social, http: "social"},
@@ -29,6 +31,7 @@ const Subjects: React.FC = () => {
     { name: "#공학", icon: engineering, http: "engineering"},
     { name: "#외국어", icon: foreignlanguage, http: "foreignlanguage"},
     { name: "#ETC", icon: etc, http: "etc"},
+
   ];
 
   return (

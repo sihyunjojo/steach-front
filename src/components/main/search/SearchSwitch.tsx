@@ -2,18 +2,23 @@ import React from "react";
 import { Switch } from "antd";
 
 interface SearchSwitchProps {
+  handleSearch: (e: React.FormEvent | null) => void;
   handleOptionChange: (e: { target: { name: string; value: boolean } }) => void;
 }
 
-const SearchSwitch: React.FC<SearchSwitchProps> = ({ handleOptionChange }) => {
+const SearchSwitch: React.FC<SearchSwitchProps> = ({
+  handleOptionChange,
+  handleSearch,
+}) => {
   const onChange = (checked: boolean) => {
     handleOptionChange({
       target: {
-        name: "curriculum_category",
+        name: "only_avaliable",
         value: checked,
       },
     });
-    // 만약 체크가 true라면 그 즉시 수강 가능한 목록만 불러오기
+    // 만약 체크가 변할때마다 그 값에 맞는 강의 검색하기
+    handleSearch(null);
   };
   return (
     <div className="flex items-center">

@@ -5,7 +5,7 @@ import {
 } from "../../interface/Curriculainterface";
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
-import { SearchSend } from "../../interface/search/SearchInterface";
+import { SearchSendCurricula } from "../../interface/search/SearchInterface";
 
 const IMG_SERVER_URL = "https://steach.ssafy.io:8082";
 const Auth = localStorage.getItem("auth");
@@ -285,7 +285,7 @@ export const postCurriculimCancel = async (curriculum_id: string) => {
 };
 
 // 커리큘럼 검색
-export const searchCurriculaApi = async (searchData: SearchSend) => {
+export const searchCurriculaApi = async (searchData: SearchSendCurricula) => {
   const response = await axios.get(`${BASE_URL}/api/v1/curricula`, {
     params: {
       curriculum_category: searchData.curriculum_category,
