@@ -28,4 +28,4 @@ dist-ssr
 /Users/김헌규/AppData/Roaming/npm-cache/**
 
 # 내꺼
-!.*G.swf
+!/public/*.swf
