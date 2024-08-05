@@ -5,9 +5,11 @@ import {
 } from "../../interface/Curriculainterface";
 import axios from "axios";
 import { BASE_URL } from "../BASE_URL";
+import { SearchSend } from "../../interface/search/SearchInterface";
 
 const IMG_SERVER_URL = "https://steach.ssafy.io:8082";
 const Auth = localStorage.getItem("auth");
+const token = Auth ? JSON.parse(Auth).token : null;
 
 let AuthData: any;
 if (Auth) {
@@ -263,7 +265,6 @@ export const getCurriculimApply = async (curriculum_id: string) => {
 };
 
 // [학생] 학생이 커리큘럼 수강 취소하기
-
 export const postCurriculimCancel = async (curriculum_id: string) => {
   try {
     const response = await axios.post(
@@ -282,4 +283,22 @@ export const postCurriculimCancel = async (curriculum_id: string) => {
     throw error;
   }
 };
-// 
+
+// 커리큘럼 검색
+export const searchCurriculaApi = async (searchData: SearchSend) => {
+  const response = await axios.get(`${BASE_URL}/api/v1/curricula`, {
+    params: {
+      curriculum_category: searchData.curriculum_category,
+      order: searchData.order,
+      only_available: searchData.only_available,
+      search: searchData.search,
+      pageSize: null,
+      currentPageNumber: null,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
