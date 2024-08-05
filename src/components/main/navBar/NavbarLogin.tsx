@@ -140,7 +140,6 @@ const NavbarLogin: React.FC = () => {
               </a>
             </li>
           </ul>
-
           <div className="flex flex-col items-center mt-4 mx-2">
             <button
               className="w-full mb-2 p-2 border-2 border-hardBeige rounded-md"
